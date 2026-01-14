@@ -1,3 +1,7 @@
+"use client"
+
+import { useEffect, useState } from "react"
+import { api } from "@/app/servidor/api.js"
 /* ===========================
    Skeleton Row
 =========================== */
@@ -25,10 +29,26 @@ function SkeletonRow() {
 /* ===========================
    Main Component
 =========================== */
-export default function TabelaBrasileirao({
-  tabela = [],
-  loading = false,
-}) {
+export default function TabelaBrasileirao() {
+  const [tabela, setTabela] = useState([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    async function carregarTabela() {
+      try {
+        setLoading(true)
+        const res = await api.get("/tabela/brasileirao")
+        setTabela(res.data)
+      } catch (error) {
+        console.error("Erro ao carregar tabela:", error)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    carregarTabela()
+  }, [])
+
   const showSkeleton = loading || tabela.length === 0
 
   const getZona = (posicao) => {
@@ -39,129 +59,124 @@ export default function TabelaBrasileirao({
   }
 
   return (
-    <section className="w-full mx-auto flex-wrap items-center px-6 justify-center md:w-3/4 ">
-      <h3 className="text-3xl font-light text-center mt-10 mb-5 md:text-5xl text-white">Tabela do Brasileirão Série A</h3>
-    <div className="w-full overflow-hidden rounded-xl border border-white/10 bg-[#0b0f1a]">
-      {/* Tabela */}
-      <div className="overflow-x-auto">
-        <table className="w-full min-w-[900px] border-collapse text-sm">
-          {/* Cabeçalho */}
-          <thead>
-            <tr className="bg-gradient-to-r from-[#0f172a] to-[#020617] text-zinc-400">
-              <th className="px-3 py-4 text-left">#</th>
-              <th className="px-3 py-4 text-left">Clube</th>
-              <th className="px-3 py-4 text-center text-white font-semibold">
-                P
-              </th>
-              <th className="hidden sm:table-cell px-3 py-4 text-center">
-                J
-              </th>
-              <th className="hidden md:table-cell px-3 py-4 text-center">
-                V
-              </th>
-              <th className="hidden md:table-cell px-3 py-4 text-center">
-                E
-              </th>
-              <th className="hidden md:table-cell px-3 py-4 text-center">
-                D
-              </th>
-              <th className="hidden sm:table-cell px-3 py-4 text-center">
-                GP
-              </th>
-              <th className="hidden sm:table-cell px-3 py-4 text-center">
-                GC
-              </th>
-              <th className="hidden sm:table-cell px-3 py-4 text-center">
-                SG
-              </th>
-            </tr>
-          </thead>
+    <section className="w-full mx-auto px-6 md:w-3/4">
+      <h3 className="text-3xl md:text-5xl font-light text-center mt-10 mb-5 text-white">
+        Tabela do Brasileirão Série A
+      </h3>
 
-          {/* Corpo */}
-          <tbody>
-            {showSkeleton
-              ? Array.from({ length: 20 }).map((_, i) => (
-                <SkeletonRow key={i} />
-              ))
-              : tabela.map((time, index) => (
-                <tr
-                  key={time.id || index}
-                  className={`border-t border-white/5 hover:bg-white/5 transition
-                      ${getZona(time.posicao)}`}
-                >
-                  {/* Posição */}
-                  <td className="px-3 py-3 text-zinc-300">
-                    {time.posicao}
-                  </td>
-
-                  {/* Clube */}
-                  <td className="px-3 py-3 flex items-center gap-3">
-                    <img
-                      src={time.escudo}
-                      alt={time.nome}
-                      className="h-6 w-6 object-contain"
-                    />
-                    <span className="text-white font-medium whitespace-nowrap">
-                      {time.nome}
-                    </span>
-                  </td>
-
-                  {/* Pontos */}
-                  <td className="px-3 py-3 text-center font-semibold text-white">
-                    {time.pontos}
-                  </td>
-
-                  {/* Estatísticas */}
-                  <td className="hidden sm:table-cell px-3 py-3 text-center text-zinc-300">
-                    {time.jogos}
-                  </td>
-
-                  <td className="hidden md:table-cell px-3 py-3 text-center">
-                    {time.vitorias}
-                  </td>
-                  <td className="hidden md:table-cell px-3 py-3 text-center">
-                    {time.empates}
-                  </td>
-                  <td className="hidden md:table-cell px-3 py-3 text-center">
-                    {time.derrotas}
-                  </td>
-
-                  <td className="hidden sm:table-cell px-3 py-3 text-center">
-                    {time.golsPro}
-                  </td>
-                  <td className="hidden sm:table-cell px-3 py-3 text-center">
-                    {time.golsContra}
-                  </td>
-                  <td
-                    className={`hidden sm:table-cell px-3 py-3 text-center font-medium ${time.saldoGols >= 0
-                        ? "text-emerald-400"
-                        : "text-red-400"
-                      }`}
+      <div className="w-full overflow-hidden rounded-xl border border-white/10 bg-[#0b0f1a]">
+        <div className="overflow-x-auto">
+          <table className="w-full min-w-[900px] border-collapse text-sm">
+            <thead>
+              <tr className="bg-gradient-to-r from-[#0f172a] to-[#020617] text-zinc-400">
+                <th className="px-3 py-4 text-left">#</th>
+                <th className="px-3 py-4 text-left">Clube</th>
+                <th className="px-3 py-4 text-center text-white font-semibold">P</th>
+                <th className="hidden sm:table-cell px-3 py-4 text-center">J</th>
+                <th className="hidden md:table-cell px-3 py-4 text-center">V</th>
+                <th className="hidden md:table-cell px-3 py-4 text-center">E</th>
+                <th className="hidden md:table-cell px-3 py-4 text-center">D</th>
+                <th className="hidden sm:table-cell px-3 py-4 text-center">GP</th>
+                <th className="hidden sm:table-cell px-3 py-4 text-center">GC</th>
+                <th className="hidden sm:table-cell px-3 py-4 text-center">SG</th>
+              </tr>
+            </thead>
+            <tbody>
+              {showSkeleton
+                ? Array.from({ length: 20 }).map((_, i) => (
+                  <SkeletonRow key={i} />
+                ))
+                : tabela.map((time) => (
+                  <tr
+                    key={time.id}
+                    className={`border-t border-white/5 hover:bg-white/5 transition ${getZona(
+                      time.posicao
+                    )}`}
                   >
-                    {time.saldoGols}
-                  </td>
-                </tr>
-              ))}
-          </tbody>
-        </table>
-      </div>
+                    {/* POSIÇÃO */}
+                    <td className="px-2 py-2 sm:px-3 sm:py-3 text-zinc-300">
+                      {time.posicao}
+                    </td>
 
-      {/* Legenda */}
-      <div className="flex flex-wrap gap-4 px-4 py-3 text-xs text-zinc-400 border-t border-white/5">
-        <div className="flex items-center gap-2">
-          <span className="h-3 w-1 bg-sky-500 rounded" />
-          Libertadores
+                    {/* CLUBE */}
+                    <td className="px-1 py-2 sm:px-3 sm:py-3 flex items-center gap-2 sm:gap-1">
+                      <img
+                        src={time.escudo}
+                        alt={time.nome}
+                        className="h-5 w-5 sm:h-6 sm:w-6 object-contain"
+                      />
+                      <span className="text-white font-medium whitespace-nowrap">
+                        {time.nome}
+                      </span>
+                    </td>
+
+                    {/* PONTOS */}
+                    <td className="px-2 py-2 sm:px-3 sm:py-3 text-center font-semibold text-white">
+                      {time.pontos}
+                    </td>
+
+                    {/* JOGOS */}
+                    <td className="px-2 py-2 sm:px-3 sm:py-3 text-center text-zinc-300">
+                      {time.jogos}
+                    </td>
+
+                    {/* VITÓRIAS */}
+                    <td className="px-2 py-2 sm:px-3 sm:py-3 text-center text-zinc-300">
+                      {time.vitorias}
+                    </td>
+
+                    {/* EMPATES */}
+                    <td className="px-2 py-2 sm:px-3 sm:py-3 text-center text-zinc-300">
+                      {time.empates}
+                    </td>
+
+                    {/* DERROTAS */}
+                    <td className="px-2 py-2 sm:px-3 sm:py-3 text-center text-zinc-300">
+                      {time.derrotas}
+                    </td>
+
+                    {/* GOLS PRÓ */}
+                    <td className="px-2 py-2 sm:px-3 sm:py-3 text-center text-zinc-300">
+                      {time.golsPro}
+                    </td>
+
+                    {/* GOLS CONTRA */}
+                    <td className="px-2 py-2 sm:px-3 sm:py-3 text-center text-zinc-300">
+                      {time.golsContra}
+                    </td>
+
+                    {/* SALDO DE GOLS */}
+                    <td
+                      className={`px-2 py-2 sm:px-3 sm:py-3 text-center font-medium ${time.saldoGols >= 0
+                          ? "text-emerald-400"
+                          : "text-red-400"
+                        }`}
+                    >
+                      {time.saldoGols}
+                    </td>
+                  </tr>
+                ))}
+            </tbody>
+
+          </table>
         </div>
-        <div className="flex items-center gap-2">
-          <span className="h-3 w-1 bg-amber-400 rounded" />
-          Sul-Americana
-        </div>
-        <div className="flex items-center gap-2">
-          <span className="h-3 w-1 bg-red-500 rounded" />
-          Rebaixamento
+
+        {/* Legenda */}
+        <div className="flex flex-wrap gap-4 px-4 py-3 text-xs text-zinc-400 border-t border-white/5">
+          <div className="flex items-center gap-2">
+            <span className="h-3 w-1 bg-sky-500 rounded" />
+            Libertadores
+          </div>
+          <div className="flex items-center gap-2">
+            <span className="h-3 w-1 bg-amber-400 rounded" />
+            Sul-Americana
+          </div>
+          <div className="flex items-center gap-2">
+            <span className="h-3 w-1 bg-red-500 rounded" />
+            Rebaixamento
+          </div>
         </div>
       </div>
-    </div>
     </section>
   )
 }

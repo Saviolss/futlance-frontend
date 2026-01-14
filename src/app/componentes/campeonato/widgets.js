@@ -7,33 +7,129 @@ export const CampeonatoBrasileiro = () => {
   const { t } = useTranslation();
 
   return (
-    <Link href="/campeonatos/brasileiro" className="w-full bg-transparent mx-auto border-2 border-blue-700 rounded-sm p-6 text-white mb-10 flex flex-col items-center justify-center md:w-md">
-      <Image src={Brasileirao} alt="Brasileirão Série A" width={200} height={80} className="mb-4 w-28 h-28" />
-      <h2 className="text-2xl font-light text-yellow-300 mb-4 font-sans md:text-4xl">Brasileirão Série A</h2>
-      <p className="text-center text-md font-sans md:text-xl">Acompanhe as tabelas, proximosjogos e jogos em tempo real.</p>
+    <Link
+      href="/campeonatos/brasileiro"
+      className="
+    relative w-full max-w-md mx-auto mb-10
+    rounded-xl overflow-hidden
+    bg-gradient-to-br from-[#0b0f1a] via-[#0f172a] to-[#020617]
+    border border-blue-500/30
+    shadow-[0_0_30px_rgba(59,130,246,0.2)]
+    p-8
+    text-white
+    flex flex-col items-center justify-center
+    transition-all duration-300
+    hover:scale-[1.02]
+    hover:shadow-[0_0_45px_rgba(59,130,246,0.35)]
+  "
+    >
+      {/* Linha decorativa UEFA */}
+      <span className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-blue-500 to-transparent" />
+
+      {/* Logo */}
+      <img
+        src="https://cdn.api-futebol.com.br/campeonatos/escudos/brasileiro-seriea.png"
+        alt="Brasileirão"
+        className="mb-5 w-24 h-24 object-contain drop-shadow-[0_0_10px_rgba(59,130,246,0.4)]"
+      />
+
+      {/* Título */}
+      <h2 className="text-2xl md:text-4xl font-light tracking-widest uppercase text-blue-300 mb-4">
+        Brasileirão
+      </h2>
+
+      {/* Descrição */}
+      <p className="text-center text-sm md:text-base text-zinc-300 leading-relaxed max-w-xs">
+        {t('descricaocamp')}  
+      </p>
     </Link>
+
   );
 }
 export const CampeonatoPaulista = () => {
   const { t } = useTranslation();
 
   return (
-    <Link href="/campeonatos/paulista" className="w-full bg-transparent mx-auto border-2 border-blue-700 rounded-sm p-6 text-white mb-10 flex flex-col items-center justify-center md:w-md">
-      <Image src={Brasileirao} alt="Paulista" width={200} height={80} className="mb-4 w-28 h-28" />
-      <h2 className="text-2xl font-light text-yellow-300 mb-4 font-sans md:text-4xl">Paulista</h2>
-      <p className="text-center text-md font-sans md:text-xl">Acompanhe as tabelas, proximosjogos e jogos em tempo real.</p>
+    <Link
+      href="/campeonatos/paulista"
+      className="
+    relative w-full max-w-md mx-auto mb-10
+    rounded-xl overflow-hidden
+    bg-gradient-to-br from-[#0b0f1a] via-[#0f172a] to-[#020617]
+    border border-blue-500/30
+    shadow-[0_0_30px_rgba(59,130,246,0.2)]
+    p-8
+    text-white
+    flex flex-col items-center justify-center
+    transition-all duration-300
+    hover:scale-[1.02]
+    hover:shadow-[0_0_45px_rgba(59,130,246,0.35)]
+  "
+    >
+      {/* Linha decorativa UEFA */}
+      <span className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-blue-500 to-transparent" />
+
+      {/* Logo */}
+      <img 
+        src="https://cdn.api-futebol.com.br/campeonatos/escudos/campeonato-paulista.png"
+        alt="Paulista"
+        className="mb-5 w-24 h-24 object-contain drop-shadow-[0_0_10px_rgba(59,130,246,0.4)]"
+      />
+
+      {/* Título */}
+      <h2 className="text-2xl md:text-4xl font-light tracking-widest uppercase text-blue-300 mb-4">
+        Paulista
+      </h2>
+
+      {/* Descrição */}
+      <p className="text-center text-sm md:text-base text-zinc-300 leading-relaxed max-w-xs">
+        {t('descricaocamp')}
+      </p>
     </Link>
+
   );
 }
 export const CampeonatoCarioca = () => {
   const { t } = useTranslation();
 
   return (
-    <Link href="/campeonatos/carioca" className="w-full bg-transparent mx-auto border-2 border-blue-700 rounded-sm p-6 text-white mb-10 flex flex-col items-center justify-center md:w-md">
-      <Image src={Brasileirao} alt="Carioca" width={200} height={80} className="mb-4 w-28 h-28" />
-      <h2 className="text-2xl font-light text-yellow-300 mb-4 font-sans md:text-4xl">Carioca</h2>
-      <p className="text-center text-md font-sans md:text-xl">Acompanhe as tabelas, proximosjogos e jogos em tempo real.</p>
+    <Link
+      href="/campeonatos/carioca"
+      className="
+    relative w-full max-w-md mx-auto mb-10
+    rounded-xl overflow-hidden
+    bg-gradient-to-br from-[#0b0f1a] via-[#0f172a] to-[#020617]
+    border border-blue-500/30
+    shadow-[0_0_30px_rgba(59,130,246,0.2)]
+    p-8
+    text-white
+    flex flex-col items-center justify-center
+    transition-all duration-300
+    hover:scale-[1.02]
+    hover:shadow-[0_0_45px_rgba(59,130,246,0.35)]
+  "
+    >
+      {/* Linha decorativa UEFA */}
+      <span className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-blue-500 to-transparent" />
+
+      {/* Logo */}
+      <img
+        src="https://cdn.api-futebol.com.br/campeonatos/escudos/carioca.png"
+        alt="Carioca"
+        className="mb-5 w-24 h-24 object-contain drop-shadow-[0_0_10px_rgba(59,130,246,0.4)]"
+      />
+
+      {/* Título */}
+      <h2 className="text-2xl md:text-4xl font-light tracking-widest uppercase text-blue-300 mb-4">
+        Carioca
+      </h2>
+
+      {/* Descrição */}
+      <p className="text-center text-sm md:text-base text-zinc-300 leading-relaxed max-w-xs">
+        {t('descricaocamp')}
+      </p>
     </Link>
+
   );
 }
 

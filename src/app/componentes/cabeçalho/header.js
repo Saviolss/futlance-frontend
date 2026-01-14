@@ -7,7 +7,7 @@ import Link from 'next/link';
 import i18n from '../../../../i18n';
 import Logo from "../../../../public/logo.png"
 
-export default function Header() {
+export  function Header() {
 	const [showTranslate, setShowTranslate] = useState(false);
 	const { t } = useTranslation();
 	const handleChangeLanguage = (lang) => {
@@ -15,7 +15,8 @@ export default function Header() {
 		setShowTranslate(false);
 	};
 	return (
-		<header className="w-full bg-[#010056] py-0 shadow-md px-1.5">
+		<>
+		<header className="w-full flex flex-col bg-[#010056] sm:py-0.5 md:py-1 shadow-md px-1.5">
 			<nav className="max-w-7xl mx-auto py-0">
 				<Image src={Logo} alt="Logo Futlance" className="mx-auto py-1.5 h-20 w-65 md:h-25 md:w-70 md:py-2"/>
 				<ul className="flex justify-center flex-wrap gap-5 mt-0 md:mt-1 text-white font-normal">
@@ -69,5 +70,118 @@ export default function Header() {
 				</ul>
 			</nav>
 		</header>
+			<button
+				className="
+          fixed
+          bottom-5 right-5
+          z-50
+					bg-blue-500
+					text-white
+          p-3
+          rounded-full
+          shadow-xl
+          transition
+        "
+				onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+				aria-label="Voltar ao topo"
+			>
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					width="22"
+					height="22"
+					fill="none"
+					stroke="currentColor"
+					strokeWidth="2"
+					strokeLinecap="round"
+					strokeLinejoin="round"
+				>
+					<path d="M12 19V5M5 12l7-7 7 7" />
+				</svg>
+			</button>
+		</>
 	);
 }
+
+export function HeaderCampeonato() {
+	const [showTranslate, setShowTranslate] = useState(false);
+	const { t } = useTranslation();
+	const handleChangeLanguage = (lang) => {
+		i18n.changeLanguage(lang);
+		setShowTranslate(false);
+	};
+	return (
+		<>
+		<header className="w-full block bg-[#010056] sm:py-0.5 md:py-1 shadow-md px-1.5">
+			<nav className="max-w-7xl mx-auto py-0">
+				<Image src={Logo} alt="Logo Futlance" className="mx-auto py-1.5 h-20 w-65 md:h-25 md:w-70 md:py-2" />
+				<ul className="flex justify-center flex-wrap gap-5 mt-0 md:mt-1 text-white font-normal">
+					{/* Início */}
+					<li className="flex flex-col items-center">
+						<Link href="/" className=" flex flex-col items-center md:hover:border-b-2 cursor-pointer" alt="botão de navegar para inicio">
+							<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mb-1"><path d="M3 9l9-7 9 7" /><path d="M9 22V12h6v10" /></svg>
+							{t('inicio')}
+						</Link>
+					</li>
+					{/* Ao vivo */}
+					<li className="flex flex-col items-center">
+						<a href="#aovivo" className="flex flex-col items-center md:hover:border-b-2 cursor-pointer" alt="botão de navegar para ao vivo">
+							<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mb-1"><circle cx="12" cy="12" r="10" /><circle cx="12" cy="12" r="4" /></svg>
+							{t('aovivo')}
+						</a>
+					</li>
+					{/* Agenda */}
+					<li className="flex flex-col items-center">
+						<a href="#agenda" className="flex flex-col items-center md:hover:border-b-2 cursor-pointer" alt="botão de navegar para agenda">
+							<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mb-1"><rect x="3" y="4" width="18" height="18" rx="2" ry="2" /><line x1="16" y1="2" x2="16" y2="6" /><line x1="8" y1="2" x2="8" y2="6" /><line x1="3" y1="10" x2="21" y2="10" /></svg>
+							{t('agenda')}
+						</a>
+					</li>
+					{/* tabela */}
+					<li className="flex flex-col items-center">
+						<a href="#tabela" className="flex flex-col items-center md:hover:border-b-2 cursor-pointer" alt="botão de navegar para tabela">
+							<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mb-1"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+							{t('tabela')}
+						</a>
+					</li>
+					{	/* artilheiros */}
+					<li className="flex flex-col items-center">
+						<a href="#artilheiros" className="flex flex-col items-center md:hover:border-b-2 cursor-pointer" alt="botão de navegar para artilheiros">
+							<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mb-1"><path d="M12 20h9"/><path d="M16 4l4 4l-4 4"/><path d="M8 4l-4 4l4 4"/><path d="M12 4v16"/></svg>
+							{t('artilheiros')}
+						</a>
+					</li>
+				</ul>
+			</nav>
+		</header>
+			<button
+				className="
+          fixed
+          bottom-5 right-5
+          z-50
+					bg-blue-500
+					text-white
+          p-3
+          rounded-full
+          shadow-xl
+          transition
+        "
+				onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+				aria-label="Voltar ao topo"
+			>
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					width="22"
+					height="22"
+					fill="none"
+					stroke="currentColor"
+					strokeWidth="2"
+					strokeLinecap="round"
+					strokeLinejoin="round"
+				>
+					<path d="M12 19V5M5 12l7-7 7 7" />
+				</svg>
+			</button>
+		</>
+	);
+}
+

@@ -1,19 +1,28 @@
 'use client';
-import Header from "@/app/componentes/cabeçalho/header";
 import TabelaPaulista from "@/app/componentes/tabelas/tabelaPaulista.js";
-import { JogosPaulista } from '@/app/componentes/jogos/widget.js';
-import { AgendaPaulista } from "@/app/componentes/agenda/widjet.js";
+import { AoVivoPaulistaWidget } from "@/app/componentes/jogos/widget";
+import { AgendaPaulista } from "@/app/componentes/agenda/widget.js";
 import Background from "@/app/home/style";
 import { useTranslation } from 'react-i18next';
+import ArtilheirosPaulista from "@/app/componentes/artilheiro/artilheiroPaulista.js";
+import { HeaderCampeonato } from "@/app/componentes/cabeçalho/header.js";
+import AnuncioHeader from "@/app/componentes/anuncio/anuncioHeader.js";
+import AnuncioBody from "@/app/componentes/anuncio/anuncioBody.js";
+import Footer from "@/app/componentes/footer/footer.js";
 
 export default function Paulista() {
   const { t } = useTranslation();
   return (
     <Background>
-      <Header />
+      <HeaderCampeonato />
+      <AnuncioHeader />
       <TabelaPaulista />
-      <JogosPaulista />
+      <AoVivoPaulistaWidget />
+      <AnuncioBody />
       <AgendaPaulista />
+      <ArtilheirosPaulista />
+      <AnuncioBody />
+      <Footer />
     </Background>
   );
 }
