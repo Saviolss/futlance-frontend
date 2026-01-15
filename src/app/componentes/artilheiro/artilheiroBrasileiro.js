@@ -31,7 +31,7 @@ export default function ArtilheirosBrasileirao() {
   }
 
   return (
-    <section className="w-full mx-auto px-6 md:w-3/4 mt-12">
+    <section id="artilheiros" className="w-full mx-auto px-6 md:w-3/4 mt-12">
       <h3 className="text-3xl md:text-5xl font-light text-center mb-5 text-white">
         Artilheiros do Brasileirão
       </h3>

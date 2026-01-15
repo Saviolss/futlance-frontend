@@ -88,9 +88,7 @@ export default function TabelaPaulista() {
                 : tabela.map((time) => (
                   <tr
                     key={time.id}
-                    className={`border-t border-white/5 hover:bg-white/5 transition ${getZona(
-                      time.posicao
-                    )}`}
+                    className={`border-t ${getZona(time.posicao)} hover:bg-white/5 transition`}
                   >
                     {/* POSIÇÃO */}
                     <td className="px-2 py-2 sm:px-3 sm:py-3 text-zinc-300">
