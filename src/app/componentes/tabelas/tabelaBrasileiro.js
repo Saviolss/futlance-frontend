@@ -61,7 +61,7 @@ export default function TabelaBrasileirao() {
   return (
     <section className="w-full mx-auto px-6 md:w-3/4">
       <h3 className="text-3xl md:text-5xl font-light text-center mt-10 mb-5 text-white">
-        Tabela do Brasileirão Série A
+        {t("tabela")} Brasileirão Série A
       </h3>
 
       <div className="w-full overflow-hidden rounded-xl border border-white/10 bg-[#0b0f1a]">
@@ -70,7 +70,7 @@ export default function TabelaBrasileirao() {
             <thead>
               <tr className="bg-gradient-to-r from-[#0f172a] to-[#020617] text-zinc-400">
                 <th className="px-3 py-4 text-left">#</th>
-                <th className="px-3 py-4 text-left">Clube</th>
+                <th className="px-3 py-4 text-left">{t("clube")}</th>
                 <th className="px-3 py-4 text-center text-white font-semibold">P</th>
                 <th className="hidden sm:table-cell px-3 py-4 text-center">J</th>
                 <th className="hidden md:table-cell px-3 py-4 text-center">V</th>
@@ -89,9 +89,7 @@ export default function TabelaBrasileirao() {
                 : tabela.map((time) => (
                   <tr
                     key={time.id}
-                    className={`border-t border-white/5 hover:bg-white/5 transition ${getZona(
-                      time.posicao
-                    )}`}
+                    className={`border-r ${getZona(time.posicao)}`}
                   >
                     {/* POSIÇÃO */}
                     <td className="px-2 py-2 sm:px-3 sm:py-3 text-zinc-300">

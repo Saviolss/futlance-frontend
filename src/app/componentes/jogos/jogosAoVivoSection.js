@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from "react"
-import { api } from "@/app/servidor/api.js"
+import  { api }  from "@/app/servidor/api.js"
 import { JogoAoVivoCard } from "./jogoAoVivoCard.js"
 export function JogosAoVivoSection({ titulo, endpoint }) {
   const [jogos, setJogos] = useState([])

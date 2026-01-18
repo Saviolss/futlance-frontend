@@ -1,7 +1,7 @@
 'use client';
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { api } from "@/app/servidor/api.js";
+import  { api }  from "@/app/servidor/api.js";
 
 export function AgendaCompleta() {
   const { t } = useTranslation();

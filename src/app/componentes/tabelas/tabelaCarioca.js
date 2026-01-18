@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react"
 import { api } from "@/app/servidor/api.js"
+import { useTranslation } from "react-i18next"
 
 /* ===========================
    Skeleton Row
@@ -54,6 +55,7 @@ function normalizarTime(item, grupo) {
    Main Component
 =========================== */
 export default function TabelaCarioca() {
+  const { t } = useTranslation()
   const [grupoA, setGrupoA] = useState([])
   const [grupoB, setGrupoB] = useState([])
   const [loading, setLoading] = useState(true)
@@ -91,7 +93,7 @@ export default function TabelaCarioca() {
             <thead>
               <tr className="bg-gradient-to-r from-[#0f172a] to-[#020617] text-zinc-400">
                 <th className="px-3 py-4 text-left">#</th>
-                <th className="px-3 py-4 text-left">Clube</th>
+                <th className="px-3 py-4 text-left">{t("clube")}</th>
                 <th className="px-3 py-4 text-center text-white font-semibold">P</th>
                 <th className="px-3 py-4 text-center">J</th>
                 <th className="px-3 py-4 text-center">V</th>
@@ -148,11 +150,11 @@ export default function TabelaCarioca() {
   return (
     <section className="w-full px-6 md:w-3/4 mx-auto mt-10">
       <h3 className="text-4xl md:text-5xl text-white font-light mb-10 text-center">
-        Campeonato Carioca
+        {t("tabela")} Carioca
       </h3>
 
-      {renderTabela(grupoA, "Grupo A")}
-      {renderTabela(grupoB, "Grupo B")}
+      {renderTabela(grupoA, t("grupo") + " A")}
+      {renderTabela(grupoB, t("grupo") + " B")}
     </section>
   )
 }

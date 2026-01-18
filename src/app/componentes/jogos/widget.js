@@ -1,12 +1,14 @@
 'use client'
 import { JogosAoVivoSection } from "./jogosAoVivoSection.js"
+import { useTranslation } from "react-i18next"
 
 export  function WidgetAoVivo() {
+  const { t } = useTranslation()
   return (
     <div className="w-full">
 
       <JogosAoVivoSection
-        titulo="Ao Vivo"
+        titulo={t("aovivo")}
         endpoint="/api/ao-vivo"
       />
 
@@ -14,38 +16,28 @@ export  function WidgetAoVivo() {
   )
 }
 
-export function aoVivoCariocaWidget() {
-  return (
-    <div className="w-full">
-
-      <JogosAoVivoSection
-        titulo="Carioca"
-        endpoint="/api/ao-vivo/carioca"
-      />
-
-    </div>
-  )
-}
-
 export function AoVivoCariocaWidget() {
+  const { t } = useTranslation()
   return (
     <div className="w-full">
 
       <JogosAoVivoSection
-        titulo="Carioca"
+        titulo={t("aovivo")}
         endpoint="/api/ao-vivo/carioca"
       />
 
     </div>
   )
 }
+
 
 export function AoVivoPaulistaWidget() {
+  const { t } = useTranslation()
   return (
     <div className="w-full">
 
     <JogosAoVivoSection
-      titulo="Paulista"
+      titulo={t("aovivo")}
       endpoint="/api/ao-vivo/paulista"
     />
 
@@ -54,11 +46,12 @@ export function AoVivoPaulistaWidget() {
 }
 
 export function AoVivoBrasileiraoWidget() {
+  const { t } = useTranslation()
   return (
     <div className="w-full">
 
     <JogosAoVivoSection
-      titulo="Brasileirão"
+      titulo={t("aovivo")}
       endpoint="/api/ao-vivo/brasileirao"
     />
 

@@ -3,7 +3,10 @@
 
 :root {
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #ffffff;
+    --font-principal: 'Sour Gummy', sans-serif;
+    --font-segundaria: 'Bitcount Prop Single', sans-serif;
+  --font-geist-mono: 'Bitcount Prop Single', sans-serif;
 }
 
 @theme inline {

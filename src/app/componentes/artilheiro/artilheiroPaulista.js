@@ -2,8 +2,10 @@
 
 import { useEffect, useState } from "react"
 import { api } from "@/app/servidor/api.js"
+import { useTranslation } from 'react-i18next';
 
 export default function ArtilheirosPaulista() {
+  const { t } = useTranslation()
   const [artilheiros, setArtilheiros] = useState([])
   const [loading, setLoading] = useState(true)
 
@@ -33,7 +35,7 @@ export default function ArtilheirosPaulista() {
   return (
     <section className="w-full mx-auto px-6 md:w-3/4 mt-12">
       <h3 className="text-3xl md:text-5xl font-light text-center mb-5 text-white">
-        Artilheiros do Paulistão
+        {t("artilheiro")} Paulistão
       </h3>
 
       <div className="w-full rounded-xl border border-white/10 bg-[#0b0f1a] overflow-hidden">
@@ -42,8 +44,8 @@ export default function ArtilheirosPaulista() {
             <thead>
               <tr className="bg-gradient-to-r from-[#0f172a] to-[#020617] text-zinc-400">
                 <th className="px-3 py-4 text-left">#</th>
-                <th className="px-3 py-4 text-left">Jogador</th>
-                <th className="px-3 py-4 text-left">Clube</th>
+                <th className="px-3 py-4 text-left">{t("jogador")}</th>
+                <th className="px-3 py-4 text-left">{t("clube")}</th>
                 <th className="px-3 py-4 text-center text-white font-semibold">
                   G
                 </th>
