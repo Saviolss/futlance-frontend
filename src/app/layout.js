@@ -1,7 +1,7 @@
 import "./globals.css";
 
 export const metadata = {
-  title: "Jogos de hoje | Futlance",
+  title: "Jogos de hoje ",
   description:
     "Acompanhe jogos ao vivo, resultados em tempo real, tabelas dos campeonatos, artilharia, classificação e próximos jogos do futebol brasileiro.",
   keywords: [
@@ -18,7 +18,7 @@ export const metadata = {
   creator: "Futlance",
   publisher: "Futlance",
   openGraph: {
-    title: "Jogos de hoje | Futlance",
+    title: "Jogos de hoje",
     description:
       "Jogos ao vivo, tabelas atualizadas, artilheiros e resultados em tempo real do futebol.",
     url: "https://www.futlance.com",
@@ -35,14 +35,14 @@ export const metadata = {
     type: "website"
   },
   twitter: {
-    card: "summary_large_image",
-    title: "Jogos de hoje | Futlance",
+    title: "Jogos de hoje ",
     description:
-      "Resultados ao vivo, tabelas e estatísticas do futebol.",
-    images: ["/public/logo.png"]
+      "Resultados ao vivo, tabelas e estatísticas do futebol."
   },
   icons: {
-    icon: "/favicon.ico"
+    icon: "/favicon.ico",
+    shortcut: "/favicon-16x16.png",
+    apple: "/apple-touch-icon.png"
   },
   robots: {
     index: true,

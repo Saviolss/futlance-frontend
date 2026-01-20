@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react"
 import { api } from "@/app/servidor/api.js"
+import { useTranslation } from 'react-i18next';
 /* ===========================
    Skeleton Row
 =========================== */
@@ -30,6 +31,7 @@ function SkeletonRow() {
    Main Component
 =========================== */
 export default function TabelaBrasileirao() {
+  const { t } = useTranslation()
   const [tabela, setTabela] = useState([])
   const [loading, setLoading] = useState(true)
 
@@ -66,19 +68,19 @@ export default function TabelaBrasileirao() {
 
       <div className="w-full overflow-hidden rounded-xl border border-white/10 bg-[#0b0f1a]">
         <div className="overflow-x-auto">
-          <table className="w-full min-w-[900px] border-collapse text-sm">
+          <table className="w-full min-w-[700px] border-collapse text-sm">
             <thead>
               <tr className="bg-gradient-to-r from-[#0f172a] to-[#020617] text-zinc-400">
                 <th className="px-3 py-4 text-left">#</th>
                 <th className="px-3 py-4 text-left">{t("clube")}</th>
                 <th className="px-3 py-4 text-center text-white font-semibold">P</th>
-                <th className="hidden sm:table-cell px-3 py-4 text-center">J</th>
-                <th className="hidden md:table-cell px-3 py-4 text-center">V</th>
-                <th className="hidden md:table-cell px-3 py-4 text-center">E</th>
-                <th className="hidden md:table-cell px-3 py-4 text-center">D</th>
-                <th className="hidden sm:table-cell px-3 py-4 text-center">GP</th>
-                <th className="hidden sm:table-cell px-3 py-4 text-center">GC</th>
-                <th className="hidden sm:table-cell px-3 py-4 text-center">SG</th>
+                <th className="px-3 py-4 sm:table-cell text-center text-white font-semibold">J</th>
+                <th className="px-3 py-4 md:table-cell text-center text-white font-semibold">V</th>
+                <th className="px-3 py-4 md:table-cell  text-center text-white font-semibold">E</th>
+                <th className="px-3 py-4 md:table-cell  text-center text-white font-semibold">D</th>
+                <th className="px-3 py-4 sm:table-cell text-center text-white font-semibold">GP</th>
+                <th className="px-3 py-4 sm:table-cell  text-center text-white font-semibold">GC</th>
+                <th className="px-3 py-4 sm:table-cell text-center text-white font-semibold">SG</th>
               </tr>
             </thead>
             <tbody>
