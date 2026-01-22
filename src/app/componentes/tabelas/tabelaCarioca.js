@@ -81,6 +81,12 @@ export default function TabelaCarioca() {
 
   const showSkeleton = loading
 
+  const getZona = (posicao) => {
+    if (posicao <= 4) return "border-l-4 border-sky-500"
+    if (posicao >= 5) return "border-l-4 border-red-500"
+    return ""
+  }
+
   function renderTabela(grupo, titulo) {
     return (
       <section className="mb-16">
@@ -111,7 +117,7 @@ export default function TabelaCarioca() {
                   <SkeletonRow key={i} />
                 ))
                 : grupo.map((time) => (
-                  <tr key={time.id} className="border-t border-white/5">
+                  <tr key={time.id} className={`border-r ${getZona(time.posicao)}`}>
                     <td className="px-3 py-3 text-zinc-300">
                       {time.posicao}
                     </td>
