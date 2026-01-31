@@ -33,7 +33,7 @@ export default function ArtilheirosPaulista() {
   }
 
   return (
-    <section className="w-full mx-auto px-6 md:w-3/4 mt-12">
+    <section className="w-full mx-auto px-6 md:w-3/4 mt-12" id="artilheiros">
       <h3 className="text-3xl md:text-5xl font-light text-center mb-5 text-white">
         {t("artilheiro")} Paulistão
       </h3>

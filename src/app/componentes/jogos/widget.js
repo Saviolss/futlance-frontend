@@ -2,7 +2,7 @@
 import { JogosAoVivoSection } from "./jogosAoVivoSection.js"
 import { useTranslation } from "react-i18next"
 
-export  function WidgetAoVivo() {
+export function WidgetAoVivo() {
   const { t } = useTranslation()
   return (
     <div className="w-full">
@@ -36,12 +36,12 @@ export function AoVivoPaulistaWidget() {
   return (
     <div className="w-full">
 
-    <JogosAoVivoSection
-      titulo={t("aovivo")}
-      endpoint="/api/ao-vivo/paulista"
-    />
+      <JogosAoVivoSection
+        titulo={t("aovivo")}
+        endpoint="/api/ao-vivo/paulista"
+      />
 
-  </div>
+    </div>
   )
 }
 
@@ -50,11 +50,11 @@ export function AoVivoBrasileiraoWidget() {
   return (
     <div className="w-full">
 
-    <JogosAoVivoSection
-      titulo={t("aovivo")}
-      endpoint="/api/ao-vivo/brasileirao"
-    />
+      <JogosAoVivoSection
+        titulo={t("aovivo")}
+        endpoint="/api/ao-vivo/brasileirao"
+      />
 
-  </div>
+    </div>
   )
 } 

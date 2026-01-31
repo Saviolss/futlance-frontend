@@ -54,8 +54,9 @@ export default function TabelaBrasileirao() {
   const showSkeleton = loading || tabela.length === 0
 
   const getZona = (posicao) => {
-    if (posicao <= 6) return "border-l-4 border-sky-500"
-    if (posicao <= 12) return "border-l-4 border-amber-400"
+    if (posicao <= 4) return "border-l-4 border-sky-500"
+    if (posicao == 5) return "border-l-4 border-green-500"
+    if (posicao <= 11) return "border-l-4 border-amber-400"
     if (posicao >= 17) return "border-l-4 border-red-500"
     return ""
   }
@@ -165,15 +166,19 @@ export default function TabelaBrasileirao() {
         <div className="flex flex-wrap gap-4 px-4 py-3 text-xs text-zinc-400 border-t border-white/5">
           <div className="flex items-center gap-2">
             <span className="h-3 w-1 bg-sky-500 rounded" />
-            Libertadores
+            {t("libertadoreszona")}
+          </div>
+          <div className="flex items-center gap-2">
+            <span className="h-3 w-1 bg-green-500 rounded" />
+            {t("prelibertadoreszona")}
           </div>
           <div className="flex items-center gap-2">
             <span className="h-3 w-1 bg-amber-400 rounded" />
-            Sul-Americana
+            {t("sulamericanazona")}
           </div>
           <div className="flex items-center gap-2">
             <span className="h-3 w-1 bg-red-500 rounded" />
-            Rebaixamento
+            {t("rebaixamento")}
           </div>
         </div>
       </div>

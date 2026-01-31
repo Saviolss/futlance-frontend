@@ -1,30 +1,27 @@
-'use client';
-import TabelaBrasileiro from "@/app/componentes/tabelas/tabelaBrasileiro.js";
-import { AoVivoBrasileiraoWidget } from "@/app/componentes/jogos/widget";
-import { AgendaBrasileiro } from "@/app/componentes/agenda/widget.js";
-import Background from "@/app/home/style";
-import { useTranslation } from 'react-i18next';
-import  ArtilheirosBrasileirao  from "@/app/componentes/artilheiro/artilheiroBrasileiro.js";
-import { HeaderCampeonato } from "@/app/componentes/cabeçalho/header.js";
-import AnuncioHeader from "@/app/componentes/anuncio/anuncioHeader.js";
-import AnuncioBody from "@/app/componentes/anuncio/anuncioBody.js";
-import Footer from "@/app/componentes/footer/footer.js";
-
-
+import Background from "@/app/home/style.js";
+import BrasileiroClient from "./brasileiroClient.js";
 
 export default function Brasileiro() {
-  const { t } = useTranslation();
   return (
     <Background>
-      <HeaderCampeonato />
-      <AnuncioHeader />
-      <TabelaBrasileiro />
-      <AoVivoBrasileiraoWidget />
-      <AnuncioBody />
-      <AgendaBrasileiro />
-      <ArtilheirosBrasileirao />
-      <AnuncioBody />
-      <Footer />
+      {/* CONTEÚDO PARA GOOGLE */}
+      <section className="sr-only">
+        <h1>Campeonato Brasileiro — jogos ao vivo e tabela</h1>
+
+        <p>
+          Acompanhe o Campeonato Brasileiro com jogos ao vivo, tabela
+          atualizada, classificação, artilharia e agenda completa das
+          partidas.
+        </p>
+
+        <p>
+          Veja resultados em tempo real, próximos confrontos e
+          estatísticas detalhadas dos principais clubes do Brasil.
+        </p>
+      </section>
+
+      {/* SITE REAL */}
+      <BrasileiroClient />
     </Background>
   );
 }
