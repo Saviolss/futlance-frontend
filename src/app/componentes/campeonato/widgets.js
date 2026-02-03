@@ -1,7 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import Image from "next/image.js";
 import Link from "next/link.js";
-import Brasileirao from '../../../../public/img/bra.png';
 
 export const CampeonatoBrasileiro = () => {
   const { t } = useTranslation();
