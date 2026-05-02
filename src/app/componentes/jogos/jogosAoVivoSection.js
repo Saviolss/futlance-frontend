@@ -6,7 +6,7 @@ export function JogosAoVivoSection({ titulo, jogos = [] }) {
   if (!jogos.length) return null
 
   return (
-    <section className="w-full mx-auto px-6 md:w-3/4">
+    <section id="aovivo" className="w-full mx-auto px-6 md:w-3/4">
       {titulo && (
         <h2 className="text-3xl font-light text-center mt-10 mb-5 md:text-5xl">
           {titulo}

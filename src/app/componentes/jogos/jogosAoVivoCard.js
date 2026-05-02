@@ -20,13 +20,13 @@ export function JogoAoVivoCard({ jogo }) {
     <div className="
       relative w-full max-w-[320px]
       rounded-xl overflow-hidden
-      bg-gradient-to-br from-[#0b0f1a] via-[#0f172a] to-[#020617]
+      bg-linear-to-br from-[#0b0f1a] via-[#0f172a] to-[#020617]
       border border-orange-400/30
       shadow-[0_0_25px_rgba(255,165,0,0.15)]
       backdrop-blur-md
       text-white
     ">
-      <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-transparent via-orange-400 to-transparent" />
+      <div className="absolute inset-x-0 top-0 h-0.5 bg-linear-to-r from-transparent via-orange-400 to-transparent" />
 
       <div className="flex flex-col items-center px-6 py-6 gap-4">
 
@@ -66,10 +66,12 @@ export function JogoAoVivoCard({ jogo }) {
             </div>
 
             {/* 👇 Penalti */}
-            <div className="flex gap-1 text-xs text-yellow-400 mt-1">
-              <span>{t("penaltis")}</span>
-              <span>({penalti.mandante} x {penalti.visitante})</span>
-            </div>
+            {penalti && (
+              <div className="flex gap-1 text-xs text-yellow-400 mt-1">
+                <span>{t("penaltis")}</span>
+                <span>({penalti.mandante} x {penalti.visitante})</span>
+              </div>
+            )}
           </div>
 
           <Time time={visitante} />

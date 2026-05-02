@@ -7,7 +7,6 @@ import WidgetsCampeonato from "../componentes/campeonato/widgets"
 import Footer from "../componentes/footer/footer"
 
 export default function HomeRenderer({ widgets = [] }) {
-  console.log("Widgets recebidos do back:", widgets)
   return (
     <>
       {/* 🔹 CONTEÚDO DINÂMICO (vem do back) */}
