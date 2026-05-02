@@ -1,28 +1,24 @@
-// app/page.js
 import { Header } from "./componentes/cabeçalho/header";
-import { Home } from "./home/home";
+import Background from "./home/style";
+import HomePage from "./home/home";
 
 
 export default function Page() {
   return (
     <>
-      <Header />
-      {/* CONTEÚDO PARA GOOGLE (não interfere no layout) */}
-      <section className="sr-only">
-        <h1>Futlance — Futebol ao vivo e campeonatos</h1>
-        <p>
-          Futlance é uma plataforma de futebol que reúne jogos ao vivo,
-          agenda de partidas, tabelas de campeonatos e informações
-          atualizadas para torcedores.
-        </p>
-        <p>
-          O site oferece dados organizados sobre competições nacionais
-          e internacionais, facilitando o acompanhamento em tempo real.
-        </p>
-      </section>
-
-      {/* SITE REAL */}
-      <Home />
+      <Background>
+        <Header />
+        <section className="max-w-5xl mx-auto px-6 mt-5 text-xs flex flex-col items-center text-white gap-2">
+          <h1 className="text-base font-medium justify-center text-white">
+            Jogos em tempo real e agenda de futebol
+          </h1>
+          <p>
+            Acompanhe partidas ao vivo, placares atualizados
+            e a agenda completa dos jogos de hoje.
+          </p>
+        </section>
+        <HomePage />
+      </Background>
     </>
   );
 }

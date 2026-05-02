@@ -1,27 +1,24 @@
-import Background from "@/app/home/style.js";
-import PaulistaClient from "./paulistaClient.js";
-
-export default function Paulista() {
+import Background from "@/app/home/style"
+import { HeaderCampeonato } from "@/app/componentes/cabeçalho/header"
+import CampeonatoClient from "../client"
+import Footer from "@/app/componentes/footer/footer"
+export default function CampeonatoPaulista() {
   return (
     <Background>
-      {/* CONTEÚDO PARA GOOGLE */}
-      <section className="sr-only">
-        <h1>Campeonato Paulista — jogos ao vivo e tabela</h1>
+      <HeaderCampeonato />
 
+      <section className="max-w-5xl mx-auto px-6 mt-5 text-xs text-white text-center">
+        <h1 className="text-base font-medium">
+          Campeonato Paulista
+        </h1>
         <p>
-          Acompanhe o Campeonato Paulista com jogos ao vivo, tabela
-          atualizada, classificação, artilharia e agenda completa das
-          partidas.
-        </p>
-
-        <p>
-          Veja resultados em tempo real, próximos confrontos e
-          estatísticas detalhadas dos principais clubes de São Paulo.
+          Acompanhe tabela, jogos, agenda e artilheiros.
         </p>
       </section>
 
-      {/* SITE REAL */}
-      <PaulistaClient />
+      {/* 👇 CLIENT COMPONENT */}
+      <CampeonatoClient endpoint="/campeonatos/paulista" />
+      <Footer />
     </Background>
-  );
-} 
+  )
+}

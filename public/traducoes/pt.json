@@ -1,8 +1,12 @@
 {
     "traduzir": "Traduzir",
     "inicio": "Início",
+    "hoje": "Hoje",
     "aovivo": "Ao vivo",
+    "penaltis": "Penaltis",
+    "finalizado": "Finalizado", 
     "agenda": "Agenda",
+    "agendavazia": "Nenhuma partida futura encontrada.",
     "campeonatos": "Campeonatos",
     "bemvindo": "Bem-vindo",
     "aovivotitulo": "Ao vivo",
