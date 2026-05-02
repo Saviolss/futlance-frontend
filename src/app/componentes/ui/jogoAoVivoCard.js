@@ -1,4 +1,8 @@
+'use client';
+import { useTranslation } from "react-i18next";
+
 export function JogoAoVivoCard({ jogo }) {
+  const { t } = useTranslation();
   const {
     campeonato,
     time_mandante,
@@ -42,7 +46,7 @@ export function JogoAoVivoCard({ jogo }) {
                 : "text-red-500"
               }`}
           >
-            {status === "finalizado" ? "Finalizado" : "Ao vivo"}
+            {status === "finalizado" ? t("finalizado") : t("aovivo")}
           </span>
         </span>
 

@@ -1,27 +1,10 @@
-'use client';
+import HomeClient from "./client"
+import { api } from "@/app/servidor/api"
 
-import { useTranslation } from "react-i18next";
-import { AgendaCompleta } from "../componentes/agenda/widget.js";
-import WidgetsCampeonato from "../componentes/campeonato/widgets.js";
-import Footer from "../componentes/footer/footer.js";
-import { WidgetAoVivo } from "../componentes/jogos/widget.js";
-import Background from "./style.js";
+export default async function HomePage() {
+  const res = await api.get("/home")
+  const data = res.data
+  console.log("Dados recebidos do back:", data)
 
-export function Home() {
-  const { t } = useTranslation();
-  return (
-    <main >
-      <Background >
-        <WidgetAoVivo />
-        <AgendaCompleta />
-        <section id="campeonatos" className="w-full md:w-3/4  mx-auto flex-wrap items-center justify-center px-6 ">
-          <h1 className="text-3xl font-light text-center mt-10 mb-5 md:text-5xl">{t('campeonatos')}</h1>
-          <div className="md:flex-wrap md:flex gap-3 md:gap-6">
-            <WidgetsCampeonato />
-          </div>
-        </section>
-        <Footer />
-      </Background>
-    </main>
-  );
+  return <HomeClient widgets={res.data.widgets} />
 }

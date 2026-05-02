@@ -1,27 +1,24 @@
-import Background from "@/app/home/style.js";
-import BrasileiroClient from "./brasileiroClient.js";
-
-export default function Brasileiro() {
+import Background from "@/app/home/style"
+import { HeaderCampeonato } from "@/app/componentes/cabeçalho/header"
+import CampeonatoClient from "../client"
+import Footer from "@/app/componentes/footer/footer"
+export default function CampeonatoBrasileiro() {
   return (
     <Background>
-      {/* CONTEÚDO PARA GOOGLE */}
-      <section className="sr-only">
-        <h1>Campeonato Brasileiro — jogos ao vivo e tabela</h1>
+      <HeaderCampeonato />
 
+      <section className="max-w-5xl mx-auto px-6 mt-5 text-xs text-white text-center">
+        <h1 className="text-base font-medium">
+          Campeonato Brasileiro Série A
+        </h1>
         <p>
-          Acompanhe o Campeonato Brasileiro com jogos ao vivo, tabela
-          atualizada, classificação, artilharia e agenda completa das
-          partidas.
-        </p>
-
-        <p>
-          Veja resultados em tempo real, próximos confrontos e
-          estatísticas detalhadas dos principais clubes do Brasil.
+          Acompanhe tabela, jogos, agenda e artilheiros.
         </p>
       </section>
 
-      {/* SITE REAL */}
-      <BrasileiroClient />
+      {/* 👇 CLIENT COMPONENT */}
+      <CampeonatoClient endpoint="/campeonatos/brasileiro" />
+      <Footer />
     </Background>
-  );
+  )
 }

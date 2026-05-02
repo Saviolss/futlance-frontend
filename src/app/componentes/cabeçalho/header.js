@@ -16,7 +16,7 @@ export  function Header() {
 	};
 	return (
 		<>
-		<header className="w-full flex flex-col bg-[#010056] sm:py-0.5 md:py-1 shadow-md px-1.5">
+		<header className="w-full flex flex-col bg-[#000] sm:py-0.5 md:py-1 shadow-md px-1.5  shadow-orange-400">
 			<nav className="max-w-7xl mx-auto py-0">
 				<Image src={Logo} alt="Logo Futlance" className="mx-auto py-1.5 h-20 w-65 md:h-25 md:w-70 md:py-2"/>
 				<ul className="flex justify-center flex-wrap gap-5 mt-0 md:mt-1 text-white font-normal">
@@ -75,7 +75,7 @@ export  function Header() {
           fixed
           bottom-5 right-5
           z-50
-					bg-blue-500
+					bg-orange-400
 					text-white
           p-3
           rounded-full
@@ -107,7 +107,7 @@ export function HeaderCampeonato() {
 
 	return (
 		<>
-		<header className="w-full flex flex-col bg-[#010056] sm:py-0.5 md:py-1 shadow-md px-1.5">
+		<header className="w-full flex flex-col bg-[#000] sm:py-0.5 md:py-1 shadow-md px-1.5 shadow-orange-400">
 			<nav className="max-w-7xl mx-auto py-0">
 				<Image src={Logo} alt="Logo Futlance" className="mx-auto py-1.5 h-20 w-65 md:h-25 md:w-70 md:py-2" />
 				<ul className="flex justify-center flex-wrap gap-5 mt-0 md:mt-1 text-white font-normal">
@@ -154,7 +154,7 @@ export function HeaderCampeonato() {
           fixed
           bottom-5 right-5
           z-50
-					bg-blue-500
+					bg-orange-400
 					text-white
           p-3
           rounded-full

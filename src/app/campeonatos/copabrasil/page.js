@@ -2,14 +2,14 @@ import Background from "@/app/home/style"
 import { HeaderCampeonato } from "@/app/componentes/cabeçalho/header"
 import CampeonatoClient from "../client"
 import Footer from "@/app/componentes/footer/footer"
-export default function CampeonatoCarioca() {
+export default function CampeonatoCopaBrasil() {
   return (
     <Background>
       <HeaderCampeonato />
 
       <section className="max-w-5xl mx-auto px-6 mt-5 text-xs text-white text-center">
         <h1 className="text-base font-medium">
-          Campeonato Carioca
+          Campeonato Copa Brasil
         </h1>
         <p>
           Acompanhe tabela, jogos, agenda e artilheiros.
@@ -17,7 +17,7 @@ export default function CampeonatoCarioca() {
       </section>
 
       {/* 👇 CLIENT COMPONENT */}
-      <CampeonatoClient endpoint="/campeonatos/carioca" />
+      <CampeonatoClient endpoint="/campeonatos/copabrasil" />
       <Footer />
     </Background>
   )
