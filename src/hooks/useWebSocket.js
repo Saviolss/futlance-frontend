@@ -10,24 +10,19 @@ export function useWebSocket(onMessage) {
       ws.current = new WebSocket(api.wsUrl)
 
       ws.current.onopen = () => {
+      }
+
+      ws.current.onopen = () => {
         console.log("✅ WebSocket conectado")
       }
 
       ws.current.onmessage = (event) => {
-        try {
-          const data = JSON.parse(event.data)
-          onMessage(data)
-        } catch (erro) {
-          console.error("❌ Erro ao parsear WebSocket:", erro)
-        }
-      }
-
-      ws.current.onerror = (erro) => {
-        console.error("❌ WebSocket erro:", erro)
+        const data = JSON.parse(event.data)
+        console.log("📡 Evento recebido:", data)
+        onMessage(data)
       }
 
       ws.current.onclose = () => {
-        console.log("⚠️ WebSocket fechado. Reconectando...")
         retry.current = setTimeout(conectar, 3000)
       }
     }

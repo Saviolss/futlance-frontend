@@ -42,7 +42,6 @@ export default function AgendaWidget({
         const res = await api.get(endpoint)
         setLista(res.data?.[0]?.dados || [])
       } catch (err) {
-        console.error("Erro ao carregar agenda:", err)
         setLista([])
       } finally {
         setLoading(false)

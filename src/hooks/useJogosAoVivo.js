@@ -12,7 +12,6 @@ export function useJogosAoVivo(endpoint) {
         const { data } = await axios.get(endpoint)
         setJogos(data)
       } catch (e) {
-        console.error("Erro ao buscar jogos ao vivo", e)
       } finally {
         setLoading(false)
       }

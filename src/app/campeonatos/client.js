@@ -16,14 +16,12 @@ export default function CampeonatoClient({ endpoint }) {
 
         const data = res.data
 
-        console.log("Resposta da API:", data)
 
         setFase(data.fase)
         setDados(data.dados)
         setWidgets(data.widgets || [])
 
       } catch (err) {
-        console.error("Erro ao carregar campeonato:", err)
       }
     }
 

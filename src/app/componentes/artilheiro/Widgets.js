@@ -47,7 +47,6 @@ export default function ArtilheirosWidget({
         setArtilheiros(prepararLista(lista))
 
       } catch (err) {
-        console.error("Erro ao carregar artilheiros:", err)
         setArtilheiros([])
       } finally {
         setLoading(false)

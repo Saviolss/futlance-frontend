@@ -4,7 +4,6 @@ import { api } from "@/app/servidor/api"
 export default async function HomePage() {
   const res = await api.get("/home")
   const data = res.data
-  console.log("Dados recebidos do back:", data)
 
   return <HomeClient widgets={res.data.widgets} />
 }

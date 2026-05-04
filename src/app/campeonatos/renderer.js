@@ -9,7 +9,6 @@ import EncerradosWidget from "@/app/componentes/jogos/widgetEncerrados"
 import ArtilheirosWidget from "../componentes/artilheiro/Widgets"
 
 export default function CampeonatoRenderer({ fase, dados, widgets = [] }) {
-  console.log("ARTILHEIROS FRONT:", dados)
 
   return (
     <>
@@ -22,7 +21,6 @@ export default function CampeonatoRenderer({ fase, dados, widgets = [] }) {
       {/* WIDGETS */}
 
       {widgets.map((widget, index) => {
-console.log(widget)
         switch (widget.tipo) {
 
           case "ao-vivo":
