@@ -1,21 +1,60 @@
 "use client"
 
+import { useEffect, useState } from "react"
+
 import WidgetAoVivo from "../componentes/jogos/widget"
 import EncerradosWidget from "../componentes/jogos/widgetEncerrados"
 import AgendaWidget from "../componentes/agenda/AgendaWidget"
 import WidgetsCampeonato from "../componentes/campeonato/widgets"
 import Footer from "../componentes/footer/footer"
 
+import { useWebSocket } from "../../hooks/useWebSocket"
+
 export default function HomeRenderer({ widgets = [] }) {
+
+  const [widgetsState, setWidgetsState] = useState(widgets)
+
+  /* ======================================================
+     🔌 WEBSOCKET
+  ====================================================== */
+
+  useWebSocket((evento) => {
+
+    console.log("📡 evento websocket:", evento)
+
+    if (evento.tipo === "ao-vivo") {
+
+      setWidgetsState((anterior) => {
+
+        const resto = anterior.filter(
+          w => w.tipo !== "ao-vivo"
+        )
+
+        if (!evento.dados?.length) {
+          return resto
+        }
+
+        return [
+          {
+            tipo: "ao-vivo",
+            dados: evento.dados
+          },
+          ...resto
+        ]
+      })
+    }
+  })
+
   return (
     <>
-      {/* 🔹 CONTEÚDO DINÂMICO (vem do back) */}
-      {widgets.map((widget, index) => {
+      {widgetsState.map((widget, index) => {
+
         switch (widget.tipo) {
+
           case "ao-vivo":
             return (
               <WidgetAoVivo
-                key={index}
+                key={`ao-vivo-${widget.dados.length}`}
                 jogos={widget.dados}
               />
             )
@@ -23,7 +62,7 @@ export default function HomeRenderer({ widgets = [] }) {
           case "agenda":
             return (
               <AgendaWidget
-                key={index}
+                key={`agenda-${index}`}
                 jogos={widget.dados}
               />
             )
@@ -31,7 +70,7 @@ export default function HomeRenderer({ widgets = [] }) {
           case "encerrados":
             return (
               <EncerradosWidget
-                key={index}
+                key={`encerrados-${index}`}
                 jogos={widget.dados}
               />
             )
@@ -41,10 +80,8 @@ export default function HomeRenderer({ widgets = [] }) {
         }
       })}
 
-      {/* 🔹 BLOCO FIXO: CAMPEONATOS */}
       <WidgetsCampeonato />
 
-      {/* 🔹 FOOTER SEMPRE PRESENTE */}
       <Footer />
     </>
   )
