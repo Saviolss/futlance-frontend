@@ -10,7 +10,9 @@ import AoVivoWidget from "@/app/componentes/jogos/widget"
 import EncerradosWidget from "@/app/componentes/jogos/widgetEncerrados"
 import ArtilheirosWidget from "../componentes/artilheiro/Widgets"
 
-import { useWebSocket } from "../../hooks/useWebSocket"
+import {
+  useEventoWebSocket
+} from "../../context/WebSocketProvider"
 
 export default function CampeonatoRenderer({
   fase,
@@ -18,29 +20,24 @@ export default function CampeonatoRenderer({
   widgets = []
 }) {
 
-  const [widgetsState, setWidgetsState] = useState(widgets)
-  const [mounted, setMounted] = useState(false)
+  const evento = useEventoWebSocket()
 
-  /* ======================================================
-     HIDRATAÇÃO
-  ====================================================== */
+  const [widgetsState, setWidgetsState] =
+    useState(widgets)
 
   useEffect(() => {
-    setMounted(true)
     setWidgetsState(widgets)
   }, [widgets])
 
-  /* ======================================================
+  /* ============================
      WEBSOCKET
-  ====================================================== */
+  ============================ */
 
-  useWebSocket((evento) => {
+  useEffect(() => {
 
-    console.log("📡 campeonato websocket:", evento)
+    if (!evento) return
 
-    /* ============================
-       🔴 AO VIVO
-    ============================ */
+    /* 🔴 AO VIVO */
 
     if (evento.tipo === "ao-vivo") {
 
@@ -64,9 +61,7 @@ export default function CampeonatoRenderer({
       })
     }
 
-    /* ============================
-       🏁 ENCERRADOS
-    ============================ */
+    /* 🏁 ENCERRADOS */
 
     if (evento.tipo === "encerrados") {
 
@@ -85,27 +80,18 @@ export default function CampeonatoRenderer({
         ]
       })
     }
-  })
 
-  if (!mounted) {
-    return null
-  }
+  }, [evento])
 
   return (
     <>
-      {/* FASE DO CAMPEONATO */}
-
-      {fase === "tabela" && (
+      {fase === "tabela" &&
         <RenderTabela dados={dados} />
-      )}
+      }
 
-      {fase === "grupos" && (
+      {fase === "grupos" &&
         <RenderGrupos dados={dados} />
-      )}
-
-      {fase === "mata-mata" && null}
-
-      {/* WIDGETS */}
+      }
 
       {widgetsState.map((widget) => {
 

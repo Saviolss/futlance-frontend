@@ -8,33 +8,34 @@ import AgendaWidget from "../componentes/agenda/AgendaWidget"
 import WidgetsCampeonato from "../componentes/campeonato/widgets"
 import Footer from "../componentes/footer/footer"
 
-import { useWebSocket } from "../../hooks/useWebSocket"
+import {
+  useEventoWebSocket
+} from "../../context/WebSocketProvider"
 
-export default function HomeRenderer({ widgets = [] }) {
+export default function HomeRenderer({
+  widgets = []
+}) {
 
-  const [widgetsState, setWidgetsState] = useState(widgets)
-  const [mounted, setMounted] = useState(false)
+  const evento = useEventoWebSocket()
 
-  /* ======================================================
-     HIDRATAÇÃO SEGURA
-  ====================================================== */
+  const [widgetsState, setWidgetsState] =
+    useState(widgets)
 
   useEffect(() => {
-    setMounted(true)
     setWidgetsState(widgets)
   }, [widgets])
 
-  /* ======================================================
+  /* ============================
      WEBSOCKET
-  ====================================================== */
+  ============================ */
 
-  useWebSocket((evento) => {
+  useEffect(() => {
+
+    if (!evento) return
 
     console.log("📡 evento websocket:", evento)
 
-    /* ============================
-       🔴 AO VIVO
-    ============================ */
+    /* 🔴 AO VIVO */
 
     if (evento.tipo === "ao-vivo") {
 
@@ -44,7 +45,6 @@ export default function HomeRenderer({ widgets = [] }) {
           w => w.tipo !== "ao-vivo"
         )
 
-        // sem jogos
         if (!evento.dados?.length) {
           return resto
         }
@@ -59,9 +59,7 @@ export default function HomeRenderer({ widgets = [] }) {
       })
     }
 
-    /* ============================
-       🏁 ENCERRADOS
-    ============================ */
+    /* 🏁 ENCERRADOS */
 
     if (evento.tipo === "encerrados") {
 
@@ -80,12 +78,8 @@ export default function HomeRenderer({ widgets = [] }) {
         ]
       })
     }
-  })
 
-  // 🔥 evita hydration mismatch
-  if (!mounted) {
-    return null
-  }
+  }, [evento])
 
   return (
     <>
