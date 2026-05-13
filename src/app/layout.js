@@ -1,8 +1,7 @@
 import "./globals.css"
 import Script from "next/script"
 
-import { WebSocketProvider } from "@/context/WebSocketProvider"
-
+import { WebSocketProvider } from "@/context/WebSocketContext"
 export const metadata = {
   metadataBase: new URL("https://futlance.com"),
 
