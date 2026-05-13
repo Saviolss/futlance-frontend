@@ -5,20 +5,44 @@ export function useWebSocket(onMessage) {
 
   const ws = useRef(null)
   const retry = useRef(null)
-  const callback = useRef(onMessage)
 
-  // mantém callback atualizado
+  // mantém callback atualizado sem recriar websocket
+  const callback = useRef(onMessage)
   callback.current = onMessage
+
+  // evita reconnect infinito ao desmontar
+  const fechadoManualmente = useRef(false)
 
   useEffect(() => {
 
     function conectar() {
 
+      // evita múltiplas conexões
+      if (
+        ws.current &&
+        (
+          ws.current.readyState === WebSocket.OPEN ||
+          ws.current.readyState === WebSocket.CONNECTING
+        )
+      ) {
+        return
+      }
+
+      console.log("🔄 Conectando websocket...")
+
       ws.current = new WebSocket(wsUrl)
+
+      /* ============================
+         CONECTADO
+      ============================ */
 
       ws.current.onopen = () => {
         console.log("✅ WebSocket conectado")
       }
+
+      /* ============================
+         EVENTOS
+      ============================ */
 
       ws.current.onmessage = (event) => {
 
@@ -28,30 +52,62 @@ export function useWebSocket(onMessage) {
 
           console.log("📡 Evento recebido:", data)
 
-          callback.current(data)
+          callback.current?.(data)
 
         } catch (e) {
-          console.error("❌ erro websocket:", e)
+
+          console.error(
+            "❌ erro ao processar websocket:",
+            e
+          )
         }
       }
 
-      ws.current.onclose = () => {
+      /* ============================
+         ERRO
+      ============================ */
 
-        console.log("🔌 WebSocket desconectado")
+      ws.current.onerror = (e) => {
 
+        console.log("⚠️ erro websocket")
+
+        // fecha conexão inválida
+        ws.current?.close()
+      }
+
+      /* ============================
+         DESCONECTOU
+      ============================ */
+
+      ws.current.onclose = (event) => {
+
+        console.log(
+          `🔌 WebSocket desconectado (${event.code})`
+        )
+
+        ws.current = null
+
+        // evita reconnect após desmontar componente
+        if (fechadoManualmente.current) {
+          return
+        }
+
+        // tenta reconectar
         retry.current = setTimeout(() => {
           conectar()
         }, 3000)
-      }
-
-      ws.current.onerror = () => {
-        console.log("⚠️ websocket reconectando...")
       }
     }
 
     conectar()
 
+    /* ============================
+       CLEANUP
+    ============================ */
+
     return () => {
+
+      fechadoManualmente.current = true
 
       clearTimeout(retry.current)
 
@@ -60,5 +116,5 @@ export function useWebSocket(onMessage) {
       }
     }
 
-  }, []) // 🔥 MUITO IMPORTANTE
+  }, [])
 }

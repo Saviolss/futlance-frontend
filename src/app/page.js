@@ -2,6 +2,7 @@ import { Header } from "./componentes/cabeçalho/header";
 import Background from "./home/style";
 import HomePage from "./home/home";
 
+export const dynamic = "force-dynamic";
 
 export default function Page() {
   return (
