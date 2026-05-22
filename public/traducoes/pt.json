@@ -1,6 +1,7 @@
 {
     "traduzir": "Traduzir",
     "inicio": "Início",
+    "noticias": "Notícias",
     "hoje": "Hoje",
     "aovivo": "Ao vivo",
     "penaltis": "Penaltis",
@@ -8,6 +9,7 @@
     "agenda": "Agenda",
     "agendavazia": "Nenhuma partida futura encontrada.",
     "campeonatos": "Campeonatos",
+    "copaMundo": "Copa do Mundo",
     "bemvindo": "Bem-vindo",
     "aovivotitulo": "Ao vivo",
     "agendadejogos": "Agenda de jogos próximos",
@@ -23,5 +25,16 @@
     "libertadoreszona": "Libertadores",
     "prelibertadoreszona": "Pre-Libertadores",
     "sulamericanazona": "Sul-Americana",
-    "faleconosco": "Fale Conosco"
+    "noticiatitulo": "Últimas Notícias",
+    "noticialink": "Ler matéria ↗",
+    "faleconosco": "Fale Conosco",
+    "privacidade": "Privacidade",
+    "cookies": "Cookies",
+    "politicaPrivacidade": "Política de Privacidade",
+    "privacidadeTexto": "O Futlance utiliza tecnologias como cookies e ferramentas de análise para melhorar a experiência dos usuários. Informações de navegação podem ser coletadas para métricas,desempenho e personalização de conteúdo.",
+    "cookiesTexto": "O Futlance utiliza cookies para melhorar a navegação, analisar o tráfego e oferecer funcionalidades essenciais. Ao continuar utilizando o site, você concorda com o uso dessas tecnologias.",
+    "cookiesInfo": "Este site utiliza cookies para melhorar a experiência do usuário.",
+    "saibaMais": "Saiba mais",
+    "aceitar": "Aceitar",   
+    "fechar": "Fechar"
 }

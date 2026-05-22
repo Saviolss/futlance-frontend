@@ -22,10 +22,14 @@ export  function Header() {
 				<ul className="flex justify-center flex-wrap gap-5 mt-0 md:mt-1 text-white font-normal">
 					{/* Início */}
 					<li className="flex flex-col items-center">
-						<Link href="/" className=" flex flex-col items-center md:hover:border-b-2 cursor-pointer" alt="botão de navegar para inicio">
-							<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mb-1"><path d="M3 9l9-7 9 7"/><path d="M9 22V12h6v10"/></svg>
-							{t('inicio')}
-						</Link>
+						<Link href="/noticia" className="flex flex-col items-center md:hover:border-b-2 cursor-pointer" alt="botão de navegar para inicio">
+							<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mb-1">
+								<path d="M4 4h16v16H4z"/>
+								<line x1="4" y1="8" x2="20" y2="8"/>
+								<line x1="12" y1="4" x2="12" y2="20"/>
+							</svg>
+							{t('noticias')}
+						</Link> 
 					</li>
 					{/* Ao vivo */}
 					<li className="flex flex-col items-center">
@@ -149,6 +153,57 @@ export function HeaderCampeonato() {
 				</ul>
 			</nav>
 		</header>
+			<button
+				className="
+          fixed
+          bottom-5 right-5
+          z-50
+					bg-orange-400
+					text-white
+          p-3
+          rounded-full
+          shadow-xl
+          transition
+        "
+				onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+				aria-label="Voltar ao topo"
+			>
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					width="22"
+					height="22"
+					fill="none"
+					stroke="currentColor"
+					strokeWidth="2"
+					strokeLinecap="round"
+					strokeLinejoin="round"
+				>
+					<path d="M12 19V5M5 12l7-7 7 7" />
+				</svg>
+			</button>
+		</>
+	);
+}
+
+export function HeaderNoticias() {
+	const { t } = useTranslation();
+
+	return (
+		<>
+			<header className="w-full flex flex-col bg-[#000] sm:py-0.5 md:py-1 shadow-md px-1.5 shadow-orange-400">
+				<nav className="max-w-7xl mx-auto py-0">
+					<Image src={Logo} alt="Logo Futlance" className="mx-auto py-1.5 h-20 w-65 md:h-25 md:w-70 md:py-2" />
+					<ul className="flex justify-center flex-wrap gap-5 mt-0 md:mt-1 text-white font-normal">
+						{/* Início */}
+						<li className="flex flex-col items-center">
+							<Link href="/" className=" flex flex-col items-center md:hover:border-b-2 cursor-pointer" alt="botão de navegar para inicio">
+								<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mb-1"><path d="M3 9l9-7 9 7" /><path d="M9 22V12h6v10" /></svg>
+								{t('inicio')}
+							</Link>
+						</li>
+					</ul>
+				</nav>
+			</header>
 			<button
 				className="
           fixed

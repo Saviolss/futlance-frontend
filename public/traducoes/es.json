@@ -1,6 +1,7 @@
 {
     "traduzir": "Traducir",
     "inicio": "Inicio",
+    "noticias": "Noticias",
     "aovivo": "En vivo",
     "hoje": "Hoy",
     "penaltis": "Penales",
@@ -8,6 +9,7 @@
     "agenda": "Agenda",
     "agendavazia": "Ningún partido futuro encontrado.",
     "campeonatos": "Campeonatos",
+    "copaMundo": "Copa del Mundo",
     "bemvindo": "Bienvenido",
     "aovivotitulo": "En vivo",
     "agendadejogos": "Calendario de partidos próximos",
@@ -23,5 +25,16 @@
     "jogador": "Jugador",
     "clube": "Club",
     "grupo": "Grupo",
-    "faleconosco": "Contáctenos"
+    "noticiatitulo": "Últimas Noticias",
+    "noticialink": "Leer artículo ↗",
+    "faleconosco": "Contáctenos",
+    "privacidade": "Privacidad",
+    "cookies": "Cookies",
+    "politicaPrivacidade": "Política de Privacidad",
+    "privacidadeTexto": "Futlance utiliza tecnologías como cookies y herramientas de análisis para mejorar la experiencia de los usuarios. Se pueden recopilar datos de navegación para métricas, rendimiento y personalización de contenido.",
+    "cookiesTexto": "Futlance utiliza cookies para mejorar la navegación, analizar el tráfico y ofrecer funcionalidades esenciales. Al continuar utilizando el sitio, aceptas el uso de estas tecnologías.",
+    "cookiesInfo": "Este sitio utiliza cookies para mejorar la experiencia del usuario.",
+    "saibaMais": "Saber más",
+    "aceitar": "Aceptar",
+    "fechar": "Cerrar"
 }

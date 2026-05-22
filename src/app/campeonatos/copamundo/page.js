@@ -2,22 +2,22 @@ import Background from "@/app/home/style"
 import { HeaderCampeonato } from "@/app/componentes/cabeçalho/header"
 import CampeonatoClient from "../client"
 import Footer from "@/app/componentes/footer/footer"
-export default function CampeonatoBrasileiro() {
+export default function CampeonatoCopaMundo() {
   return (
     <Background>
       <HeaderCampeonato />
 
       <section className="max-w-5xl mx-auto px-6 mt-5 text-xs text-white text-center">
         <h1 className="text-base font-medium">
-          Campeonato Brasileiro Série A
+          Campeonato Copa Mundo
         </h1>
         <p>
-          Acompanhe tabela, jogos, agenda e artilheiros.
+          Acompanhe grupos, jogos, agenda e artilheiros.
         </p>
       </section>
 
       {/* 👇 CLIENT COMPONENT */}
-      <CampeonatoClient endpoint="/campeonatos/brasileiro" />
+      <CampeonatoClient endpoint="/campeonatos/copamundo" />
 
       <section
         className="
@@ -39,11 +39,7 @@ export default function CampeonatoBrasileiro() {
   "
       >
 
-        {/* LINHA TOPO */}
-
         <div className="w-full h-px mb-6 bg-linear-to-r from-transparent via-orange-400/50 to-transparent" />
-
-        {/* TÍTULO */}
 
         <h2
           className="
@@ -55,16 +51,13 @@ export default function CampeonatoBrasileiro() {
       leading-tight
     "
         >
-          Como funciona o Campeonato Brasileiro Série A
+          Como funciona a Copa do Mundo
         </h2>
-
-        {/* TEXTO */}
 
         <div
           className="
       space-y-5
-      text-md
-      font-medium
+      text-sm
       md:text-base
       leading-7
       md:leading-8
@@ -73,31 +66,30 @@ export default function CampeonatoBrasileiro() {
         >
 
           <p>
-            O Campeonato Brasileiro Série A é a principal competição de futebol do Brasil.
-            O torneio reúne 20 clubes que disputam partidas em sistema de pontos corridos
-            ao longo da temporada.
+            A Copa do Mundo é a principal competição de seleções do futebol mundial.
+            O torneio é organizado pela FIFA e reúne as melhores seleções de diferentes países.
           </p>
 
           <p>
-            Cada equipe enfrenta os outros clubes em jogos de ida e volta.
-            Ao final das 38 rodadas, o time com mais pontos conquistados
-            é declarado campeão brasileiro.
+            As equipes garantem classificação através das eliminatórias continentais,
+            disputadas antes do início da competição.
           </p>
 
           <p>
-            Além da disputa pelo título, os clubes também competem por vagas
-            em torneios internacionais como a Copa Libertadores e a Copa Sul-Americana.
+            A Copa do Mundo é dividida em fase de grupos e mata-mata.
+            Na primeira fase, as seleções disputam partidas dentro dos grupos
+            para tentar avançar às oitavas de final.
           </p>
 
           <p>
-            Os quatro últimos colocados na tabela de classificação são rebaixados
-            para a Série B do Campeonato Brasileiro da temporada seguinte.
+            Nas fases eliminatórias, os confrontos acontecem em jogo único
+            até a definição das seleções finalistas e do campeão mundial.
           </p>
 
           <p>
             No <span className="text-orange-400 font-semibold">Futlance</span>
-            {" "}você acompanha jogos ao vivo, classificação atualizada,
-            artilharia, agenda de partidas e resultados em tempo real do Brasileirão.
+            {" "}você acompanha jogos ao vivo, tabela completa,
+            classificação dos grupos, agenda das partidas e estatísticas da Copa do Mundo.
           </p>
 
         </div>

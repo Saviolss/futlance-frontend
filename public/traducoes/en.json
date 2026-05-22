@@ -1,6 +1,7 @@
 {
     "traduzir": "Translate",
     "inicio": "Home",
+    "noticias": "News",
     "aovivo": "Live",
     "hoje": "Today",
     "penaltis": "Penalties",
@@ -8,6 +9,7 @@
     "agendavazia": "No upcoming matches found.",
     "finalizado": "Finished",
     "campeonatos": "Championships",
+    "copaMundo": "World Cup",
     "bemvindo": "Welcome",
     "aovivotitulo": "Live",
     "agendadejogos": "Match Schedule Upcoming",
@@ -23,5 +25,16 @@
     "jogador": "Player",
     "clube": "Club",
     "grupo": "Group",
-    "faleconosco": "Contact"
+    "noticiatitulo": "Latest News",
+    "noticialink": "Read article ↗",
+    "faleconosco": "Contact",
+    "privacidade": "Privacy",
+    "cookies": "Cookies",
+    "politicaPrivacidade": "Privacy Policy",
+    "privacidadeTexto": "Futlance uses technologies like cookies and analytics tools to enhance user experience. Browsing information may be collected for metrics, performance, and content personalization.",
+    "cookiesTexto": "Futlance uses cookies to improve navigation, analyze traffic, and provide essential functionalities. By continuing to use the site, you agree to the use of these technologies.",
+    "cookiesInfo": "This site uses cookies to enhance user experience.",
+    "saibaMais": "Learn more",
+    "aceitar": "Accept",
+    "fechar": "Close"
 }
