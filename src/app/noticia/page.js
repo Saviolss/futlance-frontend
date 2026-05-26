@@ -4,6 +4,8 @@ import Background from "@/app/home/style"
 import Footer from "@/app/componentes/footer/footer"
 import { api } from "@/app/servidor/api"
 
+export const dynamic = "force-dynamic" 
+
 async function carregarNoticias() {
 
   try {
