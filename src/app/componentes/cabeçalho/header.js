@@ -31,13 +31,6 @@ export  function Header() {
 							{t('noticias')}
 						</Link> 
 					</li>
-					{/* Ao vivo */}
-					<li className="flex flex-col items-center">
-						<a href="#aovivo" className="flex flex-col items-center md:hover:border-b-2 cursor-pointer" alt="botão de navegar para ao vivo">
-							<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mb-1"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/></svg>
-							{t('aovivo')}
-						</a>
-					</li>
 					{/* Agenda */}
 					<li className="flex flex-col items-center">
 						<a href="#agenda" className="flex flex-col items-center md:hover:border-b-2 cursor-pointer" alt="botão de navegar para agenda">
