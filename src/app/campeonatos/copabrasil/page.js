@@ -2,6 +2,18 @@ import Background from "@/app/home/style"
 import { HeaderCampeonato } from "@/app/componentes/cabeçalho/header"
 import CampeonatoClient from "../client"
 import Footer from "@/app/componentes/footer/footer"
+
+export const metadata = {
+  title: "Copa do Brasil - Futlance",
+  description: "Acompanhe a tabela, jogos, agenda e artilheiros da Copa do Brasil.",
+  keywords: "copa do brasil, futebol, notícias de futebol, resultados de futebol",
+  openGraph: {
+    title: "Copa do Brasil - Futlance",
+    description: "Acompanhe a tabela, jogos, agenda e artilheiros da Copa do Brasil.",
+    url: "https://www.futlance.com/campeonatos/copabrasil",
+    siteName: "Futlance",
+  }
+}
 export default function CampeonatoCopaBrasil() {
   return (
     <Background>
