@@ -116,7 +116,7 @@ export default function CampeonatoRenderer({
           case "encerrados":
             return (
               <EncerradosWidget
-                key="encerrados"
+                key="finalizado"
                 jogos={widget.dados}
               />
             )

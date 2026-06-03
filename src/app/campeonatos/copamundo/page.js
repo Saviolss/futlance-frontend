@@ -2,6 +2,18 @@ import Background from "@/app/home/style"
 import { HeaderCampeonato } from "@/app/componentes/cabeçalho/header"
 import CampeonatoClient from "../client"
 import Footer from "@/app/componentes/footer/footer"
+
+export const metadata = {
+  title: "Copa do Mundo - Futlance",
+  description: "Acompanhe grupos, jogos, agenda e artilheiros da Copa do Mundo.",
+  keywords: "copa do mundo, futebol, notícias de futebol, resultados de futebol",
+  openGraph: {
+    title: "Copa do Mundo - Futlance",
+    description: "Acompanhe grupos, jogos, agenda e artilheiros da Copa do Mundo.",
+    url: "https://www.futlance.com/campeonatos/copamundo",
+    siteName: "Futlance",
+  }
+}
 export default function CampeonatoCopaMundo() {
   return (
     <Background>

@@ -2,6 +2,20 @@ import Background from "@/app/home/style"
 import { HeaderCampeonato } from "@/app/componentes/cabeçalho/header"
 import CampeonatoClient from "../client"
 import Footer from "@/app/componentes/footer/footer"
+  
+
+export const metadata = {
+  title: "Campeonato Brasileiro Série A - Futlance",
+  description: "Acompanhe a tabela, jogos, agenda e artilheiros do Campeonato Brasileiro Série A.",
+  keywords: "campeonato brasileiro, série a, futebol, notícias de futebol, resultados de futebol",
+  openGraph: {
+    title: "Campeonato Brasileiro Série A - Futlance",
+    description: "Acompanhe a tabela, jogos, agenda e artilheiros do Campeonato Brasileiro Série A.",
+    url: "https://www.futlance.com/campeonatos/brasileiro",
+    siteName: "Futlance",
+  }
+}
+
 export default function CampeonatoBrasileiro() {
   return (
     <Background>
