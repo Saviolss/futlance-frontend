@@ -1,8 +1,20 @@
 {
     "traduzir": "Traduzir",
     "inicio": "Início",
+    "anterior": "Anterior",
+    "estatisticas": "Estatísticas",
+    "jogos": "Jogos",
+    "elenco": "Elenco",
+    "nome": "Nome",
+    "posicao": "Posição",
+    "tecnico": "Técnico",
+    "idademedia": "Idade média",
+    "alturamedia": "Altura média",
+    "camisa10": "Camisa 10",
+    "jogadoresNoPais": "Jogadores no País",
     "noticias": "Notícias",
     "hoje": "Hoje",
+    "buscar": "Buscar seleção",
     "aovivo": "Ao vivo",
     "penaltis": "Penaltis",
     "finalizado": "Finalizado", 
@@ -36,5 +48,6 @@
     "cookiesInfo": "Este site utiliza cookies para melhorar a experiência do usuário.",
     "saibaMais": "Saiba mais",
     "aceitar": "Aceitar",   
-    "fechar": "Fechar"
+    "fechar": "Fechar",
+    "teamSeoDescription": "{{team}} disputa a Copa do Mundo 2026. A seleção possui idade média de {{age}} anos, altura média de {{height}} cm e tem {{player}} como camisa 10."
 }

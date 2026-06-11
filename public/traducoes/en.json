@@ -1,9 +1,21 @@
 {
     "traduzir": "Translate",
     "inicio": "Home",
+    "anterior": "Previous",
+    "estatisticas": "Statistics",
+    "jogos": "Matches",
+    "elenco": "Squad",
+    "nome": "Name",
+    "posicao": "Position",
+    "tecnico": "Coach",
+    "idademedia": "Average Age",
+    "alturamedia": "Average Height",
+    "camisa10": "Jersey 10",
+    "jogadoresNoPais": "Players in the Country",
     "noticias": "News",
     "aovivo": "Live",
     "hoje": "Today",
+    "buscar": "Search Team",
     "penaltis": "Penalties",
     "agenda": "Schedule",
     "agendavazia": "No upcoming matches found.",
@@ -36,5 +48,6 @@
     "cookiesInfo": "This site uses cookies to enhance user experience.",
     "saibaMais": "Learn more",
     "aceitar": "Accept",
-    "fechar": "Close"
+    "fechar": "Close",
+    "teamSeoDescription": "{{team}} competes in the 2026 World Cup. The team has an average age of {{age}} years, an average height of {{height}} cm, and features {{player}} as the number 10."
 }

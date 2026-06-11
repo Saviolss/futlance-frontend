@@ -16,7 +16,7 @@ export  function Header() {
 	};
 	return (
 		<>
-		<header className="w-full flex flex-col bg-[#000] sm:py-0.5 md:py-1 shadow-md px-1.5  shadow-orange-400">
+		<header className="w-full flex flex-col bg-black sm:py-0.5 md:py-1 shadow-md px-1.5  shadow-orange-400">
 			<nav className="max-w-7xl mx-auto py-0">
 				<Image src={Logo} alt="Logo Futlance" className="mx-auto py-1.5 h-20 w-65 md:h-25 md:w-70 md:py-2"/>
 				<ul className="flex justify-center flex-wrap gap-5 mt-0 md:mt-1 text-white font-normal">
@@ -61,6 +61,9 @@ export  function Header() {
 								<button className="px-3 py-1 bg-white text-[#010056] rounded hover:bg-gray-200" onClick={() => handleChangeLanguage('pt')}>PT</button>
 								<button className="px-3 py-1 bg-white text-[#010056] rounded hover:bg-gray-200" onClick={() => handleChangeLanguage('en')}>EN</button>
 								<button className="px-3 py-1 bg-white text-[#010056] rounded hover:bg-gray-200" onClick={() => handleChangeLanguage('es')}>ES</button>
+								<button className="px-3 py-1 bg-white text-[#010056] rounded hover:bg-gray-200" onClick={() => handleChangeLanguage('fr')}>FR</button>
+								<button className="px-3 py-1 bg-white text-[#010056] rounded hover:bg-gray-200" onClick={() => handleChangeLanguage('de')}>DE</button>
+								<button className="px-3 py-1 bg-white text-[#010056] rounded hover:bg-gray-200" onClick={() => handleChangeLanguage('it')}>IT</button>
 							</div>
 						)}
 					</li>
@@ -104,7 +107,7 @@ export function HeaderCampeonato() {
 
 	return (
 		<>
-		<header className="w-full flex flex-col bg-[#000] sm:py-0.5 md:py-1 shadow-md px-1.5 shadow-orange-400">
+		<header className="w-full flex flex-col bg-black sm:py-0.5 md:py-1 shadow-md px-1.5 shadow-orange-400">
 			<nav className="max-w-7xl mx-auto py-0">
 				<Image src={Logo} alt="Logo Futlance" className="mx-auto py-1.5 h-20 w-65 md:h-25 md:w-70 md:py-2" />
 				<ul className="flex justify-center flex-wrap gap-5 mt-0 md:mt-1 text-white font-normal">
@@ -178,12 +181,206 @@ export function HeaderCampeonato() {
 	);
 }
 
+export function HeaderTime() {
+	const { t } = useTranslation();
+
+	return (
+		<>
+			<header className="w-full flex flex-col bg-black sm:py-0.5 md:py-1 shadow-md px-1.5 shadow-orange-400">
+
+				<nav className="max-w-7xl mx-auto py-0">
+
+					<Image
+						src={Logo}
+						alt="Logo Futlance"
+						className="mx-auto py-1.5 h-20 w-65 md:h-25 md:w-70 md:py-2"
+					/>
+
+					<ul className="flex justify-center flex-wrap gap-5 mt-0 md:mt-1 text-white font-normal">
+
+						{/* Início */}
+
+						<li className="flex flex-col items-center">
+
+							<Link
+								href="/campeonatos/copamundo"
+								className="flex flex-col items-center md:hover:border-b-2 cursor-pointer"
+								alt="Voltar para página anterior"
+							>
+
+								<svg
+									xmlns="http://www.w3.org/2000/svg"
+									width="28"
+									height="28"
+									viewBox="0 0 24 24"
+									fill="none"
+									stroke="currentColor"
+									strokeWidth="2"
+									strokeLinecap="round"
+									strokeLinejoin="round"
+									className="mb-1"
+								>
+									<line x1="19" y1="12" x2="5" y2="12" />
+									<polyline points="12 19 5 12 12 5" />
+								</svg>
+
+								{t("anterior")}
+
+							</Link>
+
+						</li>
+
+						{/* Estatísticas */}
+
+						<li className="flex flex-col items-center">
+
+							<a
+								href="#estatisticas"
+								className="flex flex-col items-center md:hover:border-b-2 cursor-pointer"
+							>
+
+								<svg
+									xmlns="http://www.w3.org/2000/svg"
+									width="28"
+									height="28"
+									viewBox="0 0 24 24"
+									fill="none"
+									stroke="currentColor"
+									strokeWidth="2"
+									strokeLinecap="round"
+									strokeLinejoin="round"
+									className="mb-1"
+								>
+									<path d="M18 20V10" />
+									<path d="M12 20V4" />
+									<path d="M6 20v-6" />
+								</svg>
+
+								{t("estatisticas")}
+
+							</a>
+
+						</li>
+
+						{/* Jogos */}
+
+						<li className="flex flex-col items-center">
+
+							<a
+								href="#jogos"
+								className="flex flex-col items-center md:hover:border-b-2 cursor-pointer"
+							>
+
+								<svg
+									xmlns="http://www.w3.org/2000/svg"
+									width="28"
+									height="28"
+									viewBox="0 0 24 24"
+									fill="none"
+									stroke="currentColor"
+									strokeWidth="2"
+									strokeLinecap="round"
+									strokeLinejoin="round"
+									className="mb-1"
+								>
+									<rect x="3" y="4" width="18" height="18" rx="2" ry="2" /><line x1="16" y1="2" x2="16" y2="6" /><line x1="8" y1="2" x2="8" y2="6" /><line x1="3" y1="10" x2="21" y2="10"></line>
+								</svg>
+
+								{t("jogos")}
+
+							</a>
+
+						</li>
+
+						{/* Elenco */}
+
+						<li className="flex flex-col items-center">
+
+							<a
+								href="#elenco"
+								className="flex flex-col items-center md:hover:border-b-2 cursor-pointer"
+							>
+
+								<svg
+									xmlns="http://www.w3.org/2000/svg"
+									width="28"
+									height="28"
+									viewBox="0 0 24 24"
+									fill="none"
+									stroke="currentColor"
+									strokeWidth="2"
+									strokeLinecap="round"
+									strokeLinejoin="round"
+									className="mb-1"
+								>
+									<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+									<circle cx="9" cy="7" r="4" />
+									<path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+									<path d="M16 3.13a4 4 0 0 1 0 7.75" />
+								</svg>
+
+								{t("elenco")}
+
+							</a>
+
+						</li>
+
+					</ul>
+
+				</nav>
+
+			</header>
+
+			{/* Botão topo */}
+
+			<button
+				className="
+          fixed
+          bottom-5
+          right-5
+          z-50
+          bg-orange-400
+          text-white
+          p-3
+          rounded-full
+          shadow-xl
+          transition
+          hover:scale-110
+        "
+				onClick={() =>
+					window.scrollTo({
+						top: 0,
+						behavior: "smooth",
+					})
+				}
+				aria-label="Voltar ao topo"
+			>
+
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					width="22"
+					height="22"
+					fill="none"
+					stroke="currentColor"
+					strokeWidth="2"
+					strokeLinecap="round"
+					strokeLinejoin="round"
+				>
+					<path d="M12 19V5M5 12l7-7 7 7" />
+				</svg>
+
+			</button>
+
+		</>
+	);
+}
+
 export function HeaderNoticias() {
 	const { t } = useTranslation();
 
 	return (
 		<>
-			<header className="w-full flex flex-col bg-[#000] sm:py-0.5 md:py-1 shadow-md px-1.5 shadow-orange-400">
+			<header className="w-full flex flex-col bg-black sm:py-0.5 md:py-1 shadow-md px-1.5 shadow-orange-400">
 				<nav className="max-w-7xl mx-auto py-0">
 					<Image src={Logo} alt="Logo Futlance" className="mx-auto py-1.5 h-20 w-65 md:h-25 md:w-70 md:py-2" />
 					<ul className="flex justify-center flex-wrap gap-5 mt-0 md:mt-1 text-white font-normal">

@@ -2,6 +2,7 @@ import Background from "@/app/home/style"
 import { HeaderCampeonato } from "@/app/componentes/cabeçalho/header"
 import CampeonatoClient from "../client"
 import Footer from "@/app/componentes/footer/footer"
+import BuscaSelecao from "@/app/componentes/buscarSelecao/buscarSelecao"
 
 export const metadata = {
   title: "Copa do Mundo - Futlance",
@@ -27,6 +28,8 @@ export default function CampeonatoCopaMundo() {
           Acompanhe grupos, jogos, agenda e artilheiros.
         </p>
       </section>
+
+      <BuscaSelecao />
 
       {/* 👇 CLIENT COMPONENT */}
       <CampeonatoClient endpoint="/campeonatos/copamundo" />
