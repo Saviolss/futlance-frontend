@@ -13,9 +13,9 @@ export const metadata = {
     "jogos de hoje",
     "futebol ao vivo",
     "tabelas de futebol",
-    "classificação do campeonato",
-    "artilharia",
-    "futebol brasileiro",
+    "copa do mundo",
+    "world cup fifa 2026",
+    "campeonato brasileiro",
     "resultados de hoje",
     "jogos em tempo real"
   ],

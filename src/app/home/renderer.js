@@ -4,7 +4,7 @@ import { useEffect, useState } from "react"
 
 import WidgetAoVivo from "../componentes/jogos/widget"
 import EncerradosWidget from "../componentes/jogos/widgetEncerrados"
-import AgendaWidget from "../componentes/agenda/AgendaWidget"
+import AgendaWidgetHome from "../componentes/agenda/AgendaWidgetHome"
 import WidgetsCampeonato from "../componentes/campeonato/widgets"
 import Footer from "../componentes/footer/footer"
 
@@ -97,7 +97,7 @@ export default function HomeRenderer({
 
           case "agenda":
             return (
-              <AgendaWidget
+              <AgendaWidgetHome
                 key="agenda"
                 jogos={widget.dados}
               />
