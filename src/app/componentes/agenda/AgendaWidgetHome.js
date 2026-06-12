@@ -141,7 +141,7 @@ export default function AgendaWidgetHome({
     return (
       <>
         <h2 className="text-3xl font-light text-center mt-10 mb-5 md:text-5xl">
-          Próximos Jogos
+          (t("agendadejogos"))
         </h2>
 
         <p className="text-center text-2xl font-light mt-6 mb-5 md:text-3xl">
@@ -159,12 +159,8 @@ export default function AgendaWidgetHome({
     >
 
       <h2 className="text-3xl font-light text-center mt-10 mb-3 md:text-5xl">
-        Próximos Jogos
+        (t("agendadejogos"))
       </h2>
-
-      <p className="text-center text-zinc-400 mb-8">
-        Jogos programados para os próximos {periodoUtilizado} dias
-      </p>
 
       <div className="flex flex-wrap justify-center gap-6">
 
