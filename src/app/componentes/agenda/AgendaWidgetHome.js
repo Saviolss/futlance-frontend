@@ -51,6 +51,7 @@ export default function AgendaWidgetHome({
 
       } catch (err) {
 
+        console.error(err)
         setLista([])
 
       } finally {
@@ -72,64 +73,66 @@ export default function AgendaWidgetHome({
     const data = new Date(dataIso)
 
     return (
-      hoje.getFullYear() === data.getFullYear() &&
+      hoje.getDate() === data.getDate() &&
       hoje.getMonth() === data.getMonth() &&
-      hoje.getDate() === data.getDate()
+      hoje.getFullYear() === data.getFullYear()
     )
   }
 
   const agora = new Date()
 
-  const jogosFuturos = lista.filter((p) => {
-
-    if (!p.data_iso) return false
-
-    return new Date(p.data_iso) > agora
-
-  })
-
-  function buscarPorPeriodo(dias) {
-
-    return jogosFuturos.filter((p) => {
-
-      const dataJogo = new Date(p.data_iso)
-
-      const diferencaDias =
-        (dataJogo - agora) /
-        (1000 * 60 * 60 * 24)
-
-      return diferencaDias <= dias
-
-    })
-  }
-
-  let periodoUtilizado = 7
-
-  let jogosSelecionados =
-    buscarPorPeriodo(7)
-
-  if (!jogosSelecionados.length) {
-
-    jogosSelecionados =
-      buscarPorPeriodo(15)
-
-    periodoUtilizado = 15
-  }
-
-  if (!jogosSelecionados.length) {
-
-    jogosSelecionados =
-      buscarPorPeriodo(30)
-
-    periodoUtilizado = 30
-  }
-
-  const jogosOrdenados =
-    [...jogosSelecionados].sort(
+  const jogosFuturos = [...lista]
+    .filter(p => p?.data_iso)
+    .filter(p => new Date(p.data_iso) > agora)
+    .sort(
       (a, b) =>
         new Date(a.data_iso) -
         new Date(b.data_iso)
     )
+
+  let periodoUtilizado = 7
+  let jogosOrdenados = []
+
+  if (jogosFuturos.length) {
+
+    const primeiroJogo =
+      new Date(jogosFuturos[0].data_iso)
+
+    function filtrarPeriodo(dias) {
+
+      return jogosFuturos.filter((jogo) => {
+
+        const dataJogo =
+          new Date(jogo.data_iso)
+
+        const diferencaDias =
+          (dataJogo - primeiroJogo) /
+          (1000 * 60 * 60 * 24)
+
+        return diferencaDias <= dias
+
+      })
+    }
+
+    jogosOrdenados =
+      filtrarPeriodo(7)
+
+    if (!jogosOrdenados.length) {
+
+      jogosOrdenados =
+        filtrarPeriodo(15)
+
+      periodoUtilizado = 15
+    }
+
+    if (!jogosOrdenados.length) {
+
+      jogosOrdenados =
+        filtrarPeriodo(30)
+
+      periodoUtilizado = 30
+    }
+  }
 
   if (loading) return null
 
@@ -142,7 +145,7 @@ export default function AgendaWidgetHome({
         </h2>
 
         <p className="text-center text-2xl font-light mt-6 mb-5 md:text-3xl">
-          Nenhuma partida encontrada.
+          {t("agendavazia")}
         </p>
       </>
     )
@@ -156,9 +159,12 @@ export default function AgendaWidgetHome({
     >
 
       <h2 className="text-3xl font-light text-center mt-10 mb-3 md:text-5xl">
-        {t("agendadejogos")}
+        Próximos Jogos
       </h2>
 
+      <p className="text-center text-zinc-400 mb-8">
+        Jogos programados para os próximos {periodoUtilizado} dias
+      </p>
 
       <div className="flex flex-wrap justify-center gap-6">
 
@@ -232,13 +238,11 @@ function Time({ time }) {
     <div className="flex flex-col items-center gap-2 w-1/3">
 
       {time.escudo && (
-
         <img
           src={time.escudo}
           alt={time.nome}
           className="w-14 h-14 object-contain"
         />
-
       )}
 
       <h3 className="text-xs text-center text-zinc-200">
