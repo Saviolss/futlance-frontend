@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { useTranslation } from "react-i18next"
 import { api } from "@/app/servidor/api"
 
@@ -12,36 +12,32 @@ export default function AgendaWidgetHome({
 
   const { t } = useTranslation()
 
-  const [lista, setLista] = useState(
-    dados?.length ? dados : jogos
-  )
-
-  const [loading, setLoading] = useState(
-    !dados && !jogos.length && !!endpoint
-  )
+  const [lista, setLista] = useState([])
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-
-    if (dados?.length) {
-      setLista(dados)
-      setLoading(false)
-      return
-    }
-
-    if (jogos.length) {
-      setLista(jogos)
-      setLoading(false)
-      return
-    }
-
-    if (!endpoint) {
-      setLoading(false)
-      return
-    }
 
     async function carregar() {
 
       try {
+
+        if (dados?.length) {
+
+          setLista(dados)
+          return
+        }
+
+        if (jogos?.length) {
+
+          setLista(jogos)
+          return
+        }
+
+        if (!endpoint) {
+
+          setLista([])
+          return
+        }
 
         const res = await api.get(endpoint)
 
@@ -51,13 +47,16 @@ export default function AgendaWidgetHome({
 
       } catch (err) {
 
-        console.error(err)
+        console.error(
+          "Erro agenda:",
+          err
+        )
+
         setLista([])
 
       } finally {
 
         setLoading(false)
-
       }
     }
 
@@ -79,62 +78,75 @@ export default function AgendaWidgetHome({
     )
   }
 
-  const agora = new Date()
+  const jogosOrdenados = useMemo(() => {
 
-  const jogosFuturos = [...lista]
-    .filter(p => p?.data_iso)
-    .filter(p => new Date(p.data_iso) > agora)
-    .sort(
-      (a, b) =>
-        new Date(a.data_iso) -
-        new Date(b.data_iso)
-    )
+    const agora = new Date()
 
-  let periodoUtilizado = 7
-  let jogosOrdenados = []
+    const jogosFuturos = [...lista]
 
-  if (jogosFuturos.length) {
+      .filter(p => p?.data_iso)
+
+      .filter(
+        p =>
+          new Date(p.data_iso) > agora
+      )
+
+      .sort(
+        (a, b) =>
+          new Date(a.data_iso) -
+          new Date(b.data_iso)
+      )
+
+    if (!jogosFuturos.length) {
+      return []
+    }
 
     const primeiroJogo =
-      new Date(jogosFuturos[0].data_iso)
+      new Date(
+        jogosFuturos[0].data_iso
+      )
 
     function filtrarPeriodo(dias) {
 
-      return jogosFuturos.filter((jogo) => {
+      return jogosFuturos.filter(
+        jogo => {
 
-        const dataJogo =
-          new Date(jogo.data_iso)
+          const dataJogo =
+            new Date(
+              jogo.data_iso
+            )
 
-        const diferencaDias =
-          (dataJogo - primeiroJogo) /
-          (1000 * 60 * 60 * 24)
+          const diferencaDias =
+            (dataJogo - primeiroJogo) /
+            (1000 * 60 * 60 * 24)
 
-        return diferencaDias <= dias
-
-      })
+          return diferencaDias <= dias
+        }
+      )
     }
 
-    jogosOrdenados =
+    let resultado =
       filtrarPeriodo(7)
 
-    if (!jogosOrdenados.length) {
+    if (!resultado.length) {
 
-      jogosOrdenados =
+      resultado =
         filtrarPeriodo(15)
-
-      periodoUtilizado = 15
     }
 
-    if (!jogosOrdenados.length) {
+    if (!resultado.length) {
 
-      jogosOrdenados =
+      resultado =
         filtrarPeriodo(30)
-
-      periodoUtilizado = 30
     }
-  }
 
-  if (loading) return null
+    return resultado
+
+  }, [lista])
+
+  if (loading) {
+    return null
+  }
 
   if (!jogosOrdenados.length) {
 
@@ -169,10 +181,17 @@ export default function AgendaWidgetHome({
           <div
             key={p.partida_id}
             className="
-              relative w-full max-w-[320px]
-              rounded-xl overflow-hidden
-              bg-gradient-to-br from-[#0b0f1a] via-[#0f172a] to-[#020617]
-              border border-orange-400/30
+              relative
+              w-full
+              max-w-[320px]
+              rounded-xl
+              overflow-hidden
+              bg-gradient-to-br
+              from-[#0b0f1a]
+              via-[#0f172a]
+              to-[#020617]
+              border
+              border-orange-400/30
               shadow-[0_0_25px_rgba(255,165,0,0.15)]
               backdrop-blur-md
               text-white
@@ -234,6 +253,7 @@ function Time({ time }) {
     <div className="flex flex-col items-center gap-2 w-1/3">
 
       {time.escudo && (
+
         <img
           src={time.escudo}
           alt={time.nome}
