@@ -21,9 +21,18 @@ export default function HomeRenderer({
   const [widgetsState, setWidgetsState] =
     useState(widgets)
 
+  /* ============================
+     DEBUG
+  ============================ */
+
   useEffect(() => {
-    setWidgetsState(widgets)
-  }, [widgets])
+
+    console.log(
+      "📦 widgetsState atualizado:",
+      widgetsState
+    )
+
+  }, [widgetsState])
 
   /* ============================
      WEBSOCKET
@@ -33,11 +42,19 @@ export default function HomeRenderer({
 
     if (!evento) return
 
-    console.log("📡 evento websocket:", evento)
+    console.log(
+      "📡 evento websocket:",
+      evento
+    )
 
     /* 🔴 AO VIVO */
 
     if (evento.tipo === "ao-vivo") {
+
+      console.log(
+        "🔴 dados ao vivo:",
+        evento.dados
+      )
 
       setWidgetsState((anterior) => {
 
@@ -45,17 +62,20 @@ export default function HomeRenderer({
           w => w.tipo !== "ao-vivo"
         )
 
-        if (!evento.dados?.length) {
-          return resto
-        }
-
-        return [
+        const novoEstado = [
           {
             tipo: "ao-vivo",
-            dados: evento.dados
+            dados: evento.dados || []
           },
           ...resto
         ]
+
+        console.log(
+          "✅ novo widgetsState:",
+          novoEstado
+        )
+
+        return novoEstado
       })
     }
 
@@ -69,13 +89,20 @@ export default function HomeRenderer({
           w => w.tipo !== "encerrados"
         )
 
-        return [
+        const novoEstado = [
           ...resto,
           {
             tipo: "encerrados",
-            dados: evento.dados
+            dados: evento.dados || []
           }
         ]
+
+        console.log(
+          "🏁 encerrados atualizados:",
+          novoEstado
+        )
+
+        return novoEstado
       })
     }
 
@@ -91,7 +118,7 @@ export default function HomeRenderer({
             return (
               <WidgetAoVivo
                 key="ao-vivo"
-                jogos={widget.dados}
+                jogos={widget.dados || []}
               />
             )
 
@@ -99,7 +126,7 @@ export default function HomeRenderer({
             return (
               <AgendaWidgetHome
                 key="agenda"
-                jogos={widget.dados}
+                jogos={widget.dados || []}
               />
             )
 
@@ -107,7 +134,7 @@ export default function HomeRenderer({
             return (
               <EncerradosWidget
                 key="encerrados"
-                jogos={widget.dados}
+                jogos={widget.dados || []}
               />
             )
 
