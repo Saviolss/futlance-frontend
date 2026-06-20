@@ -1,4 +1,5 @@
 import "./globals.css"
+import Script from "next/script"
 import { WebSocketProvider } from "@/context/WebSocketProvider"
 export const metadata = {
   metadataBase: new URL("https://futlance.com"),
@@ -93,6 +94,26 @@ export default function RootLayout({ children }) {
 
   return (
     <html lang="pt-BR">
+      <head>
+
+        <Script
+          id="monetag-inpage"
+          strategy="afterInteractive"
+        >
+          {`
+      (function(s){
+        s.dataset.zone='11179286';
+        s.src='https://nap5k.com/tag.min.js';
+      })(
+        [document.documentElement, document.body]
+          .filter(Boolean)
+          .pop()
+          .appendChild(document.createElement('script'))
+      );
+    `}
+        </Script>
+
+      </head>
 
       <body>
 

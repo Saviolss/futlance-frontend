@@ -122,7 +122,7 @@ export default function HomeRenderer({
               />
             )
 
-          case "agenda":
+            case "agenda":
             return (
               <AgendaWidgetHome
                 key="agenda"
@@ -142,7 +142,6 @@ export default function HomeRenderer({
             return null
         }
       })}
-
       <WidgetsCampeonato />
 
       <Footer />
