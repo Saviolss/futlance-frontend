@@ -1,8 +1,12 @@
 import "./globals.css"
-import Script from "next/script"
 import { WebSocketProvider } from "@/context/WebSocketProvider"
 export const metadata = {
   metadataBase: new URL("https://futlance.com"),
+  verification: {
+    other: {
+      monetag: "4c978b407430d4259177761626990861"
+    }
+  },
 
   title: "Jogos de hoje",
 
@@ -89,36 +93,6 @@ export default function RootLayout({ children }) {
 
   return (
     <html lang="pt-BR">
-
-      <head>
-
-        {/* ============================
-            GOOGLE ANALYTICS
-        ============================ */}
-
-        <Script
-          src="https://www.googletagmanager.com/gtag/js?id=G-53KERW047W"
-          strategy="afterInteractive"
-        />
-
-        <Script
-          id="google-analytics"
-          strategy="afterInteractive"
-        >
-          {`
-            window.dataLayer = window.dataLayer || [];
-
-            function gtag() {
-              dataLayer.push(arguments);
-            }
-
-            gtag('js', new Date());
-
-            gtag('config', 'G-53KERW047W');
-          `}
-        </Script>
-
-      </head>
 
       <body>
 
