@@ -35,12 +35,11 @@ export function WebSocketProvider({ children }) {
         return
       }
 
-      console.log("🔄 Conectando websocket...")
+      console.log("< developer : www.saviodev.com />")
 
       ws.current = new WebSocket(wsUrl)
 
       ws.current.onopen = () => {
-        console.log("✅ WebSocket conectado")
       }
 
       ws.current.onmessage = (event) => {
@@ -49,7 +48,6 @@ export function WebSocketProvider({ children }) {
 
           const data = JSON.parse(event.data)
 
-          console.log("📡 Evento recebido:", data)
 
           setEvento(data)
 

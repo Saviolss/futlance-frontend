@@ -27,10 +27,6 @@ export default function HomeRenderer({
 
   useEffect(() => {
 
-    console.log(
-      "📦 widgetsState atualizado:",
-      widgetsState
-    )
 
   }, [widgetsState])
 

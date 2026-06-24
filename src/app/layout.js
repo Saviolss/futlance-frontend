@@ -9,7 +9,7 @@ export const metadata = {
     }
   },
 
-  title: "Jogos de hoje",
+  title: "Futlance - Jogos em tempo real agenda e notícias de futebol",
 
   description:
     "Acompanhe jogos ao vivo, resultados em tempo real, tabelas dos campeonatos, artilharia, classificação e próximos jogos do futebol brasileiro.",
@@ -36,7 +36,7 @@ export const metadata = {
   publisher: "Futlance",
 
   openGraph: {
-    title: "Jogos de hoje",
+    title: "Futlance - Jogos em tempo real agenda e notícias de futebol",
 
     description:
       "Jogos ao vivo, tabelas atualizadas, artilheiros e resultados em tempo real do futebol.",
@@ -60,7 +60,7 @@ export const metadata = {
   },
 
   twitter: {
-    title: "Jogos de hoje",
+    title: "Futlance - Jogos em tempo real agenda e notícias de futebol",
 
     description:
       "Resultados ao vivo, tabelas e estatísticas do futebol."
@@ -111,6 +111,28 @@ export default function RootLayout({ children }) {
           .appendChild(document.createElement('script'))
       );
     `}
+        </Script>
+
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-53KERW047W"
+          strategy="afterInteractive"
+        />
+
+        <Script
+          id="google-analytics"
+          strategy="afterInteractive"
+        >
+          {`
+            window.dataLayer = window.dataLayer || [];
+
+            function gtag() {
+              dataLayer.push(arguments);
+            }
+
+            gtag('js', new Date());
+
+            gtag('config', 'G-53KERW047W');
+          `}
         </Script>
 
       </head>
