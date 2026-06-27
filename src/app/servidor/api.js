@@ -1,5 +1,4 @@
 import axios from "axios";
-
 const baseURL = "https://api.futlance.com"
 export const api = axios.create({
   baseURL,
