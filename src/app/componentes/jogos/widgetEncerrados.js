@@ -2,19 +2,17 @@
 
 import { useTranslation } from "react-i18next";
 import { JogosEncerradosSection } from "./jogosEncerradosSection";
+import { normalizeJogosData } from "./normalizeJogos";
 
 export default function EncerradosWidget({ jogos = [] }) {
   const { t } = useTranslation();
-
-  if (!jogos.length) {
-    return null; // não renderiza nada se não houver jogos encerrados
-  }
+  const jogosNormalizados = normalizeJogosData(jogos);
 
   return (
     <div className="w-full">
       <JogosEncerradosSection
         titulo={t("finalizados")}
-        jogos={jogos}
+        jogos={jogosNormalizados}
       />
     </div>
   );

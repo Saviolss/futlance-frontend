@@ -424,7 +424,7 @@ export function HeaderCampeonato() {
 					<li className="flex flex-col items-center">
 						<a href="#artilheiros" className="flex flex-col items-center md:hover:border-b-2 cursor-pointer" alt="botão de navegar para artilheiros">
 							<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mb-1"><path d="M12 20h9"/><path d="M16 4l4 4l-4 4"/><path d="M8 4l-4 4l4 4"/><path d="M12 4v16"/></svg>
-							{t('artilheiros')}
+							{t('artilheiro')}
 						</a>
 					</li>
 				</ul>
@@ -564,7 +564,7 @@ export function HeaderCampeonato() {
 									<path d="M12 4v16" />
 								</svg>
 
-								<span>{t("artilheiros")}</span>
+								<span>{t("artilheiro")}</span>
 							</a>
 						</li>
 

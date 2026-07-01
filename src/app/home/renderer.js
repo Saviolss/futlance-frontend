@@ -7,6 +7,7 @@ import EncerradosWidget from "../componentes/jogos/widgetEncerrados"
 import AgendaWidgetHome from "../componentes/agenda/AgendaWidgetHome"
 import WidgetsCampeonato from "../componentes/campeonato/widgets"
 import Footer from "../componentes/footer/footer"
+import { normalizeJogosData } from "../componentes/jogos/normalizeJogos"
 
 import {
   useEventoWebSocket
@@ -58,10 +59,12 @@ export default function HomeRenderer({
           w => w.tipo !== "ao-vivo"
         )
 
+        const dadosNormalizados = normalizeJogosData(evento.dados || [])
+
         const novoEstado = [
           {
             tipo: "ao-vivo",
-            dados: evento.dados || []
+            dados: dadosNormalizados
           },
           ...resto
         ]
@@ -85,11 +88,13 @@ export default function HomeRenderer({
           w => w.tipo !== "encerrados"
         )
 
+        const dadosNormalizados = normalizeJogosData(evento.dados || [])
+
         const novoEstado = [
           ...resto,
           {
             tipo: "encerrados",
-            dados: evento.dados || []
+            dados: dadosNormalizados
           }
         ]
 
@@ -138,6 +143,7 @@ export default function HomeRenderer({
             return null
         }
       })}
+
       <WidgetsCampeonato />
 
       <Footer />

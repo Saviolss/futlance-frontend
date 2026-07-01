@@ -1,5 +1,6 @@
 'use client';
 import { useTranslation } from "react-i18next";
+import { normalizeJogosData } from "./normalizeJogos";
 
 export function JogosEncerradosSection({
   titulo,
@@ -7,40 +8,36 @@ export function JogosEncerradosSection({
 }) {
 
   const { t } = useTranslation();
+  const jogosNormalizados = normalizeJogosData(jogos);
 
-  if (!jogos.length) return null;
+  if (!jogosNormalizados.length) return null;
 
   return (
     <section className="w-full max-w-7xl mx-auto px-4 py-10">
 
-      <div className="flex items-center gap-4 mb-10">
+      <div className="flex items-center gap-4 mb-10 mx-auto justify-center">
 
-        <div className="h-px flex-1 bg-linear-to-r from-transparent via-zinc-500/50 to-transparent" />
 
         <h2
           className="
             text-3xl
             md:text-5xl
-            font-black
-            uppercase
-            tracking-wide
+            font-light
             text-white
-            whitespace-nowrap
           "
         >
-          {titulo}
+        {t ("finalizado")}
         </h2>
 
-        <div className="h-px flex-1 bg-linear-to-r from-transparent via-zinc-500/50 to-transparent" />
 
       </div>
 
       <div className="flex flex-wrap justify-center gap-6">
 
-        {jogos.map((jogo) => (
+        {jogosNormalizados.map((jogo) => (
 
           <div
-            key={jogo.partida_id}
+            key={jogo.partida_id ?? `${jogo.mandante?.nome ?? 'mandante'}-${jogo.visitante?.nome ?? 'visitante'}`}
             className="
               relative
               w-full

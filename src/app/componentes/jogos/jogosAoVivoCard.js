@@ -47,7 +47,7 @@ export function JogoAoVivoCard({ jogo }) {
               ? "text-zinc-400"
               : "text-red-500"
             }`}>
-            {penalti ? "PÊNALTIS" : (status === "finalizado" ? t("finalizado") : t("aovivo"))}
+            {penalti ? t("penaltis") : (status === "finalizado" ? t("finalizado") : t("aovivo"))}
           </span>
         </span>
 
@@ -67,8 +67,7 @@ export function JogoAoVivoCard({ jogo }) {
 
             {/* 👇 Penalti */}
             {penalti && (
-              <div className="flex gap-1 text-xs text-yellow-400 mt-1">
-                <span>{t("penaltis")}</span>
+              <div className="flex  gap-2 text-xs text-yellow-400 mt-1">
                 <span>({penalti.mandante} x {penalti.visitante})</span>
               </div>
             )}

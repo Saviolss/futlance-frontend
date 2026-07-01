@@ -72,7 +72,7 @@ export default function ArtilheirosWidget({
       id="artilheiros"
     >
       <h3 className="text-3xl md:text-5xl font-light text-center mb-5 text-white">
-        {t("artilheiro")} {titulo}
+        {t("artilheiro")} 
       </h3>
 
       <div className="w-full rounded-xl border border-white/10 bg-[#0b0f1a] overflow-hidden">
@@ -107,23 +107,25 @@ export default function ArtilheirosWidget({
                     {jogador.nome}
                   </td>
 
-                  <td className="px-3 py-3 flex items-center gap-2 whitespace-nowrap">
+                  <td className="px-3 py-3 justify-center  whitespace-nowrap font-semibold text-white">
+                    {jogador.gols}
+                  </td>
+
+                  <td className="px-3 py-3 flex  justify-center gap-2 whitespace-nowrap">
                     {jogador.clube?.escudo && (
                       <img
                         src={jogador.clube.escudo}
                         alt={jogador.clube.nome}
-                        className="h-5 w-5 object-contain"
+                        className="h-5 w-5 object-contain "
                       />
                     )}
 
-                    <span className="text-zinc-300">
+                    <span className="text-zinc-300 text-left">
                       {jogador.clube?.nome}
                     </span>
                   </td>
 
-                  <td className="px-3 py-3 text-center font-semibold text-white">
-                    {jogador.gols}
-                  </td>
+
                 </tr>
               ))}
             </tbody>

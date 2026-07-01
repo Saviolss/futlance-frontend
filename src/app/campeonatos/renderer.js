@@ -9,6 +9,7 @@ import AgendaWidget from "../componentes/agenda/AgendaWidget"
 import AoVivoWidget from "@/app/componentes/jogos/widget"
 import EncerradosWidget from "@/app/componentes/jogos/widgetEncerrados"
 import ArtilheirosWidget from "../componentes/artilheiro/Widgets"
+import { normalizeJogosData } from "../componentes/jogos/normalizeJogos"
 
 import {
   useEventoWebSocket
@@ -47,14 +48,16 @@ export default function CampeonatoRenderer({
           w => w.tipo !== "ao-vivo"
         )
 
-        if (!evento.dados?.length) {
+        const dadosNormalizados = normalizeJogosData(evento.dados || [])
+
+        if (!dadosNormalizados.length) {
           return resto
         }
 
         return [
           {
             tipo: "ao-vivo",
-            dados: evento.dados
+            dados: dadosNormalizados
           },
           ...resto
         ]
@@ -71,11 +74,13 @@ export default function CampeonatoRenderer({
           w => w.tipo !== "encerrados"
         )
 
+        const dadosNormalizados = normalizeJogosData(evento.dados || [])
+
         return [
           ...resto,
           {
             tipo: "encerrados",
-            dados: evento.dados
+            dados: dadosNormalizados
           }
         ]
       })
