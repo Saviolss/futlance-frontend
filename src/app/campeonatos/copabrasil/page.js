@@ -2,6 +2,7 @@ import Background from "@/app/home/style"
 import { HeaderCampeonato } from "@/app/componentes/cabeçalho/header"
 import CampeonatoClient from "../client"
 import Footer from "@/app/componentes/footer/footer"
+import AdcashBanner from "@/app/componentes/anuncio/anuncioBody"
 
 export const metadata = {
   title: "Copa do Brasil - Futlance",
@@ -18,7 +19,7 @@ export default function CampeonatoCopaBrasil() {
   return (
     <Background>
       <HeaderCampeonato />
-
+      <AdcashBanner />
       <section className="max-w-5xl mx-auto px-6 mt-5 text-xs text-white text-center">
         <h1 className="text-base font-medium">
           Campeonato Copa Brasil

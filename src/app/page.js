@@ -1,6 +1,7 @@
 import { Header } from "./componentes/cabeçalho/header";
 import Background from "./home/style";
 import HomePage from "./home/home";
+import AdcashBanner from "./componentes/anuncio/anuncioBody";
 
 export const dynamic = "force-dynamic";
 
@@ -9,6 +10,7 @@ export default function Page() {
     <>
       <Background>
         <Header />
+        <AdcashBanner />
         <section className="max-w-5xl mx-auto px-6 mt-5 text-xs flex flex-col items-center text-white gap-2">
           <h1 className="text-base font-medium justify-center text-white">
             Jogos em tempo real e agenda de futebol

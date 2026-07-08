@@ -3,6 +3,7 @@ import { HeaderCampeonato } from "@/app/componentes/cabeçalho/header"
 import CampeonatoClient from "../client"
 import Footer from "@/app/componentes/footer/footer"
 import BuscaSelecao from "@/app/componentes/buscarSelecao/buscarSelecao"
+import AdcashBanner from "@/app/componentes/anuncio/anuncioBody"
 
 export const metadata = {
   title: "Copa do Mundo - Futlance",
@@ -19,7 +20,7 @@ export default function CampeonatoCopaMundo() {
   return (
     <Background>
       <HeaderCampeonato />
-
+      <AdcashBanner />
       <section className="max-w-5xl mx-auto px-6 mt-5 text-xs text-white text-center">
         <h1 className="text-base font-medium">
           Campeonato Copa Mundo

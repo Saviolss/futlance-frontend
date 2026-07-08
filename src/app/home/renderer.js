@@ -80,12 +80,12 @@ export default function HomeRenderer({
 
     /* 🏁 ENCERRADOS */
 
-    if (evento.tipo === "encerrados") {
+    if (evento.tipo === "finalizado") {
 
       setWidgetsState((anterior) => {
 
         const resto = anterior.filter(
-          w => w.tipo !== "encerrados"
+          w => w.tipo !== "finalizado"
         )
 
         const dadosNormalizados = normalizeJogosData(evento.dados || [])
@@ -93,7 +93,7 @@ export default function HomeRenderer({
         const novoEstado = [
           ...resto,
           {
-            tipo: "encerrados",
+            tipo: "finalizado",
             dados: dadosNormalizados
           }
         ]

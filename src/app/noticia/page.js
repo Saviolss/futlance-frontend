@@ -3,6 +3,7 @@ import { HeaderNoticias } from "../componentes/cabeçalho/header"
 import Background from "@/app/home/style"
 import Footer from "@/app/componentes/footer/footer"
 import { api } from "@/app/servidor/api"
+import AdcashBanner from "../componentes/anuncio/anuncioBody"
 
 export const metadata = {
   title: "Notícias de Futebol em Tempo Real - Futlance",
@@ -43,7 +44,7 @@ export default async function Page() {
     <Background>
 
       <HeaderNoticias />
-
+      <AdcashBanner />
       {/* HERO */}
 
       <section

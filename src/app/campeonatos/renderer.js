@@ -66,12 +66,12 @@ export default function CampeonatoRenderer({
 
     /* 🏁 ENCERRADOS */
 
-    if (evento.tipo === "encerrados") {
+    if (evento.tipo === "finalizado") {
 
       setWidgetsState((anterior) => {
 
         const resto = anterior.filter(
-          w => w.tipo !== "encerrados"
+          w => w.tipo !== "finalizado"
         )
 
         const dadosNormalizados = normalizeJogosData(evento.dados || [])
@@ -79,7 +79,7 @@ export default function CampeonatoRenderer({
         return [
           ...resto,
           {
-            tipo: "encerrados",
+            tipo: "finalizado",
             dados: dadosNormalizados
           }
         ]

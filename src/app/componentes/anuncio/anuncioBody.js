@@ -1,26 +1,61 @@
-// // 'use client'
+'use client'
 
-// import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 
-// export default function AnuncioInPagePush() {
-//   useEffect(() => {
-//     const script = document.createElement('script')
+export default function AdcashBanner() {
+  const mobileRef = useRef(null)
+  const leftRef = useRef(null)
+  const rightRef = useRef(null)
 
-//     script.src = 'https://nap5k.com/tag.min.js'
-//     script.async = true
-//     script.dataset.zone = '11179286'
+  useEffect(() => {
+    const createBanner = (ref, zoneId) => {
+      if (!ref.current || !window.aclib) return
 
-//     document.body.appendChild(script)
+      ref.current.innerHTML = ''
 
-//     return () => {
-//       script.remove()
-//     }
-//   }, [])
+      const script = document.createElement('script')
+      script.type = 'text/javascript'
+      script.text = `
+        aclib.runBanner({
+          zoneId: '${zoneId}'
+        });
+      `
 
-//   return (
-//     <div
-//       id="monetag-inpage-push"
-//       className="w-full flex justify-center my-4"
-//     />
-//   )
-// }
+      ref.current.appendChild(script)
+    }
+
+    const timer = setInterval(() => {
+      if (!window.aclib) return
+
+      clearInterval(timer)
+
+      if (window.innerWidth < 768) {
+        createBanner(mobileRef, '11633014')
+      } else {
+        createBanner(leftRef, '11633022')
+        createBanner(rightRef, '11633022')
+      }
+    }, 300)
+
+    return () => clearInterval(timer)
+  }, [])
+
+  return (
+    <>
+      {/* Mobile */}
+      <div className="block md:hidden w-full">
+        <div ref={mobileRef} />
+      </div>
+
+      {/* Desktop esquerdo */}
+      <div className="hidden md:block z-50 left-1.5 fixed top-1/2 transform -translate-y-1/2">
+        <div ref={leftRef} />
+      </div>
+
+      {/* Desktop direito */}
+      <div className="hidden md:block z-50 right-1.5 fixed top-1/2 transform -translate-y-1/2">
+        <div ref={rightRef} />
+      </div>
+    </>
+  )
+}

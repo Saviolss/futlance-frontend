@@ -3,11 +3,6 @@ import Script from "next/script"
 import { WebSocketProvider } from "@/context/WebSocketProvider"
 export const metadata = {
   metadataBase: new URL("https://futlance.com"),
-  verification: {
-    other: {
-      monetag: "4c978b407430d4259177761626990861"
-    }
-  },
 
   title: "Futlance - Jogos em tempo real agenda e notícias de futebol",
 
@@ -95,23 +90,13 @@ export default function RootLayout({ children }) {
   return (
     <html lang="pt-BR">
       <head>
+      <script id="aclib" type="text/javascript" src="//acscdn.com/script/aclib.js"></script>
 
-        <Script
-          id="monetag-inpage"
-          strategy="afterInteractive"
-        >
-          {`
-      (function(s){
-        s.dataset.zone='11179286';
-        s.src='https://nap5k.com/tag.min.js';
-      })(
-        [document.documentElement, document.body]
-          .filter(Boolean)
-          .pop()
-          .appendChild(document.createElement('script'))
-      );
-    `}
-        </Script>
+        {/* <Script
+          id="aclib"
+          src="https://acscdn.com/script/aclib.js"
+          strategy="beforeInteractive"
+        /> */}
 
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-53KERW047W"
