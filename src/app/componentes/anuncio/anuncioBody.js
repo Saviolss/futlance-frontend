@@ -30,10 +30,10 @@ export default function AdcashBanner() {
       clearInterval(timer)
 
       if (window.innerWidth < 768) {
-        createBanner(mobileRef, '11633014')
+        createBanner(mobileRef, '11642794')
       } else {
-        createBanner(leftRef, '11633022')
-        createBanner(rightRef, '11633022')
+        createBanner(leftRef, '11642890')
+        createBanner(rightRef, '11642890')
       }
     }, 300)
 

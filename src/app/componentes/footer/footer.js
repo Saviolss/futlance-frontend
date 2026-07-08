@@ -46,7 +46,7 @@ export default function Footer() {
           FOOTER
       ============================ */}
 
-      <footer className="w-full sm:block md:flex md:justify-center gap-3 bg-[#000] text-white text-center py-4 mt-10 border-t border-t-orange-400/30">
+      <footer className="w-full sm:block md:flex md:justify-center gap-3 bg-black text-white text-center py-4 mt-10 border-t border-t-orange-400/30">
 
         <p>
           &copy; {new Date().getFullYear()} {t('footertext')}
@@ -141,9 +141,11 @@ export default function Footer() {
 
       {showCookies && (
 
-        <div className="fixed bottom-0 left-0 w-full bg-[#111] border-t border-orange-400/30 text-white z-50 p-4">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 md:items-end md:justify-center md:p-0">
 
-          <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+          <div className="w-full max-w-6xl bg-[#111] border border-orange-400/30 text-white rounded-lg md:rounded-none md:border-t md:border-orange-400/30 md:mb-0 p-4">
+
+            <div className="mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
 
             <p className="text-sm text-gray-300">
               {t("cookiesInfo")}
@@ -170,6 +172,8 @@ export default function Footer() {
           </div>
 
         </div>
+
+      </div>
       )}
 
     </>
