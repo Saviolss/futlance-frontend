@@ -90,11 +90,6 @@ export default function RootLayout({ children }) {
   return (
     <html lang="pt-BR">
       <head>
-        <Script
-          id="aclib"
-          type="text/javascript"
-          src="//acscdn.com/script/aclib.js"
-        />
 
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-53KERW047W"
