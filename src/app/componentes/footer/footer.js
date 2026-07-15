@@ -39,6 +39,10 @@ export default function Footer() {
     setShowCookies(false);
   }
 
+  function fecharBannerCookies() {
+    setShowCookies(false);
+  }
+
   return (
     <>
 
@@ -143,7 +147,15 @@ export default function Footer() {
 
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 md:items-end md:justify-center md:p-0">
 
-          <div className="w-full max-w-6xl bg-[#111] border border-orange-400/30 text-white rounded-lg md:rounded-none md:border-t md:border-orange-400/30 md:mb-0 p-4">
+          <div className="relative w-full max-w-6xl bg-[#111] border border-orange-400/30 text-white rounded-lg md:rounded-none md:border-t md:border-orange-400/30 md:mb-0 p-4 pt-8 md:pt-4">
+
+            <button
+              onClick={fecharBannerCookies}
+              className="absolute right-2 top-2 text-xl text-gray-400 hover:text-white md:hidden"
+              aria-label="Fechar banner de cookies"
+            >
+              ×
+            </button>
 
             <div className="mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
 
