@@ -4,4 +4,4 @@ export const api = axios.create({
   baseURL,
   timeout: 10000,
 })
-export const wsUrl = "wss://api.futlance.com"
+export const wsUrl = "wss://api.futlance.com/ws"
