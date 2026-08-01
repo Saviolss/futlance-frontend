@@ -48,10 +48,6 @@ export default function HomeRenderer({
 
     if (evento.tipo === "ao-vivo") {
 
-      console.log(
-        "🔴 dados ao vivo:",
-        evento.dados
-      )
 
       setWidgetsState((anterior) => {
 
@@ -69,10 +65,6 @@ export default function HomeRenderer({
           ...resto
         ]
 
-        console.log(
-          "✅ novo widgetsState:",
-          novoEstado
-        )
 
         return novoEstado
       })
@@ -98,10 +90,6 @@ export default function HomeRenderer({
           }
         ]
 
-        console.log(
-          "🏁 encerrados atualizados:",
-          novoEstado
-        )
 
         return novoEstado
       })

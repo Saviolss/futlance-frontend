@@ -13,6 +13,7 @@ export function JogoAoVivoCard({ jogo }) {
     placar_visitante,
     estadio,
     status,
+    tempo,
     penalti
   } = jogo
 
@@ -38,7 +39,7 @@ export function JogoAoVivoCard({ jogo }) {
         )}
 
         {/* Status */}
-        <span className="flex items-center gap-2">
+        <span className="flex  items-center gap-2">
           {status !== "finalizado" && (
             <span className="animate-pulse w-2 h-2 bg-red-500 rounded-full" />
           )}
@@ -49,6 +50,11 @@ export function JogoAoVivoCard({ jogo }) {
             }`}>
             {penalti ? t("penaltis") : (status === "finalizado" ? t("finalizado") : t("aovivo"))}
           </span>
+          {tempo && (
+            <span className="text-xs text-zinc-400">
+             ⏱ {tempo}
+            </span>
+          )}
         </span>
 
         {/* Times + Placar */}

@@ -126,7 +126,7 @@ export default function AgendaWidgetHome({
     }
 
     let resultado =
-      filtrarPeriodo(7)
+      filtrarPeriodo(4)
 
     if (!resultado.length) {
 

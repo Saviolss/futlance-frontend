@@ -85,10 +85,10 @@ export default function ArtilheirosWidget({
                   {t("jogador")}
                 </th>
                 <th className="px-3 py-4 text-left">
-                  {t("clube")}
+                  G
                 </th>
                 <th className="px-3 py-4 text-center text-white font-semibold">
-                  G
+                  {t("clube")}
                 </th>
               </tr>
             </thead>

@@ -68,44 +68,59 @@ export default function AgendaWidget({
     )
   }
 
-  function jaComecou(dataIso) {
-    if (!dataIso) return false
-
-    const agora = new Date()
-    const jogo = new Date(dataIso)
-
-    return jogo <= agora
-  }
-
   /* ============================
-     FILTRO + ORDENAÇÃO
+     ORDENAÇÃO
   ============================ */
 
-  const jogosFiltrados = lista.filter(p => {
-    if (!p.data_iso) return false
+  const agora = new Date()
 
-    const hoje = new Date()
-    const dataJogo = new Date(p.data_iso)
+  // Apenas jogos futuros (data + hora)
+  const jogosFuturos = lista
+    .filter((p) => {
+      if (!p.data_iso) return false
 
-    const ehHoje =
-      hoje.getFullYear() === dataJogo.getFullYear() &&
-      hoje.getMonth() === dataJogo.getMonth() &&
-      hoje.getDate() === dataJogo.getDate()
+      return new Date(p.data_iso) > agora
+    })
+    .sort(
+      (a, b) =>
+        new Date(a.data_iso) - new Date(b.data_iso)
+    )
 
-    // remove jogos que já começaram HOJE
-    if (ehHoje && jaComecou(p.data_iso)) {
-      return false
-    }
+  /* ============================
+     JANELA (7 / 15 / 30 dias)
+  ============================ */
 
-    return true
-  })
+  function adicionarDias(data, dias) {
+    const nova = new Date(data)
+    nova.setDate(nova.getDate() + dias)
+    return nova
+  }
 
-  const jogosOrdenados = [...jogosFiltrados].sort((a, b) => {
-    if (!a.data_iso) return 1
-    if (!b.data_iso) return -1
+  let limiteDias = 7
 
-    return new Date(a.data_iso) - new Date(b.data_iso)
-  })
+  const possui7Dias = jogosFuturos.some(
+    (jogo) =>
+      new Date(jogo.data_iso) <= adicionarDias(agora, 7)
+  )
+
+  if (!possui7Dias) {
+    const possui15Dias = jogosFuturos.some(
+      (jogo) =>
+        new Date(jogo.data_iso) <= adicionarDias(agora, 15)
+    )
+
+    limiteDias = possui15Dias ? 15 : 30
+  }
+
+  const dataLimite = adicionarDias(
+    agora,
+    limiteDias
+  )
+
+  const jogosOrdenados = jogosFuturos.filter(
+    (jogo) =>
+      new Date(jogo.data_iso) <= dataLimite
+  )
 
   /* ============================
      RENDER

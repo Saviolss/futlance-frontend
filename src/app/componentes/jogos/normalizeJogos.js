@@ -12,6 +12,7 @@ export function normalizeJogosData(input) {
     "mandante",
     "visitante",
     "placar_mandante",
+    "tempo",
     "placar_visitante"
   ].some((key) => key in input)
 

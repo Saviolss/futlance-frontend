@@ -40,7 +40,20 @@ export function WebSocketProvider({ children }) {
       ws.current = new WebSocket(wsUrl)
 
       ws.current.onopen = () => {
-      }
+      };
+
+      ws.current.onmessage = (event) => {
+
+        const data = JSON.parse(event.data);
+
+        setEvento(data);
+      };
+
+      ws.current.onerror = (e) => {
+      };
+
+      ws.current.onclose = (e) => {
+      };
 
       ws.current.onmessage = (event) => {
 
@@ -48,7 +61,7 @@ export function WebSocketProvider({ children }) {
 
           const data = JSON.parse(event.data)
 
-
+          console.log("WEBSOCKET RECEBIDO", data);
           setEvento(data)
 
         } catch (e) {

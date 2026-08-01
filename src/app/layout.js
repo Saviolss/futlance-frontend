@@ -11,11 +11,12 @@ export const metadata = {
 
   keywords: [
     "jogos de hoje",
+    "jogos de futebol hoje",
     "futebol ao vivo",
-    "tabelas de futebol",
-    "copa do mundo",
-    "world cup fifa 2026",
+    "classificação do campeonato brasileiro",
     "campeonato brasileiro",
+    "campeonato copa do brasil", 
+    "classificação copa do brasil",
     "resultados de hoje",
     "jogos em tempo real"
   ],
@@ -62,9 +63,7 @@ export const metadata = {
   },
 
   icons: {
-    icon: "/favicon.ico",
-    shortcut: "/favicon-16x16.png",
-    apple: "/apple-touch-icon.png"
+    icon: "/favicon.ico"
   },
 
   robots: {
