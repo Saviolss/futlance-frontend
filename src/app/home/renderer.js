@@ -39,10 +39,6 @@ export default function HomeRenderer({
 
     if (!evento) return
 
-    console.log(
-      "📡 evento websocket:",
-      evento
-    )
 
     /* 🔴 AO VIVO */
 

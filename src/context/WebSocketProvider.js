@@ -61,7 +61,6 @@ export function WebSocketProvider({ children }) {
 
           const data = JSON.parse(event.data)
 
-          console.log("WEBSOCKET RECEBIDO", data);
           setEvento(data)
 
         } catch (e) {
