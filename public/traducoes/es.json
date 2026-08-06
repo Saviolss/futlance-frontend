@@ -49,6 +49,7 @@
     "saibaMais": "Saber más",
     "aceitar": "Aceptar",
     "fechar": "Cerrar",
-    "teamSeoDescription": "{{team}} compite en la Copa del Mundo 2026. El equipo tiene una edad promedio de {{age}} años, una altura promedio de {{height}} cm y cuenta con {{player}} como el número 10."
+    "teamSeoDescription": "{{team}} compite en la Copa del Mundo 2026. El equipo tiene una edad promedio de {{age}} años, una altura promedio de {{height}} cm y cuenta con {{player}} como el número 10.",
+    "termos": "Términos"
 }
 

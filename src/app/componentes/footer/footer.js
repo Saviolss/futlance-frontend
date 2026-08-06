@@ -1,13 +1,12 @@
 'use client';
 
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 export default function Footer() {
 
   const { t } = useTranslation();
-
-  const [modal, setModal] = useState(null);
 
   const [showCookies, setShowCookies] = useState(false);
 
@@ -37,6 +36,7 @@ export default function Footer() {
     );
 
     setShowCookies(false);
+
   }
 
   function fecharBannerCookies() {
@@ -53,7 +53,7 @@ export default function Footer() {
       <footer className="w-full sm:block md:flex md:justify-center gap-3 bg-black text-white text-center py-4 mt-10 border-t border-t-orange-400/30">
 
         <p>
-          &copy; {new Date().getFullYear()} {t('footertext')}
+          &copy; {new Date().getFullYear()} {t("footertext")}
         </p>
 
         <a
@@ -63,81 +63,30 @@ export default function Footer() {
           {t("faleconosco")}
         </a>
 
-        <button
-          onClick={() => setModal("privacidade")}
+        <Link
+          href="/privacidade"
           className="underline mx-2"
         >
           {t("privacidade")}
-        </button>
+        </Link>
 
-        <button
-          onClick={() => setModal("cookies")}
+        <Link
+          href="/cookies"
           className="underline"
         >
           {t("cookies")}
-        </button>
+        </Link>
+
+        
+        <Link
+          href="/termos"
+          className="underline mx-2"
+        >
+          {t("termos")}
+        </Link>
+       
 
       </footer>
-
-      {/* ============================
-          MODAL PRIVACIDADE
-      ============================ */}
-
-      {modal === "privacidade" && (
-
-        <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 px-4">
-
-          <div className="bg-[#111] text-white max-w-lg w-full p-6 rounded-lg">
-
-            <h2 className="text-xl mb-4 font-semibold">
-              {t("politicaPrivacidade")}
-            </h2>
-
-            <p className="text-sm text-gray-300 leading-6">
-              {t("privacidadeTexto")}
-            </p>
-
-            <button
-              onClick={() => setModal(null)}
-              className="mt-6 bg-orange-500 px-4 py-2 rounded"
-            >
-              {t("fechar")}
-            </button>
-
-          </div>
-
-        </div>
-      )}
-
-      {/* ============================
-          MODAL COOKIES
-      ============================ */}
-
-      {modal === "cookies" && (
-
-        <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 px-4">
-
-          <div className="bg-[#111] text-white max-w-lg w-full p-6 rounded-lg">
-
-            <h2 className="text-xl mb-4 font-semibold">
-              {t("cookies")}
-            </h2>
-
-            <p className="text-sm text-gray-300 leading-6">
-              {t("cookiesTexto")}
-            </p>
-
-            <button
-              onClick={() => setModal(null)}
-              className="mt-6 bg-orange-500 px-4 py-2 rounded"
-            >
-              {t("fechar")}
-            </button>
-
-          </div>
-
-        </div>
-      )}
 
       {/* ============================
           BANNER COOKIES
@@ -159,25 +108,27 @@ export default function Footer() {
 
             <div className="mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
 
-            <p className="text-sm text-gray-300">
-              {t("cookiesInfo")}
-            </p>
+              <p className="text-sm text-gray-300">
+                {t("cookiesInfo")}
+              </p>
 
-            <div className="flex gap-3">
+              <div className="flex gap-3">
 
-              <button
-                onClick={() => setModal("cookies")}
-                className="underline text-sm"
-              >
-                {t("saibaMais")}
-              </button>
+                <Link
+                  href="/cookies"
+                  className="underline text-sm"
+                >
+                  {t("saibaMais")}
+                </Link>
 
-              <button
-                onClick={aceitarCookies}
-                className="bg-orange-500 px-4 py-2 rounded text-sm"
-              >
-                {t("aceitar")}
-              </button>
+                <button
+                  onClick={aceitarCookies}
+                  className="bg-orange-500 px-4 py-2 rounded text-sm"
+                >
+                  {t("aceitar")}
+                </button>
+
+              </div>
 
             </div>
 
@@ -185,9 +136,9 @@ export default function Footer() {
 
         </div>
 
-      </div>
       )}
 
     </>
   );
+
 }

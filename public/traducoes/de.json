@@ -49,5 +49,6 @@
   "saibaMais": "Mehr erfahren",
   "aceitar": "Akzeptieren",
   "fechar": "Schließen",
-  "teamSeoDescription": "{{team}} nimmt an der Weltmeisterschaft 2026 teil. Das Team hat ein Durchschnittsalter von {{age}} Jahren, eine Durchschnittsgröße von {{height}} cm und {{player}} als Nummer 10."
+  "teamSeoDescription": "{{team}} nimmt an der Weltmeisterschaft 2026 teil. Das Team hat ein Durchschnittsalter von {{age}} Jahren, eine Durchschnittsgröße von {{height}} cm und {{player}} als Nummer 10.",
+  "termos": "Bedingungen"
 }

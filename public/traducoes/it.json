@@ -49,5 +49,6 @@
   "saibaMais": "Scopri di più",
   "aceitar": "Accetta",
   "fechar": "Chiudi",
-  "teamSeoDescription": "{{team}} partecipa alla Coppa del Mondo 2026. La squadra ha un'età media di {{age}} anni, un'altezza media di {{height}} cm e presenta {{player}} come numero 10."
+  "teamSeoDescription": "{{team}} partecipa alla Coppa del Mondo 2026. La squadra ha un'età media di {{age}} anni, un'altezza media di {{height}} cm e presenta {{player}} come numero 10.",
+  "termos": "Termini"
 }
