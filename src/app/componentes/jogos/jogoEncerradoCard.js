@@ -153,7 +153,7 @@ export function JogoEncerradoCard({ jogo }) {
           absolute
           top-3
           right-3
-          z-20
+          z-50
           w-9
           h-9
           flex
