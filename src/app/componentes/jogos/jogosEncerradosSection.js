@@ -1,22 +1,162 @@
 'use client';
+
 import { useTranslation } from "react-i18next";
 import { normalizeJogosData } from "./normalizeJogos";
 
 export function JogosEncerradosSection({
-  titulo,
   jogos = []
 }) {
 
   const { t } = useTranslation();
+
   const jogosNormalizados = normalizeJogosData(jogos);
 
-  if (!jogosNormalizados.length) return null;
+  const agora = new Date();
+
+  const tresDiasAtras = new Date(agora);
+  tresDiasAtras.setDate(tresDiasAtras.getDate() - 3);
+
+  const jogosFiltrados = jogosNormalizados.filter((jogo) => {
+
+    if (!jogo.data) {
+      return false;
+    }
+
+    let dataJogo = null;
+
+    const dataTexto = String(jogo.data).trim();
+    const horaTexto = jogo.hora
+      ? String(jogo.hora).trim()
+      : "23:59";
+
+    /*
+     * Formato DD/MM/YYYY
+     */
+
+    const partes = dataTexto.split("/");
+
+    if (partes.length === 3) {
+
+      const dia = Number(partes[0]);
+      const mes = Number(partes[1]) - 1;
+      const ano = Number(partes[2]);
+
+      const partesHora = horaTexto.split(":");
+
+      const hora = Number(partesHora[0]) || 0;
+      const minuto = Number(partesHora[1]) || 0;
+
+      dataJogo = new Date(
+        ano,
+        mes,
+        dia,
+        hora,
+        minuto,
+        0,
+        0
+      );
+
+    } else {
+
+      /*
+       * Caso o backend já envie uma data reconhecida
+       * pelo JavaScript.
+       */
+
+      const tentativa = new Date(
+        `${dataTexto} ${horaTexto}`
+      );
+
+      if (!Number.isNaN(tentativa.getTime())) {
+        dataJogo = tentativa;
+      }
+
+    }
+
+    if (!dataJogo || Number.isNaN(dataJogo.getTime())) {
+      return false;
+    }
+
+    /*
+     * Remove jogos futuros.
+     *
+     * Um jogo finalizado não deve possuir data/hora futura.
+     */
+
+    if (dataJogo > agora) {
+      return false;
+    }
+
+    /*
+     * Mantém somente os últimos 3 dias.
+     */
+
+    if (dataJogo < tresDiasAtras) {
+      return false;
+    }
+
+    return true;
+  });
+
+  /*
+   * Ordena do jogo mais recente para o mais antigo.
+   */
+
+  const jogosOrdenados = [...jogosFiltrados].sort((a, b) => {
+
+    function converterData(jogo) {
+
+      if (!jogo.data) {
+        return 0;
+      }
+
+      const dataTexto = String(jogo.data).trim();
+      const horaTexto = jogo.hora
+        ? String(jogo.hora).trim()
+        : "23:59";
+
+      const partes = dataTexto.split("/");
+
+      if (partes.length === 3) {
+
+        const dia = Number(partes[0]);
+        const mes = Number(partes[1]) - 1;
+        const ano = Number(partes[2]);
+
+        const partesHora = horaTexto.split(":");
+
+        const hora = Number(partesHora[0]) || 0;
+        const minuto = Number(partesHora[1]) || 0;
+
+        return new Date(
+          ano,
+          mes,
+          dia,
+          hora,
+          minuto
+        ).getTime();
+      }
+
+      const data = new Date(
+        `${dataTexto} ${horaTexto}`
+      );
+
+      return Number.isNaN(data.getTime())
+        ? 0
+        : data.getTime();
+    }
+
+    return converterData(b) - converterData(a);
+  });
+
+  if (!jogosOrdenados.length) {
+    return null;
+  }
 
   return (
     <section className="w-full max-w-7xl mx-auto px-4 py-10">
 
       <div className="flex items-center gap-4 mb-10 mx-auto justify-center">
-
 
         <h2
           className="
@@ -26,18 +166,20 @@ export function JogosEncerradosSection({
             text-white
           "
         >
-        {t ("finalizado")}
+          {t("finalizado")}
         </h2>
-
 
       </div>
 
       <div className="flex flex-wrap justify-center gap-6">
 
-        {jogosNormalizados.map((jogo) => (
+        {jogosOrdenados.map((jogo) => (
 
           <div
-            key={jogo.partida_id ?? `${jogo.mandante?.nome ?? 'mandante'}-${jogo.visitante?.nome ?? 'visitante'}`}
+            key={
+              jogo.partida_id ??
+              `${jogo.mandante?.nome ?? 'mandante'}-${jogo.visitante?.nome ?? 'visitante'}`
+            }
             className="
               relative
               w-full
@@ -60,9 +202,25 @@ export function JogosEncerradosSection({
 
             {/* LINHA TOPO */}
 
-            <div className="absolute inset-x-0 top-0 h-[2px] bg-linear-to-r from-transparent via-zinc-500 to-transparent" />
+            <div className="
+              absolute
+              inset-x-0
+              top-0
+              h-[2px]
+              bg-linear-to-r
+              from-transparent
+              via-zinc-500
+              to-transparent
+            " />
 
-            <div className="flex flex-col items-center px-6 py-6 gap-5">
+            <div className="
+              flex
+              flex-col
+              items-center
+              px-6
+              py-6
+              gap-5
+            ">
 
               {/* CAMPEONATO */}
 
@@ -73,6 +231,7 @@ export function JogosEncerradosSection({
                     uppercase
                     tracking-[0.2em]
                     text-zinc-400
+                    text-center
                   "
                 >
                   {jogo.campeonato.nome}
@@ -83,7 +242,12 @@ export function JogosEncerradosSection({
 
               <div className="flex items-center gap-2">
 
-                <span className="w-2 h-2 rounded-full bg-zinc-500" />
+                <span className="
+                  w-2
+                  h-2
+                  rounded-full
+                  bg-zinc-500
+                " />
 
                 <span
                   className="
@@ -100,11 +264,23 @@ export function JogosEncerradosSection({
 
               {/* TIMES */}
 
-              <div className="flex items-center justify-between w-full">
+              <div className="
+                flex
+                items-center
+                justify-between
+                w-full
+              ">
 
                 <Time time={jogo.mandante} />
 
-                <div className="flex flex-col items-center">
+                {/* PLACAR */}
+
+                <div className="
+                  flex
+                  flex-col
+                  items-center
+                  min-w-[80px]
+                ">
 
                   <div
                     className="
@@ -116,13 +292,30 @@ export function JogosEncerradosSection({
                       text-zinc-200
                     "
                   >
-                    <span>{jogo.placar_mandante}</span>
-                    <span className="opacity-50">:</span>
-                    <span>{jogo.placar_visitante}</span>
+                    <span>
+                      {jogo.placar_mandante}
+                    </span>
+
+                    <span className="opacity-50">
+                      :
+                    </span>
+
+                    <span>
+                      {jogo.placar_visitante}
+                    </span>
                   </div>
 
+                  {/* DATA */}
+
                   {(jogo.data || jogo.hora) && (
-                    <span className="text-xs text-zinc-500 mt-2">
+                    <span
+                      className="
+                        text-xs
+                        text-zinc-500
+                        mt-2
+                        text-center
+                      "
+                    >
                       {jogo.data} {jogo.hora}
                     </span>
                   )}
@@ -147,18 +340,30 @@ export function JogosEncerradosSection({
 
 function Time({ time }) {
 
-  return (
-    <div className="flex flex-col items-center gap-3 w-1/3">
+  if (!time) {
+    return null;
+  }
 
-      <img
-        src={time?.escudo}
-        alt={time?.nome}
-        className="
-          w-14
-          h-14
-          object-contain
-        "
-      />
+  return (
+    <div className="
+      flex
+      flex-col
+      items-center
+      gap-3
+      w-1/3
+    ">
+
+      {time.escudo && (
+        <img
+          src={time.escudo}
+          alt={time.nome || "Time"}
+          className="
+            w-14
+            h-14
+            object-contain
+          "
+        />
+      )}
 
       <span
         className="
@@ -170,7 +375,7 @@ function Time({ time }) {
           leading-tight
         "
       >
-        {time?.nome}
+        {time.nome}
       </span>
 
     </div>
