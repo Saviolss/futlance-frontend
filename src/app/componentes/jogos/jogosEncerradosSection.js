@@ -1,7 +1,7 @@
 'use client';
 
 import { useTranslation } from "react-i18next";
-import { JogoEncerradoCard } from "./JogoEncerradoCard.js";
+import { JogoEncerradoCard } from "./jogoEncerradoCard.js";
 import { normalizeJogosData } from "./normalizeJogos.js";
 export function JogosEncerradosSection({
   jogos = []
