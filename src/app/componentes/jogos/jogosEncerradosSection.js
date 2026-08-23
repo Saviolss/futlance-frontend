@@ -1,8 +1,9 @@
 'use client';
 
 import { useTranslation } from "react-i18next";
-import { JogoEncerradoCard } from "./jogoEncerradoCard.js";
-import { normalizeJogosData } from "./normalizeJogos.js";
+import { JogoEncerradoCard } from "./jogoEncerradoCard";
+import { normalizeJogosData } from "./normalizeJogos";
+
 export function JogosEncerradosSection({
   jogos = []
 }) {
@@ -13,20 +14,16 @@ export function JogosEncerradosSection({
 
   const agora = new Date();
 
-  /*
-   * Limite de 3 dias anteriores
-   */
   const tresDiasAtras = new Date(agora);
   tresDiasAtras.setDate(tresDiasAtras.getDate() - 3);
 
-  /*
-   * Converte data + hora para timestamp
-   */
-  function converterData(jogo) {
+  const jogosFiltrados = jogosNormalizados.filter((jogo) => {
 
-    if (!jogo?.data) {
-      return null;
+    if (!jogo.data) {
+      return false;
     }
+
+    let dataJogo = null;
 
     const dataTexto = String(jogo.data).trim();
 
@@ -35,8 +32,9 @@ export function JogosEncerradosSection({
       : "23:59";
 
     /*
-     * Formato DD/MM/YYYY
+     * DD/MM/YYYY
      */
+
     const partes = dataTexto.split("/");
 
     if (partes.length === 3) {
@@ -50,7 +48,7 @@ export function JogosEncerradosSection({
       const hora = Number(partesHora[0]) || 0;
       const minuto = Number(partesHora[1]) || 0;
 
-      const data = new Date(
+      dataJogo = new Date(
         ano,
         mes,
         dia,
@@ -60,46 +58,34 @@ export function JogosEncerradosSection({
         0
       );
 
-      if (!Number.isNaN(data.getTime())) {
-        return data.getTime();
+    } else {
+
+      const tentativa = new Date(
+        `${dataTexto} ${horaTexto}`
+      );
+
+      if (!Number.isNaN(tentativa.getTime())) {
+        dataJogo = tentativa;
       }
-
-      return null;
     }
 
-    /*
-     * Caso o backend envie uma data
-     * reconhecida diretamente pelo JavaScript.
-     */
-    const tentativa = new Date(
-      `${dataTexto} ${horaTexto}`
-    );
-
-    if (!Number.isNaN(tentativa.getTime())) {
-      return tentativa.getTime();
-    }
-
-    return null;
-  }
-
-
-  const jogosFiltrados = jogosNormalizados.filter((jogo) => {
-
-    const dataJogo = converterData(jogo);
-
-    if (dataJogo === null) {
-      return false;
-    }
-
-
-    if (dataJogo > agora.getTime()) {
+    if (!dataJogo || Number.isNaN(dataJogo.getTime())) {
       return false;
     }
 
     /*
-     * Remove jogos anteriores aos últimos 3 dias
+     * Remove jogos futuros.
      */
-    if (dataJogo < tresDiasAtras.getTime()) {
+
+    if (dataJogo > agora) {
+      return false;
+    }
+
+    /*
+     * Mantém somente os últimos 3 dias.
+     */
+
+    if (dataJogo < tresDiasAtras) {
       return false;
     }
 
@@ -107,14 +93,57 @@ export function JogosEncerradosSection({
   });
 
   /*
-   * Mais recente primeiro
+   * Mais recente primeiro.
    */
+
   const jogosOrdenados = [...jogosFiltrados].sort((a, b) => {
 
-    const dataA = converterData(a) ?? 0;
-    const dataB = converterData(b) ?? 0;
+    function converterData(jogo) {
 
-    return dataB - dataA;
+      if (!jogo.data) {
+        return 0;
+      }
+
+      const dataTexto = String(jogo.data).trim();
+
+      const horaTexto = jogo.hora
+        ? String(jogo.hora).trim()
+        : "23:59";
+
+      const partes = dataTexto.split("/");
+
+      if (partes.length === 3) {
+
+        const dia = Number(partes[0]);
+        const mes = Number(partes[1]) - 1;
+        const ano = Number(partes[2]);
+
+        const partesHora = horaTexto.split(":");
+
+        const hora = Number(partesHora[0]) || 0;
+        const minuto = Number(partesHora[1]) || 0;
+
+        return new Date(
+          ano,
+          mes,
+          dia,
+          hora,
+          minuto,
+          0,
+          0
+        ).getTime();
+      }
+
+      const data = new Date(
+        `${dataTexto} ${horaTexto}`
+      );
+
+      return Number.isNaN(data.getTime())
+        ? 0
+        : data.getTime();
+    }
+
+    return converterData(b) - converterData(a);
   });
 
   if (!jogosOrdenados.length) {
@@ -122,10 +151,7 @@ export function JogosEncerradosSection({
   }
 
   return (
-    <section
-      id="encerrados"
-      className="w-full max-w-7xl mx-auto px-4 py-10"
-    >
+    <section className="w-full max-w-7xl mx-auto px-4 py-10">
 
       <div className="flex items-center gap-4 mb-10 mx-auto justify-center">
 
@@ -153,6 +179,10 @@ export function JogosEncerradosSection({
             }
             jogo={{
               ...jogo,
+
+              /*
+               * ADAPTAÇÃO PARA O CARD
+               */
 
               time_mandante: jogo.mandante,
               time_visitante: jogo.visitante
