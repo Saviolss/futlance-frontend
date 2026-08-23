@@ -7,12 +7,11 @@ import { normalizeJogosData } from "./normalizeJogos";
 export function JogosEncerradosSection({
   jogos = []
 }) {
-
-
-
+const {
+  t
+} = useTranslation();
 
   const jogosNormalizados = normalizeJogosData(jogos);
-  const { t } = useTranslation();
 
   const agora = new Date();
 
