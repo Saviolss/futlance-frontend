@@ -9,10 +9,10 @@ export function JogosEncerradosSection({
 }) {
 
 
-  
-  const { t } = useTranslation();
+
 
   const jogosNormalizados = normalizeJogosData(jogos);
+  const { t } = useTranslation();
 
   const agora = new Date();
 
