@@ -9,6 +9,7 @@ import {
 import Link from "next/link"
 
 import { api } from "@/app/servidor/api"
+
 import { useTranslation } from "react-i18next"
 
 // ============================================================
@@ -18,39 +19,54 @@ import { useTranslation } from "react-i18next"
 const GOOGLE_CLIENT_ID =
   process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID
 
+export default function LoginGoogle({
+  onLoginSucesso
+}) {
 
-export default function LoginGoogle() {
-  const { t, i18n } = useTranslation()
+  const { t, i18n } =
+    useTranslation()
 
   const botaoGoogleRef =
     useRef(null)
-
 
   // ==========================================================
   // ESTADOS
   // ==========================================================
 
-  const [carregando, setCarregando] =
-    useState(true)
+  const [
+    carregando,
+    setCarregando
+  ] = useState(true)
 
-  const [erro, setErro] =
-    useState("")
+  const [
+    erro,
+    setErro
+  ] = useState("")
 
-  const [mostrarConsentimento, setMostrarConsentimento] =
-    useState(false)
+  const [
+    mostrarConsentimento,
+    setMostrarConsentimento
+  ] = useState(false)
 
-  const [aceitouPolitica, setAceitouPolitica] =
-    useState(false)
+  const [
+    aceitouPolitica,
+    setAceitouPolitica
+  ] = useState(false)
 
-  const [aceitouTermos, setAceitouTermos] =
-    useState(false)
+  const [
+    aceitouTermos,
+    setAceitouTermos
+  ] = useState(false)
 
-  const [dadosGoogle, setDadosGoogle] =
-    useState(null)
+  const [
+    dadosGoogle,
+    setDadosGoogle
+  ] = useState(null)
 
-  const [enviandoLogin, setEnviandoLogin] =
-    useState(false)
-
+  const [
+    enviandoLogin,
+    setEnviandoLogin
+  ] = useState(false)
 
   // ==========================================================
   // ENVIAR LOGIN PARA O BACKEND
@@ -62,7 +78,6 @@ export default function LoginGoogle() {
 
       setErro("")
 
-
       // ======================================================
       // VERIFICAR ACEITES
       // ======================================================
@@ -70,73 +85,125 @@ export default function LoginGoogle() {
       if (!aceitouPolitica) {
 
         setErro(
-          t("aceiteTermosParaContinuar")
+          t(
+            "aceiteTermosParaContinuar"
+          )
         )
 
         return
 
       }
-
 
       if (!aceitouTermos) {
 
         setErro(
-          t("aceiteTermosParaContinuar")
+          t(
+            "aceiteTermosParaContinuar"
+          )
         )
 
         return
 
       }
-
 
       if (!dadosGoogle?.idToken) {
 
         setErro(
-          t("naoFoiPossivelObterDadosGoogle")
+          t(
+            "naoFoiPossivelObterDadosGoogle"
+          )
         )
 
         return
 
       }
 
-
       setEnviandoLogin(true)
 
+      // ======================================================
+      // IDIOMA
+      // ======================================================
+
+      const idiomaAtual =
+        (
+          i18n?.language ||
+          "pt"
+        )
+          .split("-")[0]
+          .toLowerCase()
 
       // ======================================================
       // ENVIAR PARA API
       // ======================================================
 
-      const idiomaAtual =
-        (i18n.language || "pt")
-          .split("-")[0]
-          .toLowerCase()
-
       const resposta =
         await api.post(
           "/auth/google",
           {
-            idToken: dadosGoogle.idToken,
-            idioma: idiomaAtual,
-            aceitouPolitica: true,
-            aceitouTermos: true
+            idToken:
+              dadosGoogle.idToken,
+
+            idioma:
+              idiomaAtual,
+
+            aceitouPolitica:
+              true,
+
+            aceitouTermos:
+              true
           }
         )
 
+      // ======================================================
+      // VERIFICAR RESPOSTA
+      // ======================================================
+
+      if (
+        !resposta.data?.sucesso
+      ) {
+
+        setErro(
+          resposta.data?.mensagem ||
+          t(
+            "erroLogin",
+            "Não foi possível realizar o login."
+          )
+        )
+
+        return
+
+      }
 
       // ======================================================
-      // FECHAR MODAL
+      // FECHAR CONSENTIMENTO
       // ======================================================
 
-      setMostrarConsentimento(false)
-
+      setMostrarConsentimento(
+        false
+      )
 
       // ======================================================
-      // IR PARA HOME
+      // LOGIN REALIZADO
+      // ======================================================
+
+      if (
+        typeof onLoginSucesso ===
+        "function"
+      ) {
+
+        onLoginSucesso(
+          resposta.data.usuario
+        )
+
+        return
+
+      }
+
+      // ======================================================
+      // COMPORTAMENTO NORMAL
       // ======================================================
 
       window.location.href = "/"
-
 
     } catch (erro) {
 
@@ -145,18 +212,18 @@ export default function LoginGoogle() {
         erro
       )
 
-
       const mensagem =
         erro?.response?.data?.mensagem ||
         erro?.response?.data?.erro ||
         erro?.message ||
-        "Não foi possível realizar o login."
-
+        t(
+          "erroLogin",
+          "Não foi possível realizar o login."
+        )
 
       setErro(
         mensagem
       )
-
 
     } finally {
 
@@ -165,7 +232,6 @@ export default function LoginGoogle() {
     }
 
   }
-
 
   // ==========================================================
   // CALLBACK GOOGLE
@@ -179,7 +245,6 @@ export default function LoginGoogle() {
 
       setErro("")
 
-
       // ======================================================
       // TOKEN
       // ======================================================
@@ -187,28 +252,26 @@ export default function LoginGoogle() {
       const idToken =
         respostaGoogle?.credential
 
-
       if (!idToken) {
 
         setErro(
-          "O Google não retornou o token de autenticação."
+          t(
+            "naoFoiPossivelObterDadosGoogle",
+            "O Google não retornou o token de autenticação."
+          )
         )
 
         return
 
       }
 
-
       // ======================================================
       // GUARDAR TOKEN TEMPORARIAMENTE
       // ======================================================
 
       setDadosGoogle({
-
         idToken
-
       })
-
 
       // ======================================================
       // MOSTRAR CONSENTIMENTO
@@ -226,13 +289,15 @@ export default function LoginGoogle() {
       )
 
       setErro(
-        "Não foi possível processar o login do Google."
+        t(
+          "erroLoginGoogle",
+          "Não foi possível processar o login do Google."
+        )
       )
 
     }
 
   }
-
 
   // ==========================================================
   // CANCELAR CONSENTIMENTO
@@ -260,7 +325,6 @@ export default function LoginGoogle() {
 
   }
 
-
   // ==========================================================
   // CARREGAR GOOGLE IDENTITY SERVICES
   // ==========================================================
@@ -278,7 +342,10 @@ export default function LoginGoogle() {
       )
 
       setErro(
-        "O login do Google não está configurado."
+        t(
+          "loginGoogleNaoConfigurado",
+          "O login do Google não está configurado."
+        )
       )
 
       setCarregando(false)
@@ -286,7 +353,6 @@ export default function LoginGoogle() {
       return
 
     }
-
 
     // ========================================================
     // INICIALIZAR GOOGLE
@@ -305,7 +371,10 @@ export default function LoginGoogle() {
         )
 
         setErro(
-          "Não foi possível carregar o Google."
+          t(
+            "googleNaoCarregado",
+            "Não foi possível carregar o Google."
+          )
         )
 
         setCarregando(false)
@@ -313,7 +382,6 @@ export default function LoginGoogle() {
         return
 
       }
-
 
       // ======================================================
       // CONFIGURAR GOOGLE
@@ -335,7 +403,6 @@ export default function LoginGoogle() {
 
       })
 
-
       // ======================================================
       // RENDERIZAR BOTÃO
       // ======================================================
@@ -347,13 +414,11 @@ export default function LoginGoogle() {
         botaoGoogleRef.current.innerHTML =
           ""
 
-
         window.google.accounts.id.renderButton(
 
           botaoGoogleRef.current,
 
           {
-
             type:
               "standard",
 
@@ -374,18 +439,15 @@ export default function LoginGoogle() {
 
             width:
               320
-
           }
 
         )
 
       }
 
-
       setCarregando(false)
 
     }
-
 
     // ========================================================
     // GOOGLE JÁ CARREGADO
@@ -403,7 +465,6 @@ export default function LoginGoogle() {
 
     }
 
-
     // ========================================================
     // CRIAR SCRIPT
     // ========================================================
@@ -413,22 +474,17 @@ export default function LoginGoogle() {
         "script"
       )
 
-
     script.src =
       "https://accounts.google.com/gsi/client"
-
 
     script.async =
       true
 
-
     script.defer =
       true
 
-
     script.onload =
       inicializarGoogle
-
 
     script.onerror =
       () => {
@@ -438,18 +494,19 @@ export default function LoginGoogle() {
         )
 
         setErro(
-          "Não foi possível carregar o login do Google."
+          t(
+            "googleNaoCarregado",
+            "Não foi possível carregar o login do Google."
+          )
         )
 
         setCarregando(false)
 
       }
 
-
     document.head.appendChild(
       script
     )
-
 
     // ========================================================
     // LIMPEZA
@@ -471,7 +528,6 @@ export default function LoginGoogle() {
 
   }, [])
 
-
   // ==========================================================
   // INTERFACE
   // ==========================================================
@@ -486,9 +542,8 @@ export default function LoginGoogle() {
 
       <div
         ref={botaoGoogleRef}
-        className="flex justify-center mb-3"
+        className="mb-3 flex justify-center"
       />
-
 
       {/* ====================================================
           CARREGANDO
@@ -498,12 +553,14 @@ export default function LoginGoogle() {
 
         <p className="mt-3 text-center text-sm text-gray-400">
 
-          Carregando...
+          {t(
+            "carregando",
+            "Carregando..."
+          )}
 
         </p>
 
       )}
-
 
       {/* ====================================================
           ERRO
@@ -523,7 +580,6 @@ export default function LoginGoogle() {
 
         )}
 
-
       {/* ====================================================
           MODAL DE CONSENTIMENTO
       ==================================================== */}
@@ -540,10 +596,12 @@ export default function LoginGoogle() {
 
             <h2 className="mb-4 text-xl font-extrabold">
 
-              Antes de continuar
+              {t(
+                "antesDeContinuar",
+                "Antes de continuar"
+              )}
 
             </h2>
-
 
             {/* =================================================
                 TEXTO
@@ -551,21 +609,24 @@ export default function LoginGoogle() {
 
             <p className="mb-5 text-sm leading-6 text-gray-300">
 
-              Para criar sua conta no Futlance, leia e aceite
-              nossa Política de Privacidade e os Termos de Uso.
+              {t(
+                "textoConsentimentoGoogle",
+                "Para criar sua conta no Futlance, leia e aceite nossa Política de Privacidade e os Termos de Uso."
+              )}
 
             </p>
-
 
             {/* =================================================
                 POLÍTICA
             ================================================= */}
 
-              <label className="mb-4 flex cursor-pointer items-start gap-3">
+            <label className="mb-4 flex cursor-pointer items-start gap-3">
 
               <input
                 type="checkbox"
-                checked={aceitouPolitica}
+                checked={
+                  aceitouPolitica
+                }
                 onChange={(e) =>
                   setAceitouPolitica(
                     e.target.checked
@@ -576,30 +637,41 @@ export default function LoginGoogle() {
 
               <span className="text-sm leading-6 text-gray-300">
 
-                Li e aceito a{" "}
+                {t(
+                  "liAceitoAPolitica",
+                  "Li e aceito a"
+                )}
+
+                {" "}
 
                 <Link
                   href="/privacidade"
                   target="_blank"
                   className="text-orange-400 underline"
                 >
-                  Política de Privacidade
+
+                  {t(
+                    "politicaPrivacidade",
+                    "Política de Privacidade"
+                  )}
+
                 </Link>
 
               </span>
 
             </label>
 
-
             {/* =================================================
                 TERMOS
             ================================================= */}
 
-              <label className="mb-4 flex cursor-pointer items-start gap-3">
+            <label className="mb-4 flex cursor-pointer items-start gap-3">
 
               <input
                 type="checkbox"
-                checked={aceitouTermos}
+                checked={
+                  aceitouTermos
+                }
                 onChange={(e) =>
                   setAceitouTermos(
                     e.target.checked
@@ -610,23 +682,32 @@ export default function LoginGoogle() {
 
               <span className="text-sm leading-6 text-gray-300">
 
-                Li e aceito os{" "}
+                {t(
+                  "liAceitoOsTermos",
+                  "Li e aceito os"
+                )}
+
+                {" "}
 
                 <Link
                   href="/termos"
                   target="_blank"
                   className="text-orange-400 underline"
                 >
-                  Termos de Uso
+
+                  {t(
+                    "termosDeUso",
+                    "Termos de Uso"
+                  )}
+
                 </Link>
 
               </span>
 
             </label>
 
-
             {/* =================================================
-                ERRO DO CONSENTIMENTO
+                ERRO
             ================================================= */}
 
             {erro && (
@@ -642,12 +723,11 @@ export default function LoginGoogle() {
 
             )}
 
-
             {/* =================================================
                 BOTÕES
             ================================================= */}
 
-              <div className="flex justify-end gap-3">
+            <div className="flex justify-end gap-3">
 
               <button
                 type="button"
@@ -657,13 +737,15 @@ export default function LoginGoogle() {
                 disabled={
                   enviandoLogin
                 }
-                className="rounded-md border border-white/10 px-4 py-2 text-sm text-gray-300 hover:bg-white/10 disabled:opacity-50"
+                className="rounded-md border border-white/10 px-4 py-2 text-sm text-gray-300 transition hover:bg-white/10 disabled:opacity-50"
               >
 
-                Cancelar
+                {t(
+                  "cancelar",
+                  "Cancelar"
+                )}
 
               </button>
-
 
               <button
                 type="button"
@@ -675,12 +757,18 @@ export default function LoginGoogle() {
                   !aceitouPolitica ||
                   !aceitouTermos
                 }
-                className="rounded-md bg-orange-500 px-4 py-2 text-sm font-medium text-white hover:bg-orange-600 disabled:cursor-not-allowed disabled:opacity-50 shadow-md"
+                className="rounded-md bg-orange-500 px-4 py-2 text-sm font-medium text-white shadow-md transition hover:bg-orange-600 disabled:cursor-not-allowed disabled:opacity-50"
               >
 
                 {enviandoLogin
-                  ? "Entrando..."
-                  : "Continuar"}
+                  ? t(
+                    "entrando",
+                    "Entrando..."
+                  )
+                  : t(
+                    "continuar",
+                    "Continuar"
+                  )}
 
               </button>
 
