@@ -9,7 +9,7 @@ export const metadata = {
   description: "Acompanhe a tabela, jogos, agenda e artilheiros da Champions League.",
   keywords: "champions league, futebol, notícias de futebol, resultados de futebol",
   openGraph: {
-    title: "Champions League - Futlance",
+    title: "UEFA Champions League - Futlance",
     description: "Acompanhe a tabela, jogos, agenda e artilheiros da Champions League.",
     url: "https://www.futlance.com/campeonatos/champions",
     siteName: "Futlance",

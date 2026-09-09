@@ -15,8 +15,10 @@ export const metadata = {
     "futebol ao vivo",
     "classificação do campeonato brasileiro",
     "campeonato brasileiro",
-    "campeonato copa do brasil", 
-    "classificação copa do brasil",
+    "campeonato champions league", 
+    "classificação champions league",
+    "UEFA champions league",
+    "Brasileirão Série A",
     "resultados de hoje",
     "jogos em tempo real"
   ],

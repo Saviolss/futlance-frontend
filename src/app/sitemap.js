@@ -13,10 +13,10 @@ export default function sitemap() {
       priority: 0.9,
     },
     {
-      url: 'https://www.futlance.com/campeonatos/copamundo',
+      url: 'https://www.futlance.com/campeonatos/champions',
       lastModified: new Date(),
       changeFrequency: 'daily',
-      priority: 0.8,
+      priority: 0.9,
     },
     {
       url: 'https://www.futlance.com/campeonatos/copabrasil',
