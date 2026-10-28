@@ -9,9 +9,12 @@
     "deploy": "git reset --hard origin/main && npm install && npm run build && pm2 reload frontend"
   },
   "dependencies": {
+    "@stripe/react-stripe-js": "^7.0.0",
+    "@stripe/stripe-js": "^10.1.0",
     "axios": "^1.13.2",
     "dotenv": "^17.4.2",
     "framer-motion": "^12.23.26",
+    "html2canvas": "^1.4.1",
     "i18next": "^25.7.3",
     "next": "16.0.8",
     "next-i18next": "^15.4.3",

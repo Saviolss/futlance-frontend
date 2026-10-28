@@ -1,5 +1,7 @@
 "use client"
 
+import { useEffect, useState } from "react"
+import { createPortal } from "react-dom"
 import { useTranslation } from "react-i18next"
 
 export default function ModalAssistenteTorcedor({
@@ -10,31 +12,36 @@ export default function ModalAssistenteTorcedor({
   onFechar
 }) {
   const { t } = useTranslation()
+  const [portalPronto, setPortalPronto] = useState(false)
 
-  if (!aberto) return null
+  useEffect(() => {
+    setPortalPronto(true)
+  }, [])
 
-  return (
-    <div className="fixed inset-0 z-[110] flex items-center justify-center bg-black/70 px-4 backdrop-blur-sm">
-      <div className="relative w-full max-w-md overflow-hidden rounded-2xl border border-white/10 bg-[#0b0f1a] shadow-2xl">
-        <div className="border-b border-white/10 px-6 py-5 text-center">
+  if (!aberto || !portalPronto) return null
+
+  return createPortal(
+    <div className="fixed inset-0 z-110 flex items-center justify-center overflow-y-auto bg-black/70 p-3 backdrop-blur-sm sm:p-4">
+      <div className="relative mx-auto flex max-h-[calc(100dvh-1.5rem)] w-full max-w-md flex-col overflow-hidden rounded-2xl border border-white/10 bg-[#0b0f1a] shadow-2xl sm:max-h-[calc(100dvh-2rem)]">
+        <div className="shrink-0 border-b border-white/10 px-4 py-4 text-center sm:px-6 sm:py-5">
           <button
             type="button"
             onClick={onFechar}
-            className="absolute right-4 top-3 text-2xl text-zinc-400 transition hover:text-white"
+            className="absolute right-3 top-3 flex h-10 w-10 items-center justify-center rounded-full text-2xl text-zinc-400 transition hover:bg-white/5 hover:text-white sm:right-4"
             aria-label={t("comum.fechar", "Fechar")}
           >
             ×
           </button>
 
-          <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-orange-500/10">
-            <span className="text-3xl">❤️</span>
+          <div className="mx-auto mb-3 flex h-14 w-14 items-center justify-center rounded-full bg-orange-500/10 sm:mb-4 sm:h-16 sm:w-16">
+            <span className="text-2xl sm:text-3xl">❤️</span>
           </div>
 
-          <h2 className="text-2xl font-extrabold text-white">
+          <h2 className="px-7 text-xl font-extrabold text-white sm:px-0 sm:text-2xl">
             {t("torcedor.tituloAssistente", "Conheça o Assistente Torcedor")}
           </h2>
 
-          <p className="mt-2 text-sm leading-6 text-zinc-400">
+          <p className="mt-2 text-sm leading-5 text-zinc-400 sm:leading-6">
             {t(
               "torcedor.descricaoAssistente",
               "Tenha seu time sempre por perto e receba informações importantes diretamente para você."
@@ -43,7 +50,7 @@ export default function ModalAssistenteTorcedor({
         </div>
 
         {time && (
-          <div className="mx-6 mt-5 flex items-center justify-center gap-3 rounded-xl border border-white/10 bg-[#111827] p-4">
+          <div className="mx-4 mt-4 flex shrink-0 items-center justify-center gap-3 rounded-xl border border-white/10 bg-[#111827] p-3 sm:mx-6 sm:mt-5 sm:p-4">
             {time.escudo ? (
               <img
                 src={time.escudo}
@@ -68,9 +75,9 @@ export default function ModalAssistenteTorcedor({
           </div>
         )}
 
-        <div className="px-6 py-5">
-          <div className="mb-5 text-center">
-            <span className="text-3xl font-extrabold text-orange-500">
+        <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-4 py-4 sm:px-6 sm:py-5">
+          <div className="mb-4 text-center sm:mb-5">
+            <span className="text-2xl font-extrabold text-orange-500 sm:text-3xl">
               R$ 3,99
             </span>
 
@@ -79,7 +86,7 @@ export default function ModalAssistenteTorcedor({
             </span>
           </div>
 
-          <div className="space-y-3">
+          <div className="space-y-2.5 sm:space-y-3">
             <div className="flex items-start gap-3">
               <span className="mt-0.5 text-green-400">✓</span>
               <p className="text-sm text-zinc-300">
@@ -132,7 +139,7 @@ export default function ModalAssistenteTorcedor({
           </div>
         </div>
 
-        <div className="border-t border-white/10 px-6 py-5">
+        <div className="shrink-0 border-t border-white/10 px-4 py-4 sm:px-6 sm:py-5">
           <button
             type="button"
             onClick={onAssinar}
@@ -150,6 +157,7 @@ export default function ModalAssistenteTorcedor({
           </button>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   )
 }

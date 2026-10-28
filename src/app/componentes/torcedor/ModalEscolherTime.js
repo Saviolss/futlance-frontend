@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
+import { createPortal } from "react-dom"
 import { useTranslation } from "react-i18next"
 import { api } from "@/app/servidor/api"
 
@@ -16,6 +17,11 @@ export default function ModalEscolherTime({
   const [timeSelecionado, setTimeSelecionado] = useState(null)
   const [carregando, setCarregando] = useState(false)
   const [erro, setErro] = useState("")
+  const [portalPronto, setPortalPronto] = useState(false)
+
+  useEffect(() => {
+    setPortalPronto(true)
+  }, [])
 
   useEffect(() => {
     if (!aberto) return
@@ -49,27 +55,29 @@ export default function ModalEscolherTime({
         ? onSelecionarTime
         : null
 
+    onFechar?.()
+
     if (selecionar) {
       selecionar(timeSelecionado)
     }
   }
 
-  if (!aberto) return null
+  if (!aberto || !portalPronto) return null
 
   const timesFiltrados = times.filter((time) => {
     const nome = String(time.nome || "").toLowerCase()
     return nome.includes(busca.toLowerCase())
   })
 
-  return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/70 px-4 backdrop-blur-sm">
-      <div className="relative flex max-h-[90vh] w-full max-w-lg flex-col overflow-hidden rounded-2xl border border-white/10 bg-[#0b0f1a] shadow-2xl">
-        <div className="flex items-center justify-between border-b border-white/10 px-6 py-5">
-          <div>
-            <h2 className="text-xl font-bold text-white">
+  return createPortal(
+    <div className="fixed inset-0 z-100 grid place-items-center overflow-hidden bg-black/70 p-3 backdrop-blur-sm sm:p-4">
+      <div className="relative mx-auto flex h-[calc(100dvh-1.5rem)] w-full max-w-lg flex-col overflow-hidden rounded-2xl border border-white/10 bg-[#0b0f1a] shadow-2xl sm:h-[min(90dvh,48rem)]">
+        <div className="flex shrink-0 items-start justify-between gap-3 border-b border-white/10 px-4 py-4 sm:px-6 sm:py-5">
+          <div className="min-w-0">
+            <h2 className="text-lg font-bold text-white sm:text-xl">
               {t("torcedor.escolherTime", "Escolha seu time")}
             </h2>
-            <p className="mt-1 text-sm text-zinc-400">
+            <p className="mt-1 text-sm leading-5 text-zinc-400">
               {t("torcedor.escolherTimeDescricao", "Escolha o time que você acompanha.")}
             </p>
           </div>
@@ -77,24 +85,24 @@ export default function ModalEscolherTime({
           <button
             type="button"
             onClick={onFechar}
-            className="text-2xl text-zinc-400 transition hover:text-white"
+            className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-2xl text-zinc-400 transition hover:bg-white/5 hover:text-white"
             aria-label={t("comum.fechar", "Fechar")}
           >
             ×
           </button>
         </div>
 
-        <div className="px-6 pt-5">
+        <div className="shrink-0 px-4 pt-4 sm:px-6 sm:pt-5">
           <input
             type="text"
             value={busca}
             onChange={(e) => setBusca(e.target.value)}
             placeholder={t("torcedor.pesquisarTime", "Pesquisar time")}
-            className="w-full rounded-xl border border-white/10 bg-[#111827] px-4 py-3 text-sm text-white outline-none placeholder:text-zinc-500 focus:border-orange-500"
+            className="w-full min-w-0 rounded-xl border border-white/10 bg-[#111827] px-4 py-3 text-base text-white outline-none placeholder:text-zinc-500 focus:border-orange-500 sm:text-sm"
           />
         </div>
 
-        <div className="min-h-0 flex-1 overflow-y-auto px-6 py-5">
+        <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-4 py-4 sm:px-6 sm:py-5">
           {carregando && (
             <div className="py-10 text-center text-sm text-zinc-400">
               {t("comum.carregando", "Carregando...")}
@@ -114,7 +122,7 @@ export default function ModalEscolherTime({
           )}
 
           {!carregando && !erro && timesFiltrados.length > 0 && (
-            <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+            <div className="grid grid-cols-1 gap-3 min-[380px]:grid-cols-2 sm:grid-cols-3">
               {timesFiltrados.map((time) => {
                 const selecionado = timeSelecionado?.timeId === time.timeId
 
@@ -123,7 +131,7 @@ export default function ModalEscolherTime({
                     key={time.timeId}
                     type="button"
                     onClick={() => selecionarTime(time)}
-                    className={`flex min-h-[120px] flex-col items-center justify-center rounded-xl border p-4 transition ${selecionado
+                    className={`flex min-h-[104px] min-w-0 flex-col items-center justify-center rounded-xl border p-3 transition sm:min-h-[120px] sm:p-4 ${selecionado
                         ? "border-orange-500 bg-orange-500/10"
                         : "border-white/10 bg-[#111827] hover:border-orange-500/50 hover:bg-white/5"
                       }`}
@@ -132,16 +140,16 @@ export default function ModalEscolherTime({
                       <img
                         src={time.escudo}
                         alt={time.nome}
-                        className="mb-3 h-12 w-12 object-contain"
+                        className="mb-2 h-10 w-10 shrink-0 object-contain sm:mb-3 sm:h-12 sm:w-12"
                       />
                     ) : (
-                      <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-white/10 text-xl">
+                      <div className="mb-2 flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white/10 text-xl sm:mb-3 sm:h-12 sm:w-12">
                         ⚽
                       </div>
                     )}
 
                     <span
-                      className={`text-center text-sm font-medium ${selecionado
+                      className={`wrap-break-word max-w-full text-center text-sm font-medium ${selecionado
                           ? "text-orange-400"
                           : "text-white"
                         }`}
@@ -155,7 +163,7 @@ export default function ModalEscolherTime({
           )}
         </div>
 
-        <div className="border-t border-white/10 px-6 py-5">
+        <div className="shrink-0 border-t border-white/10 px-4 py-4 sm:px-6 sm:py-5">
           <button
             type="button"
             onClick={confirmar}
@@ -166,6 +174,7 @@ export default function ModalEscolherTime({
           </button>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   )
 }

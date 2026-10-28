@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
+import { createPortal } from "react-dom"
 import { useRouter } from "next/navigation"
 import { api } from "@/app/servidor/api"
 import Login from "../autenticacao/Login"
@@ -20,6 +21,7 @@ export default function TimeTorcedor() {
 
   const [modalLogin, setModalLogin] = useState(false)
   const [modoLogin, setModoLogin] = useState("login")
+  const [portalPronto, setPortalPronto] = useState(false)
 
   const [modalConfirmarEmail, setModalConfirmarEmail] = useState(false)
   const [dadosCadastro, setDadosCadastro] = useState(null)
@@ -36,6 +38,7 @@ export default function TimeTorcedor() {
     : "TIME"
 
   useEffect(() => {
+    setPortalPronto(true)
     carregarSessao()
   }, [])
 
@@ -125,7 +128,7 @@ export default function TimeTorcedor() {
       return
     }
 
-    router.push("/torcedor")
+    router.push("/configuracoes")
   }
 
   function fecharLogin() {
@@ -295,37 +298,17 @@ export default function TimeTorcedor() {
     setModalAssinatura(false)
   }
 
+
   async function assinaturaContinuar(dados) {
-    if (criandoAssinatura) {
-      return
-    }
+    if (criandoAssinatura) throw new Error("Já existe uma solicitação de pagamento em andamento.")
 
     try {
       setCriandoAssinatura(true)
 
-      if (!dados?.telefone) {
-        throw new Error(
-          "Número de WhatsApp não informado."
-        )
-      }
-
-      if (!dados?.idioma) {
-        throw new Error(
-          "Idioma da assinatura não informado."
-        )
-      }
-
-      if (!dados?.pagamento) {
-        throw new Error(
-          "Forma de pagamento não informada."
-        )
-      }
-
-      if (!time?.timeId && !time?.id) {
-        throw new Error(
-          "Não foi possível identificar o time selecionado."
-        )
-      }
+      if (!dados?.telefone) throw new Error("Número de WhatsApp não informado.")
+      if (!dados?.idioma) throw new Error("Idioma da assinatura não informado.")
+      if (!dados?.pagamento) throw new Error("Forma de pagamento não informada.")
+      if (!time?.timeId && !time?.id) throw new Error("Não foi possível identificar o time selecionado.")
 
       const dadosAssinatura = {
         telefone: dados.telefone,
@@ -333,114 +316,57 @@ export default function TimeTorcedor() {
         pagamento: dados.pagamento,
         time: {
           id: time.timeId ?? time.id,
-          nome:
-            time.nomePopular ||
-            time.nome ||
-            "",
-          escudo:
-            time.escudo ||
-            null,
-          slug:
-            time.slug ||
-            ""
+          nome: time.nomePopular || time.nome || "",
+          escudo: time.escudo || null,
+          slug: time.slug || ""
         }
       }
 
-      const resposta =
-        await api.post(
-          "/assinatura",
-          dadosAssinatura
-        )
+      const resposta = await api.post("/assinatura", dadosAssinatura)
 
       if (!resposta.data?.sucesso) {
-        throw new Error(
-          resposta.data?.mensagem ||
-          "Não foi possível criar a assinatura."
-        )
+        throw new Error(resposta.data?.mensagem || "Não foi possível criar a assinatura.")
       }
 
-      const assinaturaCriada =
-        resposta.data?.assinatura
-
-      if (!assinaturaCriada?.id) {
-        throw new Error(
-          "A assinatura foi criada, mas o ID não foi retornado."
-        )
+      if (!resposta.data?.assinatura?.id) {
+        throw new Error("A assinatura foi criada, mas o ID não foi retornado.")
       }
 
-      setAssinatura(assinaturaCriada)
-
-      if (dados.pagamento === "cartao") {
-        const checkoutUrl =
-          resposta.data?.checkoutUrl
-
-        if (!checkoutUrl) {
-          throw new Error(
-            "A assinatura foi criada, mas o link de pagamento não foi gerado."
-          )
-        }
-
-        setModalAssinatura(false)
-
-        window.location.href = checkoutUrl
-
-        return
-      }
-
-      if (dados.pagamento === "pix") {
-        setModalAssinatura(false)
-
-        alert(
-          "Assinatura criada. O pagamento PIX será disponibilizado em seguida."
-        )
-
-        return
-      }
-
-      throw new Error(
-        "Forma de pagamento inválida."
-      )
+      setAssinatura(resposta.data.assinatura)
+      return resposta.data
     } catch (erro) {
-      console.error(
-        "Erro ao criar assinatura:",
-        erro
-      )
-
-      const mensagem =
-        erro?.response?.data?.mensagem ||
-        erro?.message ||
-        "Não foi possível iniciar o pagamento."
-
-      alert(mensagem)
+      console.error("Erro ao criar assinatura:", erro)
+      throw new Error(erro?.response?.data?.mensagem || erro?.message || "Não foi possível iniciar o pagamento.")
     } finally {
       setCriandoAssinatura(false)
     }
   }
+
 
   if (carregando) {
     return (
       <button
         type="button"
         disabled
-        className="flex flex-col items-center md:hover:border-b-2 cursor-pointer"
+        className="flex min-h-14 min-w-14 cursor-wait flex-col items-center justify-center gap-0.5 rounded-lg px-1 text-white transition-colors md:min-h-16 md:min-w-16 md:hover:border-b-2"
         aria-label="Time"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          width="28"
-          height="28"
+          width="24"
+          height="24"
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
           strokeWidth="2"
           strokeLinecap="round"
           strokeLinejoin="round"
-          className="mb-1"
+          className="mb-0.5 md:mb-1"
         >
           <path d="M12 21s-8.5-4.8-10.5-9.5C.2 8.8 2.2 4 6.5 4c2.1 0 3.5 1.1 4.5 2.3C12 5.1 13.4 4 15.5 4c4.3 0 6.3 4.8 5 7.5C20.5 16.2 12 21 12 21Z" />
         </svg>
 
-        <span className="text-[11px] md:text-[16px]">
+        <span className="max-w-14 truncate text-[11px] leading-tight md:max-w-20 md:text-base">
           Time
         </span>
       </button>
@@ -452,8 +378,8 @@ export default function TimeTorcedor() {
       <button
         type="button"
         onClick={abrirTime}
-        className="flex flex-col items-center md:hover:border-b-2 cursor-pointer"
-        aria-label="Time"
+        className="group flex min-h-14 min-w-14 cursor-pointer flex-col items-center justify-center gap-0.5 rounded-lg px-1 text-white transition-colors active:text-orange-400 md:min-h-16 md:min-w-16 md:hover:border-b-2"
+        aria-label={time?.nome ? `Meu time: ${time.nome}` : "Selecionar meu time"}
       >
         {time?.escudo ? (
           <img
@@ -462,33 +388,33 @@ export default function TimeTorcedor() {
               time?.nome ||
               "Time do torcedor"
             }
-            className="h-7 w-7 object-contain transition group-hover:scale-110"
+            className="h-6 w-6 shrink-0 object-contain transition md:h-7 md:w-7 md:group-hover:scale-110"
           />
         ) : (
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            width="28"
-            height="28"
+            width="24"
+            height="24"
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
             strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"
-            className="mb-1"
+            className="mb-0.5 md:mb-1"
           >
             <path d="M12 21s-8.5-4.8-10.5-9.5C.2 8.8 2.2 4 6.5 4c2.1 0 3.5 1.1 4.5 2.3C12 5.1 13.4 4 15.5 4c4.3 0 6.3 4.8 5 7.5C20.5 16.2 12 21 12 21Z" />
           </svg>
         )}
 
-        <span className="text-[11px] md:text-[16px]">
+        <span className="max-w-14 truncate text-[11px] leading-tight md:max-w-20 md:text-base">
           {nomeTimeExibicao}
         </span>
       </button>
 
-      {modalLogin && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/70 px-4 py-6">
-          <div className="relative max-h-[95vh] w-full max-w-md overflow-y-auto">
+      {modalLogin && portalPronto && createPortal(
+        <div className="fixed inset-0 z-100 flex items-center justify-center overflow-y-auto bg-black/70 px-3 py-3 sm:px-4 sm:py-4">
+          <div className="relative my-auto max-h-[calc(100dvh-1.5rem)] w-full max-w-md min-w-0 overflow-y-auto overscroll-contain sm:max-h-[calc(100dvh-2rem)]">
             <button
               type="button"
               onClick={fecharLogin}
@@ -540,7 +466,8 @@ export default function TimeTorcedor() {
               )}
             </div>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
 
       {modalConfirmarEmail &&
