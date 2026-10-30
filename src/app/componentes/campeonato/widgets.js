@@ -141,7 +141,7 @@ export default function WidgetsCampeonato() {
         <h1 className="text-3xl font-light text-center mt-10 mb-5 md:text-5xl">{t('campeonatos')}</h1>
         <div className="md:flex-wrap md:flex gap-3 md:gap-6">
           <CampeonatoBrasileiro />
-          <CampeonatoCopaBrasil />
+          {/* <CampeonatoCopaBrasil /> */}
           <CampeonatoChampions />                         
         </div>
       </section>

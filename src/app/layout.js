@@ -7,7 +7,7 @@ export const metadata = {
   title: "Futlance - Jogos em tempo real agenda e notícias de futebol",
 
   description:
-    "Acompanhe jogos ao vivo, resultados em tempo real, tabelas dos campeonatos, artilharia, classificação e próximos jogos do futebol brasileiro.",
+    "Acompanhe jogos ao vivo, resultados em tempo real, tabelas dos campeonatos, artilharia, classificação e não perca nada dos campeonatos.",
 
   keywords: [
     "jogos de hoje",
@@ -15,8 +15,9 @@ export const metadata = {
     "futebol ao vivo",
     "classificação do campeonato brasileiro",
     "campeonato brasileiro",
-    "campeonato copa do brasil", 
-    "classificação copa do brasil",
+    "champions league",
+    "brasileirão serie a",
+    "jogos ao vivo futebol",
     "resultados de hoje",
     "jogos em tempo real"
   ],
@@ -35,7 +36,7 @@ export const metadata = {
     title: "Futlance - Jogos em tempo real agenda e notícias de futebol",
 
     description:
-      "Jogos ao vivo, tabelas atualizadas, artilheiros e resultados em tempo real do futebol.",
+      "Jogos ao vivo, tabelas atualizadas, artilheiros e resultados em tempo real do futebol dos campeonatos brasileirão e champions league.",
 
     url: "https://www.futlance.com",
 
@@ -43,7 +44,7 @@ export const metadata = {
 
     images: [
       {
-        url: "/logo.png",
+        url: "https://www.futlance.com/public/logo.png",
         width: 1200,
         height: 630,
         alt: "Futlance - Futebol ao vivo"
@@ -51,6 +52,8 @@ export const metadata = {
     ],
 
     locale: "pt_BR",
+
+    alternateLocale: ["en_US", "es_ES", "fr_FR", "de_DE", "it_IT"],
 
     type: "website"
   },
@@ -63,7 +66,9 @@ export const metadata = {
   },
 
   icons: {
-    icon: "/favicon.ico"
+    icon: "src/app/favicon.ico",
+    shortcut: "src/app/favicon.ico",
+    apple: "src/app/favicon.ico"
   },
 
   robots: {
