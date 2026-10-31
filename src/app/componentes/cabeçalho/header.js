@@ -4,16 +4,20 @@ import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import Image from 'next/image';
 import Link from 'next/link';
-import i18n from '../../../../i18n';
+import { usePathname, useRouter } from 'next/navigation';
+import { getLocalizedHref, getLocalizedPath } from '@/app/[lang]/locale-paths';
 import Logo from "../../../../public/logo.png"
 import TimeTorcedor from '../torcedor/TimeTorcedor';
 
 export function Header() {
 	const [showTranslate, setShowTranslate] = useState(false)
 	const { t } = useTranslation()
+	const pathname = usePathname()
+	const router = useRouter()
+	const homeHref = getLocalizedHref(pathname, "/")
 
 	const handleChangeLanguage = (lang) => {
-		i18n.changeLanguage(lang)
+		router.push(getLocalizedPath(pathname, lang))
 		setShowTranslate(false)
 	}
 
@@ -458,6 +462,8 @@ export function Header() {
 
 export function HeaderCampeonato() {
 	const { t } = useTranslation();
+	const pathname = usePathname()
+	const homeHref = getLocalizedHref(pathname, "/")
 
 	const [showNav, setShowNav] = useState(true)
 
@@ -494,7 +500,7 @@ export function HeaderCampeonato() {
 				<ul className="flex justify-center flex-wrap gap-5 mt-0 md:mt-1 text-white font-normal">
 					{/* Início */}
 					<li className="flex flex-col items-center">
-						<Link href="/" className=" flex flex-col items-center md:hover:border-b-2 cursor-pointer" alt="botão de navegar para inicio">
+						<Link href={homeHref} className=" flex flex-col items-center md:hover:border-b-2 cursor-pointer" alt="botão de navegar para inicio">
 							<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mb-1"><path d="M3 9l9-7 9 7" /><path d="M9 22V12h6v10" /></svg>
 							{t('inicio')}
 						</Link>
@@ -591,7 +597,7 @@ export function HeaderCampeonato() {
 						{/* Início */}
 						<li>
 							<Link
-								href="/"
+								href={homeHref}
 								className="flex flex-col items-center justify-center h-full text-[11px]"
 							>
 								<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="2">
@@ -1152,4 +1158,3 @@ export function HeaderNoticias() {
 		</>
 	);
 }
-

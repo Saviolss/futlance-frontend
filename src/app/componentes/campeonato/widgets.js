@@ -1,13 +1,16 @@
 'use client';
 import { useTranslation } from 'react-i18next';
 import Link from "next/link.js";
+import { usePathname } from "next/navigation";
+import { getLocalizedHref } from "@/app/[lang]/locale-paths";
 
 export const CampeonatoBrasileiro = () => {
   const { t } = useTranslation();
+  const pathname = usePathname();
 
   return (
     <Link
-      href="/campeonatos/brasileiro"
+      href={getLocalizedHref(pathname, "/campeonatos/brasileiro")}
       className="
     relative w-full max-w-md mx-auto mb-10
     rounded-xl overflow-hidden
@@ -90,10 +93,11 @@ export const CampeonatoCopaBrasil = () => {
 }
 export const CampeonatoChampions = () => {
   const { t } = useTranslation();
+  const pathname = usePathname();
 
   return (
     <Link
-      href="/campeonatos/champions"
+      href={getLocalizedHref(pathname, "/campeonatos/champions")}
       className="
     relative w-full max-w-md mx-auto mb-10
     rounded-xl overflow-hidden

@@ -1,6 +1,7 @@
 import "./globals.css"
 import Script from "next/script"
 import { WebSocketProvider } from "@/context/WebSocketProvider"
+import LocaleProvider from "./[lang]/locale-provider"
 export const metadata = {
   metadataBase: new URL("https://futlance.com"),
 
@@ -85,7 +86,15 @@ export const metadata = {
   },
 
   alternates: {
-    canonical: "https://www.futlance.com"
+    canonical: "https://www.futlance.com",
+    languages: {
+      "pt-BR": "https://www.futlance.com",
+      "en-US": "https://www.futlance.com/en",
+      "es-ES": "https://www.futlance.com/es",
+      "fr-FR": "https://www.futlance.com/fr",
+      "de-DE": "https://www.futlance.com/de",
+      "it-IT": "https://www.futlance.com/it"
+    }
   }
 }
 
@@ -126,7 +135,9 @@ export default function RootLayout({ children }) {
         ============================ */}
 
         <WebSocketProvider>
-          {children}
+          <LocaleProvider>
+            {children}
+          </LocaleProvider>
         </WebSocketProvider>
 
       </body>

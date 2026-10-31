@@ -8,37 +8,33 @@ import traducaoFr from './public/traducoes/fr.json';
 import traducaoDe from './public/traducoes/de.json';
 import traducaoIt from './public/traducoes/it.json';
 
-// Detecta o idioma do navegador
-const supportedLangs = ['en', 'pt', 'es', 'fr', 'de', 'it'];
-let browserLang = typeof window !== 'undefined' ? (navigator.language || navigator.userLanguage || 'pt').slice(0, 2) : 'pt';
-const len = supportedLangs.includes(browserLang) ? browserLang : 'pt';
-
+export const translationResources = {
+  en: {
+    translation: traducaoEn,
+  },
+  pt: {
+    translation: traducaoPt,
+  },
+  es: {
+    translation: traducaoEs,
+  },
+  fr: {
+    translation: traducaoFr,
+  },
+  de: {
+    translation: traducaoDe,
+  },
+  it: {
+    translation: traducaoIt,
+  },
+};
 
 i18n
   .use(initReactI18next)
   .init({
-    lng: len,
+    lng: 'pt',
     fallbackLng: 'pt',
-    resources: {
-      en: {
-        translation: traducaoEn,
-      },
-      pt: {
-        translation: traducaoPt,
-      },
-      es: {
-        translation: traducaoEs,
-      },
-      fr: {
-        translation: traducaoFr,
-      },
-      de: {
-        translation: traducaoDe,
-      },
-      it: {
-        translation: traducaoIt,
-      },
-    },
+    resources: translationResources,
     interpolation: {
       escapeValue: false,
     },
