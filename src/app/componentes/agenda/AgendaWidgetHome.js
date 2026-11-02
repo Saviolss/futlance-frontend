@@ -81,6 +81,7 @@ export default function AgendaWidgetHome({
   const jogosOrdenados = useMemo(() => {
 
     const agora = new Date()
+    const partidasIncluidas = new Set()
 
     const jogosFuturos = [...lista]
 
@@ -90,6 +91,17 @@ export default function AgendaWidgetHome({
         p =>
           new Date(p.data_iso) > agora
       )
+
+      .filter(p => {
+        if (p.partida_id == null) return true
+
+        const partidaId = String(p.partida_id)
+
+        if (partidasIncluidas.has(partidaId)) return false
+
+        partidasIncluidas.add(partidaId)
+        return true
+      })
 
       .sort(
         (a, b) =>

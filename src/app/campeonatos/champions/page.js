@@ -8,11 +8,24 @@ export const metadata = {
   title: "Champions League - Futlance",
   description: "Acompanhe a tabela, jogos, agenda e artilheiros da Champions League.",
   keywords: "champions league, futebol, notícias de futebol, resultados de futebol",
+  alternates: {
+    canonical: "https://www.futlance.com/campeonatos/champions",
+    languages: {
+      "pt-BR": "https://www.futlance.com/campeonatos/champions",
+      "en-US": "https://www.futlance.com/en/campeonatos/champions",
+      "es-ES": "https://www.futlance.com/es/campeonatos/champions",
+      "fr-FR": "https://www.futlance.com/fr/campeonatos/champions",
+      "de-DE": "https://www.futlance.com/de/campeonatos/champions",
+      "it-IT": "https://www.futlance.com/it/campeonatos/champions"
+    }
+  },
   openGraph: {
     title: "UEFA Champions League - Futlance",
     description: "Acompanhe a tabela, jogos, agenda e artilheiros da Champions League.",
     url: "https://www.futlance.com/campeonatos/champions",
     siteName: "Futlance",
+    locale: "pt_BR",
+    alternateLocale: ["en_US", "es_ES", "fr_FR", "de_DE", "it_IT"],
   }
 }
 

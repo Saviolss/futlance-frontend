@@ -1,19 +1,25 @@
-'use client';
+"use client"
 
-import { useTranslation } from "react-i18next";
-import { JogosEncerradosSection } from "./jogosEncerradosSection";
-import { normalizeJogosData } from "./normalizeJogos";
+import { useTranslation } from "react-i18next"
+import { JogosEncerradosSection } from "./jogosEncerradosSection"
+export default function WidgetEncerrados({
+  jogos = []
+}) {
 
-export default function EncerradosWidget({ jogos = [] }) {
-  const { t } = useTranslation();
-  const jogosNormalizados = normalizeJogosData(jogos);
+  const { t } = useTranslation()
+
+  if (!jogos.length) {
+    return null
+  }
 
   return (
-    <div className="w-full">
+    <section className="w-full">
+
       <JogosEncerradosSection
-        titulo={t("finalizados")}
-        jogos={jogosNormalizados}
+        titulo={t("finalizado")}
+        jogos={jogos}
       />
-    </div>
-  );
+
+    </section>
+  )
 }

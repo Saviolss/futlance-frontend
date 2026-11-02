@@ -1,13 +1,14 @@
 import "./globals.css"
 import Script from "next/script"
 import { WebSocketProvider } from "@/context/WebSocketProvider"
+import LocaleProvider from "./[lang]/locale-provider"
 export const metadata = {
   metadataBase: new URL("https://futlance.com"),
 
   title: "Futlance - Jogos em tempo real agenda e notícias de futebol",
 
   description:
-    "Acompanhe jogos ao vivo, resultados em tempo real, tabelas dos campeonatos, artilharia, classificação e próximos jogos do futebol brasileiro.",
+    "Acompanhe jogos ao vivo, resultados em tempo real, tabelas dos campeonatos, artilharia, classificação e não perca nada dos campeonatos.",
 
   keywords: [
     "jogos de hoje",
@@ -15,10 +16,9 @@ export const metadata = {
     "futebol ao vivo",
     "classificação do campeonato brasileiro",
     "campeonato brasileiro",
-    "campeonato champions league", 
-    "classificação champions league",
-    "UEFA champions league",
-    "Brasileirão Série A",
+    "champions league",
+    "brasileirão serie a",
+    "jogos ao vivo futebol",
     "resultados de hoje",
     "jogos em tempo real"
   ],
@@ -37,7 +37,7 @@ export const metadata = {
     title: "Futlance - Jogos em tempo real agenda e notícias de futebol",
 
     description:
-      "Jogos ao vivo, tabelas atualizadas, artilheiros e resultados em tempo real do futebol.",
+      "Jogos ao vivo, tabelas atualizadas, artilheiros e resultados em tempo real do futebol dos campeonatos brasileirão e champions league.",
 
     url: "https://www.futlance.com",
 
@@ -45,7 +45,7 @@ export const metadata = {
 
     images: [
       {
-        url: "/logo.png",
+        url: "https://www.futlance.com/public/logo.png",
         width: 1200,
         height: 630,
         alt: "Futlance - Futebol ao vivo"
@@ -53,6 +53,8 @@ export const metadata = {
     ],
 
     locale: "pt_BR",
+
+    alternateLocale: ["en_US", "es_ES", "fr_FR", "de_DE", "it_IT"],
 
     type: "website"
   },
@@ -65,7 +67,9 @@ export const metadata = {
   },
 
   icons: {
-    icon: "/favicon.ico"
+    icon: "src/app/favicon.ico",
+    shortcut: "src/app/favicon.ico",
+    apple: "src/app/favicon.ico"
   },
 
   robots: {
@@ -82,7 +86,15 @@ export const metadata = {
   },
 
   alternates: {
-    canonical: "https://www.futlance.com"
+    canonical: "https://www.futlance.com",
+    languages: {
+      "pt-BR": "https://www.futlance.com",
+      "en-US": "https://www.futlance.com/en",
+      "es-ES": "https://www.futlance.com/es",
+      "fr-FR": "https://www.futlance.com/fr",
+      "de-DE": "https://www.futlance.com/de",
+      "it-IT": "https://www.futlance.com/it"
+    }
   }
 }
 
@@ -123,7 +135,9 @@ export default function RootLayout({ children }) {
         ============================ */}
 
         <WebSocketProvider>
-          {children}
+          <LocaleProvider>
+            {children}
+          </LocaleProvider>
         </WebSocketProvider>
 
       </body>

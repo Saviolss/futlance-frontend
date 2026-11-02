@@ -1,7 +1,9 @@
 import axios from "axios";
-const baseURL = "https://api.futlance.com"
+const baseURL = process.env.NEXT_PUBLIC_BASE_URL
 export const api = axios.create({
   baseURL,
-  timeout: 10000,
+  withCredentials: true,
+  headers: { "Content-Type": "application/json" },
+  timeout: 50000,
 })
-export const wsUrl = "wss://api.futlance.com/ws"
+export const wsUrl = 'ws://localhost:3333/ws'

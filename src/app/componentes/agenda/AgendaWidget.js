@@ -73,6 +73,7 @@ export default function AgendaWidget({
   ============================ */
 
   const agora = new Date()
+  const partidasIncluidas = new Set()
 
   // Apenas jogos futuros (data + hora)
   const jogosFuturos = lista
@@ -80,6 +81,16 @@ export default function AgendaWidget({
       if (!p.data_iso) return false
 
       return new Date(p.data_iso) > agora
+    })
+    .filter((p) => {
+      if (p.partida_id == null) return true
+
+      const partidaId = String(p.partida_id)
+
+      if (partidasIncluidas.has(partidaId)) return false
+
+      partidasIncluidas.add(partidaId)
+      return true
     })
     .sort(
       (a, b) =>
@@ -149,9 +160,9 @@ export default function AgendaWidget({
       </h1>
 
       <div className="flex flex-wrap justify-center gap-6">
-        {jogosOrdenados.map((p) => (
+        {jogosOrdenados.map((p, index) => (
           <div
-            key={p.partida_id}
+            key={`${p.partida_id ?? "partida"}-${index}`}
             className="
               relative w-full max-w-[320px]
               rounded-xl overflow-hidden
