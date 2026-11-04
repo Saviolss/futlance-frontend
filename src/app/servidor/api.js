@@ -6,5 +6,4 @@ export const api = axios.create({
   headers: { "Content-Type": "application/json" },
   timeout: 50000,
 })
-// export const wsUrl = 'ws://localhost:3333/ws'
 export const wsUrl = 'wss://api.futlance.com/ws'
