@@ -1,6 +1,7 @@
+
 "use client";
-import { useTranslation } from "react-i18next"
-import { useState } from "react"
+import { useTranslation } from "react-i18next";
+import { useState } from "react";
 
 function valor(...valores) {
   return valores.find((v) => v !== undefined && v !== null && v !== "") ?? "";
@@ -27,44 +28,19 @@ function obterNome(time) {
   return valor(time?.nome, time?.nome_popular, time?.name, "Time");
 }
 
-function carregarImagemEscudo(url) {
-  if (!url) return Promise.resolve(null);
-
-  return new Promise((resolve) => {
-    const imagem = new Image();
-    const timeout = setTimeout(() => resolve(null), 5000);
-    imagem.crossOrigin = "anonymous";
-    imagem.onload = () => {
-      clearTimeout(timeout);
-      resolve(imagem);
-    };
-    imagem.onerror = () => {
-      clearTimeout(timeout);
-      resolve(null);
-    };
-    imagem.src = url;
-  });
+function arredondarRetangulo(ctx, x, y, largura, altura, raio) {
+  ctx.beginPath();
+  ctx.roundRect(x, y, largura, altura, raio);
 }
 
-function desenharEscudo(contexto, imagem, nome, x, y) {
-  const tamanho = 100;
-  if (imagem) {
-    const escala = Math.min(tamanho / imagem.naturalWidth, tamanho / imagem.naturalHeight);
-    const largura = imagem.naturalWidth * escala;
-    const altura = imagem.naturalHeight * escala;
-    contexto.drawImage(imagem, x - largura / 2, y - altura / 2, largura, altura);
-    return;
+function desenharTextoAjustado(ctx, texto, x, y, larguraMaxima, tamanhoMaximo, tamanhoMinimo = 24) {
+  let tamanho = tamanhoMaximo;
+  ctx.font = `700 ${tamanho}px Arial, sans-serif`;
+  while (ctx.measureText(String(texto)).width > larguraMaxima && tamanho > tamanhoMinimo) {
+    tamanho -= 2;
+    ctx.font = `700 ${tamanho}px Arial, sans-serif`;
   }
-
-  contexto.fillStyle = "#374151";
-  contexto.beginPath();
-  contexto.arc(x, y, tamanho / 2, 0, Math.PI * 2);
-  contexto.fill();
-  contexto.fillStyle = "#ffffff";
-  contexto.font = "bold 34px Arial, sans-serif";
-  contexto.textAlign = "center";
-  contexto.textBaseline = "middle";
-  contexto.fillText(nome.trim().charAt(0).toUpperCase() || "?", x, y);
+  ctx.fillText(String(texto), x, y, larguraMaxima);
 }
 
 export default function JogoEncerradoCard({ jogo, campeonato }) {
@@ -91,72 +67,138 @@ export default function JogoEncerradoCard({ jogo, campeonato }) {
 
     try {
       const detalhes = [formatarData(data, hora), estadio].filter(Boolean).join(" • ");
-
       const canvas = document.createElement("canvas");
       canvas.width = 1080;
       canvas.height = 1080;
       const contexto = canvas.getContext("2d");
       if (!contexto) throw new Error("Seu navegador não conseguiu criar a imagem.");
 
-      contexto.fillStyle = "#0b1020";
-      contexto.fillRect(0, 0, canvas.width, canvas.height);
+      // Fundo principal
+      const fundo = contexto.createLinearGradient(0, 0, 1080, 1080);
+      fundo.addColorStop(0, "#071426");
+      fundo.addColorStop(0.55, "#0d1b2e");
+      fundo.addColorStop(1, "#101827");
+      contexto.fillStyle = fundo;
+      contexto.fillRect(0, 0, 1080, 1080);
 
-      const gradiente = contexto.createLinearGradient(0, 0, canvas.width, canvas.height);
-      gradiente.addColorStop(0, "#0f172a");
-      gradiente.addColorStop(1, "#111827");
-      contexto.fillStyle = gradiente;
-      contexto.fillRect(0, 0, canvas.width, canvas.height);
-
-      contexto.fillStyle = "#1f2937";
-      contexto.strokeStyle = "#374151";
-      contexto.lineWidth = 4;
+      // Detalhes decorativos
+      contexto.fillStyle = "rgba(249,115,22,0.07)";
       contexto.beginPath();
-      contexto.roundRect(62, 62, 956, 956, 56);
+      contexto.arc(1040, 70, 230, 0, Math.PI * 2);
+      contexto.fill();
+      contexto.beginPath();
+      contexto.arc(20, 1050, 190, 0, Math.PI * 2);
+      contexto.fill();
+
+      // Card central
+      contexto.fillStyle = "#111f32";
+      contexto.strokeStyle = "#26364a";
+      contexto.lineWidth = 3;
+      arredondarRetangulo(contexto, 48, 48, 984, 984, 38);
       contexto.fill();
       contexto.stroke();
 
+      // Faixa superior laranja
+      const faixa = contexto.createLinearGradient(100, 0, 980, 0);
+      faixa.addColorStop(0, "#ea580c");
+      faixa.addColorStop(0.5, "#fb923c");
+      faixa.addColorStop(1, "#ea580c");
+      contexto.fillStyle = faixa;
+      arredondarRetangulo(contexto, 48, 48, 984, 9, 5);
+      contexto.fill();
+
+      // Campeonato
       contexto.textAlign = "center";
       contexto.textBaseline = "middle";
       contexto.fillStyle = "#fb923c";
-      contexto.font = "700 34px Arial, sans-serif";
-      contexto.fillText(String(nomeCampeonato).toUpperCase(), 540, 170, 760);
-      contexto.fillStyle = "#d1d5db";
-      contexto.font = "700 26px Arial, sans-serif";
-      contexto.fillText("RESULTADO FINAL", 540, 225);
+      contexto.font = "700 30px Arial, sans-serif";
+      contexto.fillText(String(nomeCampeonato).toUpperCase(), 540, 155, 820);
 
-      contexto.fillStyle = "#ffffff";
-      contexto.font = "700 44px Arial, sans-serif";
-      contexto.textAlign = "right";
-      contexto.fillText(String(nomeMandante), 350, 510, 270);
-
-      contexto.textAlign = "center";
-      contexto.font = "900 96px Arial, sans-serif";
-      contexto.fillText(`${golsMandante}`, 430, 510, 110);
-      contexto.fillStyle = "#fb923c";
-      contexto.font = "900 72px Arial, sans-serif";
-      contexto.fillText(":", 540, 510);
-      contexto.fillStyle = "#ffffff";
-      contexto.font = "900 96px Arial, sans-serif";
-      contexto.fillText(`${golsVisitante}`, 650, 510, 110);
-
-      contexto.font = "700 44px Arial, sans-serif";
-      contexto.textAlign = "left";
-      contexto.fillText(String(nomeVisitante), 730, 510, 270);
-
-      contexto.strokeStyle = "#374151";
+      // Indicador de partida encerrada
+      contexto.fillStyle = "#26364a";
+      arredondarRetangulo(contexto, 405, 202, 270, 54, 27);
+      contexto.fill();
+      contexto.fillStyle = "#a7b6c8";
       contexto.beginPath();
-      contexto.moveTo(120, 660);
-      contexto.lineTo(960, 660);
+      contexto.arc(437, 229, 7, 0, Math.PI * 2);
+      contexto.fill();
+      contexto.fillStyle = "#e2e8f0";
+      contexto.font = "700 19px Arial, sans-serif";
+      contexto.fillText(String(t("finalizado")).toUpperCase(), 550, 229);
+
+      // Separador superior
+      contexto.strokeStyle = "#26364a";
+      contexto.lineWidth = 2;
+      contexto.beginPath();
+      contexto.moveTo(130, 305);
+      contexto.lineTo(950, 305);
       contexto.stroke();
-      
+
+      // Nomes dos times alinhados com o placar
+      const centroY = 510;
+
+      contexto.textBaseline = "middle";
+      contexto.textAlign = "center";
+      contexto.fillStyle = "#ffffff";
+
+      // Nome do mandante
+      desenharTextoAjustado(
+        contexto,
+        nomeMandante,
+        245,
+        centroY,
+        280,
+        34,
+        20
+      );
+
+      // Nome do visitante
+      desenharTextoAjustado(
+        contexto,
+        nomeVisitante,
+        835,
+        centroY,
+        280,
+        34,
+        20
+      );
+
+      // Placar centralizado
+      contexto.fillStyle = "#ffffff";
+      contexto.font = "900 110px Arial, sans-serif";
       contexto.textAlign = "center";
       contexto.textBaseline = "middle";
-      contexto.fillStyle = "#d1d5db";
-      contexto.font = "600 28px Arial, sans-serif";
-      contexto.fillText(detalhes, 540, 760, 720);
+      contexto.fillText(String(golsMandante), 425, centroY);
+      contexto.fillText(String(golsVisitante), 655, centroY);
 
       contexto.fillStyle = "#fb923c";
-      contexto.font = "700 26px Arial, sans-serif";
+      contexto.font = "900 76px Arial, sans-serif";
+      contexto.fillText(":", 540, centroY);
+
+      // Etiqueta resultado
+      contexto.fillStyle = "#26364a";
+      arredondarRetangulo(contexto, 395, 665, 290, 58, 29);
+      contexto.fill();
+      contexto.fillStyle = "#fb923c";
+      contexto.font = "700 21px Arial, sans-serif";
+      contexto.fillText("PLACAR FINAL", 540, 694);
+
+      // Informações da partida
+      contexto.strokeStyle = "#26364a";
+      contexto.lineWidth = 2;
+      contexto.beginPath();
+      contexto.moveTo(130, 790);
+      contexto.lineTo(950, 790);
+      contexto.stroke();
+
+      contexto.fillStyle = "#cbd5e1";
+      contexto.font = "600 25px Arial, sans-serif";
+      contexto.fillText(detalhes || "Resultado da partida", 540, 850, 820);
+
+      // Marca Futlance discreta
+      contexto.fillStyle = "#64748b";
+      contexto.font = "600 21px Arial, sans-serif";
+      contexto.fillText("futlance.com", 540, 960);
 
       const blob = await new Promise((resolve, reject) => {
         canvas.toBlob((resultado) => {
@@ -170,8 +212,8 @@ export default function JogoEncerradoCard({ jogo, campeonato }) {
       if (navigator.share && navigator.canShare?.({ files: [arquivo] })) {
         try {
           await navigator.share({
-            title: `${nomeMandante} ${golsMandante} x ${golsVisitante} ${nomeVisitante}`,
-            text: `Confira o resultado no Futlance: ${nomeCampeonato}`,
+            title: `Confira o resultado no Futlance: ${nomeCampeonato}`,
+            text: `${nomeMandante} ${golsMandante} x ${golsVisitante} ${nomeVisitante}`,
             files: [arquivo],
           });
           return;
