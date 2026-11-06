@@ -204,7 +204,7 @@ export function getLocalizedMetadata(lang, page) {
   const content = getPageContent(lang, page)
   const path = pagePaths[page]
   const localizedUrl = (locale) =>
-    `https://www.futlance.com${locale === "pt" ? "" : `/${locale}`}${path}`
+    `https://futlance.com${locale === "pt" ? "" : `/${locale}`}${path}`
   const url = localizedUrl(lang)
 
   return {

@@ -12,7 +12,7 @@ export const metadata = {
   openGraph: {
     title: "Copa do Mundo - Futlance",
     description: "Acompanhe grupos, jogos, agenda e artilheiros da Copa do Mundo.",
-    url: "https://www.futlance.com/campeonatos/copamundo",
+    url: "https://futlance.com/campeonatos/copamundo",
     siteName: "Futlance",
   }
 }

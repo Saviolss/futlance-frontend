@@ -1,4 +1,4 @@
-const siteUrl = 'https://www.futlance.com'
+const siteUrl = 'https://futlance.com'
 import { languageTags } from './[lang]/locale-config'
 
 const localizedPages = [

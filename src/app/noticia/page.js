@@ -8,12 +8,12 @@ import AdcashBanner from "../componentes/anuncio/anuncioBody"
 export const metadata = {
   title: "Notícias de Futebol em Tempo Real - Futlance",
   description: "Fique por dentro das últimas notícias, análises, bastidores, transferências e destaques do mundo do futebol, tudo atualizado em tempo real.",
-  canonical: "https://www.futlance.com/noticia",
+  canonical: "https://futlance.com/noticia",
   keywords: "notícias de futebol, análises de futebol, bastidores do futebol, transferências de jogadores, destaques do futebol, notícias de última hora, futebol nacional, futebol internacional",
   openGraph: {
     title: "Notícias de Futebol em Tempo Real - Futlance",
     description: "Fique por dentro das últimas notícias, análises, bastidores, transferências e destaques do mundo do futebol, tudo atualizado em tempo real.",
-    url: "https://www.futlance.com/noticia",
+    url: "https://futlance.com/noticia",
     siteName: "Futlance",
   }
 }

@@ -26,6 +26,6 @@ export default function robots() {
         allow: '/',
       },
     ],
-    sitemap: 'https://www.futlance.com/sitemap.xml',
+    sitemap: 'https://futlance.com/sitemap.xml',
   }
 }

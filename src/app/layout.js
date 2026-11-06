@@ -39,13 +39,13 @@ export const metadata = {
     description:
       "Jogos ao vivo, tabelas atualizadas, artilheiros e resultados em tempo real do futebol dos campeonatos brasileirão e champions league.",
 
-    url: "https://www.futlance.com",
+    url: "https://futlance.com",
 
     siteName: "Futlance",
 
     images: [
       {
-        url: "https://www.futlance.com/public/logo.png",
+        url: "https://futlance.com/logo.png",
         width: 1200,
         height: 630,
         alt: "Futlance - Futebol ao vivo"
@@ -67,7 +67,13 @@ export const metadata = {
   },
 
   icons: {
-    icon: "/favicon.png",
+    icon: [
+      {
+        url: "/favicon.png",
+        sizes: "480x480",
+        type: "image/png"
+      }
+    ],
     shortcut: "/favicon.png",
     apple: "/favicon.png"
   },
@@ -86,14 +92,14 @@ export const metadata = {
   },
 
   alternates: {
-    canonical: "https://www.futlance.com",
+    canonical: "https://futlance.com",
     languages: {
-      "pt-BR": "https://www.futlance.com",
-      "en-US": "https://www.futlance.com/en",
-      "es-ES": "https://www.futlance.com/es",
-      "fr-FR": "https://www.futlance.com/fr",
-      "de-DE": "https://www.futlance.com/de",
-      "it-IT": "https://www.futlance.com/it"
+      "pt-BR": "https://futlance.com",
+      "en-US": "https://futlance.com/en",
+      "es-ES": "https://futlance.com/es",
+      "fr-FR": "https://futlance.com/fr",
+      "de-DE": "https://futlance.com/de",
+      "it-IT": "https://futlance.com/it"
     }
   }
 }

@@ -53,7 +53,10 @@ export default function ModalAssinatura({ aberto, time, usuario, onFechar, onCon
     let timer
 
     async function consultarPagamento() {
-      for (let tentativa = 1; tentativa <= 10 && ativo; tentativa += 1) {
+      let tentativa = 0
+
+      while (ativo) {
+        tentativa += 1
         setTentativas(tentativa)
 
         try {
@@ -81,22 +84,29 @@ export default function ModalAssinatura({ aberto, time, usuario, onFechar, onCon
 
           setEstadoPagamento("pendente")
           setMensagemPagamento("Estamos aguardando a confirmação do pagamento. Isso pode levar alguns instantes.")
-
-          if (tentativa < 10) {
-            await new Promise(resolve => {
-              timer = setTimeout(resolve, 3000)
-            })
-          }
         } catch (error) {
           if (!ativo) return
-          setEstadoPagamento("erro")
-          setMensagemPagamento(error?.response?.data?.mensagem || error?.message || "Não foi possível verificar seu pagamento. Tente novamente.")
-          setVerificando(false)
-          return
-        }
-      }
 
-      if (ativo) setVerificando(false)
+          const status = error?.response?.status
+          const mensagemErro =
+            error?.response?.data?.mensagem ||
+            "Não foi possível consultar o pagamento. Tentaremos novamente em alguns instantes."
+
+          if (status && status < 500) {
+            setEstadoPagamento("erro")
+            setMensagemPagamento(mensagemErro)
+            setVerificando(false)
+            return
+          }
+
+          setEstadoPagamento("pendente")
+          setMensagemPagamento(mensagemErro)
+        }
+
+        await new Promise(resolve => {
+          timer = setTimeout(resolve, 3000)
+        })
+      }
     }
 
     consultarPagamento()
@@ -254,7 +264,7 @@ export default function ModalAssinatura({ aberto, time, usuario, onFechar, onCon
             </div>
             <h3 className="text-xl font-bold">Confirmando pagamento...</h3>
             <p role="status" className="mt-3 text-sm text-gray-300">{mensagemPagamento}</p>
-            <p className="mt-3 text-xs text-gray-500">Verificação {tentativas}/10.</p>
+            <p className="mt-3 text-xs text-gray-500">Verificação {tentativas}. Continuaremos tentando até receber a confirmação.</p>
             {!verificando && (
               <button type="button" onClick={verificarNovamente} className="mt-4 w-full rounded-xl bg-orange-500 px-4 py-3 font-bold text-white transition hover:bg-orange-600">
                 Verificar novamente
@@ -339,7 +349,7 @@ export default function ModalAssinatura({ aberto, time, usuario, onFechar, onCon
             </div>
             <p className="mt-3 text-center text-sm text-gray-300">A assinatura será ativada somente após a confirmação do pagamento.</p>
             <p role="status" className="mt-3 text-center text-xs text-gray-400">
-              {verificando ? `Verificação ${tentativas}/10. ${mensagemPagamento}` : mensagemPagamento}
+              {verificando ? `Verificação ${tentativas}. ${mensagemPagamento}` : mensagemPagamento}
             </p>
             {erro && <p role="alert" className="mt-3 rounded-lg bg-red-500/10 p-3 text-sm text-red-300">{erro}</p>}
             {!verificando && (
@@ -355,7 +365,7 @@ export default function ModalAssinatura({ aberto, time, usuario, onFechar, onCon
 
         {estadoPagamento === "pendente" && clientSecret && (
           <div className="mt-4 text-center text-sm text-gray-400">
-            {verificando ? `Verificação ${tentativas}/10. ${mensagemPagamento}` : mensagemPagamento}
+            {verificando ? `Verificação ${tentativas}. ${mensagemPagamento}` : mensagemPagamento}
             <div className="mt-3 flex flex-col gap-3">
               {!verificando && (
                 <button type="button" onClick={verificarNovamente} className="w-full rounded-xl bg-orange-500 px-4 py-3 font-bold text-white transition hover:bg-orange-600">

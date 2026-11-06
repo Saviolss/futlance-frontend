@@ -11,7 +11,7 @@ export const metadata = {
   openGraph: {
     title: "Copa do Brasil - Futlance",
     description: "Acompanhe a tabela, jogos, agenda e artilheiros da Copa do Brasil.",
-    url: "https://www.futlance.com/campeonatos/copabrasil",
+    url: "https://futlance.com/campeonatos/copabrasil",
     siteName: "Futlance",
   }
 }

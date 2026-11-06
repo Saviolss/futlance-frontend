@@ -36,8 +36,12 @@ export default function RetornoPagamentoPage() {
     let timer
 
     async function consultar() {
-      for (let tentativa = 1; tentativa <= 10 && ativo; tentativa += 1) {
+      let tentativa = 0
+
+      while (ativo) {
+        tentativa += 1
         setTentativas(tentativa)
+
         try {
           const dados = await verificarPagamento(sessionId)
           if (!ativo) return
@@ -47,19 +51,25 @@ export default function RetornoPagamentoPage() {
           if (dados.estado !== "pendente") return
         } catch (error) {
           if (!ativo) return
-          setEstado("erro")
-          setMensagem(
+
+          const status = error?.response?.status
+          const mensagemErro =
             error?.response?.data?.mensagem ||
-            "Não conseguimos conectar ao servidor para verificar o pagamento. Confira sua conexão e tente novamente."
-          )
-          return
+            "Não conseguimos conectar ao servidor. Tentaremos verificar novamente em alguns instantes."
+
+          if (status && status < 500) {
+            setEstado("erro")
+            setMensagem(mensagemErro)
+            return
+          }
+
+          setEstado("pendente")
+          setMensagem(mensagemErro)
         }
 
-        if (tentativa < 10) {
-          await new Promise(resolve => {
-            timer = setTimeout(resolve, 3000)
-          })
-        }
+        await new Promise(resolve => {
+          timer = setTimeout(resolve, 3000)
+        })
       }
     }
 
@@ -101,7 +111,7 @@ export default function RetornoPagamentoPage() {
 
         {pendente && (
           <p className="mt-4 text-xs text-gray-500">
-            Verificação {tentativas}/10. Não feche esta página enquanto confirmamos.
+            Verificação {tentativas}. Continuaremos tentando até receber a confirmação.
           </p>
         )}
 

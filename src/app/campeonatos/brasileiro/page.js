@@ -9,20 +9,20 @@ export const metadata = {
   description: "Acompanhe a tabela, jogos, agenda e artilheiros do Campeonato Brasileiro Série A.",
   keywords: "campeonato brasileiro, série a, futebol, notícias de futebol, resultados de futebol",
   alternates: {
-    canonical: "https://www.futlance.com/campeonatos/brasileiro",
+    canonical: "https://futlance.com/campeonatos/brasileiro",
     languages: {
-      "pt-BR": "https://www.futlance.com/campeonatos/brasileiro",
-      "en-US": "https://www.futlance.com/en/campeonatos/brasileiro",
-      "es-ES": "https://www.futlance.com/es/campeonatos/brasileiro",
-      "fr-FR": "https://www.futlance.com/fr/campeonatos/brasileiro",
-      "de-DE": "https://www.futlance.com/de/campeonatos/brasileiro",
-      "it-IT": "https://www.futlance.com/it/campeonatos/brasileiro"
+      "pt-BR": "https://futlance.com/campeonatos/brasileiro",
+      "en-US": "https://futlance.com/en/campeonatos/brasileiro",
+      "es-ES": "https://futlance.com/es/campeonatos/brasileiro",
+      "fr-FR": "https://futlance.com/fr/campeonatos/brasileiro",
+      "de-DE": "https://futlance.com/de/campeonatos/brasileiro",
+      "it-IT": "https://futlance.com/it/campeonatos/brasileiro"
     }
   },
   openGraph: {
     title: "Campeonato Brasileiro Série A - Futlance",
     description: "Acompanhe a tabela, jogos, agenda e artilheiros do Campeonato Brasileiro Série A.",
-    url: "https://www.futlance.com/campeonatos/brasileiro",
+    url: "https://futlance.com/campeonatos/brasileiro",
     siteName: "Futlance",
     locale: "pt_BR",
     alternateLocale: ["en_US", "es_ES", "fr_FR", "de_DE", "it_IT"],
