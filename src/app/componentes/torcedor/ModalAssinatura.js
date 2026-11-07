@@ -15,6 +15,7 @@ export default function ModalAssinatura({ aberto, time, usuario, onFechar, onCon
   const [idioma, setIdioma] = useState("pt")
   const [pagamento, setPagamento] = useState("cartao")
   const [clientSecret, setClientSecret] = useState("")
+  const [checkoutSessionId, setCheckoutSessionId] = useState("")
   const [pix, setPix] = useState(null)
   const [assinaturaId, setAssinaturaId] = useState("")
   const [criando, setCriando] = useState(false)
@@ -34,6 +35,7 @@ export default function ModalAssinatura({ aberto, time, usuario, onFechar, onCon
   useEffect(() => {
     if (!aberto) {
       setClientSecret("")
+      setCheckoutSessionId("")
       setPix(null)
       setAssinaturaId("")
       setErro("")
@@ -60,30 +62,54 @@ export default function ModalAssinatura({ aberto, time, usuario, onFechar, onCon
         setTentativas(tentativa)
 
         try {
-          const resposta = await api.get("/assinatura")
+          const resposta = checkoutSessionId
+            ? await api.get("/assinatura/pagamento/retorno", {
+                params: { session_id: checkoutSessionId }
+              })
+            : await api.get("/assinatura")
           if (!ativo) return
-          const assinatura = resposta.data?.assinaturas?.find(item => item.id === assinaturaId)
 
-          if (!assinatura) {
-            throw new Error("Não foi possível localizar essa assinatura.")
+          if (checkoutSessionId) {
+            if (resposta.data?.estado === "sucesso") {
+              setEstadoPagamento("sucesso")
+              setMensagemPagamento(resposta.data.mensagem || "Pagamento confirmado! Sua assinatura está ativa.")
+              setVerificando(false)
+              return
+            }
+
+            if (resposta.data?.estado === "erro") {
+              setEstadoPagamento("erro")
+              setMensagemPagamento(resposta.data.mensagem || "Não foi possível confirmar o pagamento.")
+              setVerificando(false)
+              return
+            }
+
+            setEstadoPagamento("pendente")
+            setMensagemPagamento(resposta.data?.mensagem || "Estamos aguardando a confirmação do pagamento. Isso pode levar alguns instantes.")
+          } else {
+            const assinatura = resposta.data?.assinaturas?.find(item => item.id === assinaturaId)
+
+            if (!assinatura) {
+              throw new Error("Não foi possível localizar essa assinatura.")
+            }
+
+            if (assinatura.status === "ATIVA") {
+              setEstadoPagamento("sucesso")
+              setMensagemPagamento("Pagamento confirmado! Sua assinatura está ativa.")
+              setVerificando(false)
+              return
+            }
+
+            if (assinatura.status !== "PENDENTE") {
+              setEstadoPagamento("erro")
+              setMensagemPagamento("Não foi possível confirmar o pagamento. Volte ao Futlance e tente novamente.")
+              setVerificando(false)
+              return
+            }
+
+            setEstadoPagamento("pendente")
+            setMensagemPagamento("Estamos aguardando a confirmação do pagamento. Isso pode levar alguns instantes.")
           }
-
-          if (assinatura.status === "ATIVA") {
-            setEstadoPagamento("sucesso")
-            setMensagemPagamento("Pagamento confirmado! Sua assinatura está ativa.")
-            setVerificando(false)
-            return
-          }
-
-          if (assinatura.status !== "PENDENTE") {
-            setEstadoPagamento("erro")
-            setMensagemPagamento("Não foi possível confirmar o pagamento. Volte ao Futlance e tente novamente.")
-            setVerificando(false)
-            return
-          }
-
-          setEstadoPagamento("pendente")
-          setMensagemPagamento("Estamos aguardando a confirmação do pagamento. Isso pode levar alguns instantes.")
         } catch (error) {
           if (!ativo) return
 
@@ -115,13 +141,14 @@ export default function ModalAssinatura({ aberto, time, usuario, onFechar, onCon
       ativo = false
       clearTimeout(timer)
     }
-  }, [aberto, assinaturaId, verificando])
+  }, [aberto, assinaturaId, checkoutSessionId, verificando])
 
   if (!aberto) return null
 
   function selecionarPagamento(metodo) {
     setPagamento(metodo)
     setClientSecret("")
+    setCheckoutSessionId("")
     setPix(null)
     setAssinaturaId("")
     setErro("")
@@ -158,6 +185,7 @@ export default function ModalAssinatura({ aberto, time, usuario, onFechar, onCon
         throw new Error("O servidor não retornou o identificador da assinatura.")
       }
       setAssinaturaId(dados.assinatura.id)
+      setCheckoutSessionId(dados.sessionId || "")
 
       if (pagamento === "cartao") {
         if (!secret) throw new Error("O servidor não retornou os dados do Checkout do cartão.")
