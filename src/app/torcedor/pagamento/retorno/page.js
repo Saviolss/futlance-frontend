@@ -6,31 +6,43 @@ import { api } from "../../../servidor/api"
 
 export default function RetornoPagamentoPage() {
   const router = useRouter()
-  const [sessionId, setSessionId] = useState("")
+  const [identificadorPagamento, setIdentificadorPagamento] = useState(null)
   const [estado, setEstado] = useState("carregando")
   const [mensagem, setMensagem] = useState("Estamos verificando seu pagamento com segurança.")
   const [tentativas, setTentativas] = useState(0)
   const [reverificar, setReverificar] = useState(0)
 
   useEffect(() => {
-    const id = new URLSearchParams(window.location.search).get("session_id")
-    if (!id) {
-      setEstado("erro")
-      setMensagem("Não encontramos o identificador do pagamento. Volte ao Futlance e tente novamente.")
+    const parametros = new URLSearchParams(window.location.search)
+    const sessionId = parametros.get("session_id")
+    const paymentIntentId =
+      parametros.get("payment_intent") || parametros.get("payment_intent_id")
+
+    if (sessionId) {
+      setIdentificadorPagamento({ session_id: sessionId })
       return
     }
-    setSessionId(id)
+
+    if (paymentIntentId) {
+      setIdentificadorPagamento({ payment_intent: paymentIntentId })
+      return
+    }
+
+    if (!sessionId && !paymentIntentId) {
+      setEstado("erro")
+      setMensagem("Não encontramos o identificador do pagamento. Volte ao Futlance e tente novamente.")
+    }
   }, [])
 
-  const verificarPagamento = useCallback(async id => {
+  const verificarPagamento = useCallback(async identificador => {
     const resposta = await api.get("/assinatura/pagamento/retorno", {
-      params: { session_id: id }
+      params: identificador
     })
     return resposta.data
   }, [])
 
   useEffect(() => {
-    if (!sessionId) return
+    if (!identificadorPagamento) return
 
     let ativo = true
     let timer
@@ -43,7 +55,7 @@ export default function RetornoPagamentoPage() {
         setTentativas(tentativa)
 
         try {
-          const dados = await verificarPagamento(sessionId)
+          const dados = await verificarPagamento(identificadorPagamento)
           if (!ativo) return
 
           setMensagem(dados.mensagem || "Estamos verificando seu pagamento.")
@@ -79,7 +91,7 @@ export default function RetornoPagamentoPage() {
       ativo = false
       clearTimeout(timer)
     }
-  }, [sessionId, reverificar, verificarPagamento])
+  }, [identificadorPagamento, reverificar, verificarPagamento])
 
   const sucesso = estado === "sucesso"
   const pendente = estado === "pendente" || estado === "carregando"

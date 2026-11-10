@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation"
 import { useTranslation } from "react-i18next"
 import { api } from "@/app/servidor/api"
 import ModalAssinatura from "@/app/componentes/torcedor/ModalAssinatura"
+import ModalEscolherTime from "@/app/componentes/torcedor/ModalEscolherTime"
 
 export default function MinhasAssinaturasPage() {
   const router = useRouter()
@@ -13,6 +14,7 @@ export default function MinhasAssinaturasPage() {
   const [usuario, setUsuario] = useState(null)
   const [time, setTime] = useState(null)
   const [assinaturas, setAssinaturas] = useState([])
+  const [modalEscolherTime, setModalEscolherTime] = useState(false)
   const [modalAssinatura, setModalAssinatura] = useState(false)
   const [cancelandoId, setCancelandoId] = useState(null)
   const [assinaturaCancelar, setAssinaturaCancelar] = useState(null)
@@ -36,8 +38,7 @@ export default function MinhasAssinaturasPage() {
       const usuarioAtual = respostaSessao.data.usuario
       setUsuario(usuarioAtual)
 
-      const chaveTime =
-        `futlance_time_torcedor_${ usuarioAtual.id } `
+      const chaveTime = `futlance_time_torcedor_${usuarioAtual.id}`
 
       const timeSalvo =
         localStorage.getItem(chaveTime)
@@ -98,15 +99,35 @@ export default function MinhasAssinaturasPage() {
 
   function abrirAssinatura() {
     if (!time) {
-      alert(
-        t(
-          "configuracoesAssinatura.escolhaTime",
-          "Escolha seu time antes de assinar o Assistente do Torcedor."
-        )
-      )
+      setModalEscolherTime(true)
       return
     }
 
+    setModalAssinatura(true)
+  }
+
+  function selecionarTime(timeSelecionado) {
+    const timeAtual = {
+      timeId: timeSelecionado.timeId ?? timeSelecionado.id ?? null,
+      nome: timeSelecionado.nomePopular || timeSelecionado.nome || "",
+      escudo: timeSelecionado.escudo || null,
+      slug: timeSelecionado.slug || ""
+    }
+
+    setTime(timeAtual)
+
+    if (usuario?.id) {
+      try {
+        localStorage.setItem(
+          `futlance_time_torcedor_${usuario.id}`,
+          JSON.stringify(timeAtual)
+        )
+      } catch (error) {
+        console.error("Erro ao salvar o time selecionado:", error)
+      }
+    }
+
+    setModalEscolherTime(false)
     setModalAssinatura(true)
   }
 
@@ -321,8 +342,8 @@ if (carregando) {
 }
 
 return (
-  <main className="min-h-screen bg-[#0b0b0b] text-white">
-    <header className="border-b border-white/10 bg-[#111111]">
+  <main className="min-h-screen  bg-[#070b12] text-white">
+    <header >
       <div className="max-w-5xl mx-auto px-4 py-4 flex items-center justify-between gap-4">
         <button
           onClick={() =>
@@ -654,6 +675,12 @@ return (
         </div>
       )}
     </section>
+
+    <ModalEscolherTime
+      aberto={modalEscolherTime}
+      onFechar={() => setModalEscolherTime(false)}
+      onSelecionarTime={selecionarTime}
+    />
 
     {modalAssinatura && (
       <ModalAssinatura

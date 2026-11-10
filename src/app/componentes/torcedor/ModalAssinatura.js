@@ -357,23 +357,30 @@ export default function ModalAssinatura({ aberto, time, usuario, onFechar, onCon
           </>
         ) : (
           <>
-            <div className="rounded-xl bg-white p-4 text-center text-gray-900">
+            <div className="rounded-2xl border border-white/10 bg-gradient-to-b from-[#151a23] to-[#0d1118] p-5 text-center text-white">
+              <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-xl border border-orange-500/20 bg-orange-500/10 text-orange-400">
+                <svg viewBox="0 0 24 24" className="h-6 w-6" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
+                  <path d="M7 3H4a1 1 0 0 0-1 1v3m14-4h3a1 1 0 0 1 1 1v3M3 17v3a1 1 0 0 0 1 1h3m14-4v3a1 1 0 0 1-1 1h-3M7 7h3v3H7zm7 0h3v3h-3zm-7 7h3v3H7zm7 0h3v3h-3z" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </div>
               <h3 className="text-lg font-bold">Pague com Pix</h3>
-              <p className="mt-1 text-sm text-gray-600">Escaneie o QR Code usando o aplicativo do seu banco.</p>
+              <p className="mt-1 text-sm text-gray-400">Escaneie o QR Code com o aplicativo do seu banco.</p>
               {pix.imagem ? (
-                <img src={pix.imagem} alt="QR Code Pix para pagamento" className="mx-auto mt-4 h-56 w-56 object-contain" />
+                <div className="mx-auto mt-5 inline-flex rounded-2xl bg-white p-3 shadow-lg shadow-black/20">
+                  <img src={pix.imagem} alt="QR Code Pix para pagamento" className="h-52 w-52 object-contain" />
+                </div>
               ) : (
-                <p className="mt-4 text-sm text-red-600">O Stripe não forneceu a imagem do QR Code.</p>
+                <p className="mt-4 text-sm text-red-300">O Stripe não forneceu a imagem do QR Code.</p>
               )}
               {pix.codigo && (
                 <>
-                  <label htmlFor="codigo-pix" className="mt-4 block text-left text-sm font-semibold">Pix copia e cola</label>
-                  <textarea id="codigo-pix" readOnly value={pix.codigo} className="mt-2 min-h-24 w-full resize-y break-all rounded-lg border border-gray-300 bg-gray-50 p-3 text-xs text-gray-800" />
-                  <button type="button" onClick={copiarPix} className="mt-3 w-full rounded-lg bg-orange-500 px-4 py-3 font-bold text-white hover:bg-orange-600">{copiado ? "Código copiado!" : "Copiar código Pix"}</button>
+                  <label htmlFor="codigo-pix" className="mt-5 block text-left text-sm font-semibold text-gray-200">Pix copia e cola</label>
+                  <textarea id="codigo-pix" readOnly value={pix.codigo} className="mt-2 min-h-24 w-full resize-y break-all rounded-xl border border-white/10 bg-[#0b0f15] p-3 text-xs text-gray-300 outline-none" />
+                  <button type="button" onClick={copiarPix} className="mt-3 w-full rounded-xl bg-orange-500 px-4 py-3 font-bold text-white transition hover:bg-orange-400">{copiado ? "Código copiado!" : "Copiar código Pix"}</button>
                 </>
               )}
               {pix.expiracao && <p className="mt-3 text-xs text-gray-500">Validade: {new Date(pix.expiracao * 1000).toLocaleString("pt-BR")}</p>}
-              {pix.instrucoes && <a href={pix.instrucoes} target="_blank" rel="noreferrer" className="mt-3 inline-block text-sm text-orange-600 underline">Abrir instruções de pagamento</a>}
+              {pix.instrucoes && <a href={pix.instrucoes} target="_blank" rel="noreferrer" className="mt-3 inline-block text-sm text-orange-400 underline underline-offset-4">Abrir instruções de pagamento</a>}
             </div>
             <p className="mt-3 text-center text-sm text-gray-300">A assinatura será ativada somente após a confirmação do pagamento.</p>
             <p role="status" className="mt-3 text-center text-xs text-gray-400">

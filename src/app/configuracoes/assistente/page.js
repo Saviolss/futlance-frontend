@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation"
 import { useTranslation } from "react-i18next"
 import { api } from "../../servidor/api"
 import ModalAssinatura from "../../componentes/torcedor/ModalAssinatura"
+import ModalEscolherTime from "../../componentes/torcedor/ModalEscolherTime"
 
 export default function AssistenteTorcedorPage() {
   const router = useRouter()
@@ -12,6 +13,7 @@ export default function AssistenteTorcedorPage() {
   const [carregando, setCarregando] = useState(true)
   const [usuario, setUsuario] = useState(null)
   const [time, setTime] = useState(null)
+  const [seletorTimeAberto, setSeletorTimeAberto] = useState(false)
   const [assinaturaAberta, setAssinaturaAberta] = useState(false)
 
   useEffect(() => {
@@ -54,11 +56,35 @@ export default function AssistenteTorcedorPage() {
 
   function abrirAssinatura() {
     if (!time) {
-      alert(t("configuracoesAssistente.escolhaTime", "Escolha seu time antes de assinar o Assistente do Torcedor."))
-      router.push("/configuracoes/meu-time")
+      setSeletorTimeAberto(true)
       return
     }
 
+    setAssinaturaAberta(true)
+  }
+
+  function selecionarTime(timeSelecionado) {
+    const timeAtual = {
+      timeId: timeSelecionado.timeId ?? timeSelecionado.id ?? null,
+      nome: timeSelecionado.nomePopular || timeSelecionado.nome || "",
+      escudo: timeSelecionado.escudo || null,
+      slug: timeSelecionado.slug || ""
+    }
+
+    setTime(timeAtual)
+
+    if (usuario?.id) {
+      try {
+        localStorage.setItem(
+          `futlance_time_torcedor_${usuario.id}`,
+          JSON.stringify(timeAtual)
+        )
+      } catch (error) {
+        console.error("Erro ao salvar o time selecionado:", error)
+      }
+    }
+
+    setSeletorTimeAberto(false)
     setAssinaturaAberta(true)
   }
 
@@ -417,6 +443,12 @@ export default function AssistenteTorcedorPage() {
         </p>
       </div>
       </main>
+
+      <ModalEscolherTime
+        aberto={seletorTimeAberto}
+        onFechar={() => setSeletorTimeAberto(false)}
+        onSelecionarTime={selecionarTime}
+      />
 
       <ModalAssinatura
         aberto={assinaturaAberta}
