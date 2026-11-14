@@ -7,6 +7,33 @@ function valor(...valores) {
   return valores.find((v) => v !== undefined && v !== null && v !== "") ?? "";
 }
 
+function obterDataJogo(jogo) {
+  const data = valor(jogo?.data_iso, jogo?.data, jogo?.data_realizacao, jogo?.data_partida);
+  if (!data) return null;
+
+  if (data instanceof Date) {
+    return Number.isNaN(data.getTime()) ? null : data;
+  }
+
+  const texto = String(data).trim();
+  const dataBrasileira = texto.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
+  if (dataBrasileira) {
+    const [, dia, mes, ano] = dataBrasileira;
+    const dataConvertida = new Date(Date.UTC(Number(ano), Number(mes) - 1, Number(dia)));
+    if (
+      dataConvertida.getUTCDate() !== Number(dia) ||
+      dataConvertida.getUTCMonth() !== Number(mes) - 1 ||
+      dataConvertida.getUTCFullYear() !== Number(ano)
+    ) {
+      return null;
+    }
+    return dataConvertida;
+  }
+
+  const dataConvertida = new Date(texto);
+  return Number.isNaN(dataConvertida.getTime()) ? null : dataConvertida;
+}
+
 function formatarData(data, hora) {
   if (!data) return hora || "";
   const texto = String(data);
@@ -319,6 +346,22 @@ export default function JogoEncerradoCard({ jogo, campeonato }) {
 export function JogosEncerradosSection({ titulo, jogos = [] }) {
   if (!jogos.length) return null;
 
+  const agora = Date.now();
+  const diasLimite = [3, 7, 15, 30].find((dias) =>
+    jogos.some((jogo) => {
+      const data = obterDataJogo(jogo);
+      return data && agora - data.getTime() <= dias * 24 * 60 * 60 * 1000;
+    })
+  );
+  const jogosRecentes = diasLimite
+    ? jogos.filter((jogo) => {
+        const data = obterDataJogo(jogo);
+        return data && agora - data.getTime() <= diasLimite * 24 * 60 * 60 * 1000;
+      })
+    : [];
+
+  if (!jogosRecentes.length) return null;
+
   return (
     <section className="mx-auto w-full max-w-7xl px-4 py-10">
       {titulo && (
@@ -328,7 +371,7 @@ export function JogosEncerradosSection({ titulo, jogos = [] }) {
       )}
 
       <div className="flex flex-wrap justify-center gap-6">
-        {jogos.map((jogo, index) => (
+        {jogosRecentes.map((jogo, index) => (
           <JogoEncerradoCard
             key={jogo?.partida_id ?? jogo?.id ?? `${jogo?.data ?? ""}-${index}`}
             jogo={jogo}
