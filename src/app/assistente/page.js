@@ -4,14 +4,16 @@ import { useState } from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import Footer from "../componentes/footer/footer.js"
-import Login from "../componentes/autenticacao/Login"
-import CriarConta from "../componentes/autenticacao/CriarConta"
-import ModalConfirmarEmail from "../componentes/torcedor/ModalConfirmarEmail"
-import ModalEscolherTime from "../componentes/torcedor/ModalEscolherTime"
-import ModalAssistenteTorcedor from "../componentes/torcedor/ModalAssistenteTorcedor"
-import ModalAssinatura from "../componentes/torcedor/ModalAssinatura"
+import Login from "../componentes/autenticacao/Login.js"
+import CriarConta from "../componentes/autenticacao/CriarConta.js"
+import ModalConfirmarEmail from "../componentes/torcedor/ModalConfirmarEmail.js"
+import ModalEscolherTime from "../componentes/torcedor/ModalEscolherTime.js"
+import ModalAssistenteTorcedor from "../componentes/torcedor/ModalAssistenteTorcedor.js"
+import ModalAssinatura from "../componentes/torcedor/ModalAssinatura.js"
 import { api } from "@/app/servidor/api"
 
+const precoMes = process.env.NEXT_PUBLIC_PRECO_MES
+const precoAno = process.env.NEXT_PUBLIC_PRECO_ANO
 const beneficios = [
   {
     numero: "01",
@@ -306,7 +308,7 @@ export default function AssistenteTorcedorLandingPage() {
           <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center">
             <BotaoAssinar onClick={iniciarAssinatura} disabled={verificandoAssinatura} className="inline-flex min-h-14 items-center justify-center gap-3 rounded-xl bg-orange-500 px-7 text-base font-bold text-[#101010] shadow-[0_10px_35px_rgba(249,115,22,0.2)] transition hover:-translate-y-0.5 hover:bg-orange-400 disabled:cursor-wait disabled:opacity-60" />
             <p className="text-sm text-zinc-500">
-              Apenas <span className="font-semibold text-zinc-200">R$ 3,99/mês</span>
+              Apenas <span className="font-semibold text-zinc-200">R$ {precoMes}/mês</span>
             </p>
           </div>
 
@@ -442,7 +444,7 @@ export default function AssistenteTorcedorLandingPage() {
           </div>
           <div className="relative mt-8 shrink-0 lg:mt-0 lg:text-center">
             <p className="text-3xl font-black">
-              R$ 3,99<span className="ml-1 text-sm font-medium text-zinc-400">/mês</span>
+              R$ {precoMes}<span className="ml-1 text-sm font-medium text-zinc-400">/mês</span>
             </p>
             <BotaoAssinar onClick={iniciarAssinatura} disabled={verificandoAssinatura} className="mt-4 inline-flex min-h-13 w-full items-center justify-center gap-3 rounded-xl bg-orange-500 px-7 font-bold text-[#101010] transition hover:bg-orange-400 disabled:cursor-wait disabled:opacity-60 sm:w-auto" />
             <p className="mt-3 text-xs text-zinc-500">Pagamento seguro. Cancele quando quiser.</p>
