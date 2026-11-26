@@ -4,6 +4,7 @@ import { useEffect, useState } from "react"
 import { createPortal } from "react-dom"
 import { useTranslation } from "react-i18next"
 
+const precoMes = process.env.NEXT_PUBLIC_PRECO_MES
 export default function ModalAssistenteTorcedor({
   aberto,
   time,
@@ -78,7 +79,7 @@ export default function ModalAssistenteTorcedor({
         <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-4 py-4 sm:px-6 sm:py-5">
           <div className="mb-4 text-center sm:mb-5">
             <span className="text-2xl font-extrabold text-orange-500 sm:text-3xl">
-              R$ 3,99
+              R$ {precoMes}
             </span>
 
             <span className="ml-1 text-sm text-zinc-400">

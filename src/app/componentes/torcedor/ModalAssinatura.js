@@ -316,12 +316,12 @@ export default function ModalAssinatura({ aberto, time, usuario, onFechar, onCon
             <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
               <button type="button" onClick={() => selecionarPagamento("cartao")} className={`rounded-xl border p-4 text-left ${pagamento === "cartao" ? "border-orange-500 bg-orange-500/10" : "border-white/10 bg-white/5"}`}>
                 <span className="block font-semibold">Cartão</span>
-                <span className="mt-1 block text-sm text-gray-300">R$ 3,99/mês</span>
+                <span className="mt-1 block text-sm text-gray-300">R$ {precoMes}/mês</span>
                 <span className="mt-1 block text-xs text-gray-400">Cobrança recorrente</span>
               </button>
               <button type="button" onClick={() => selecionarPagamento("pix")} className={`rounded-xl border p-4 text-left ${pagamento === "pix" ? "border-orange-500 bg-orange-500/10" : "border-white/10 bg-white/5"}`}>
                 <span className="block font-semibold">Pix anual</span>
-                <span className="mt-1 block text-sm text-gray-300">R$ 47,88/ano</span>
+                <span className="mt-1 block text-sm text-gray-300">R$ {precoAno}/ano</span>
                 <span className="mt-1 block text-xs text-gray-400">Pagamento único, sem renovação automática</span>
               </button>
             </div>

@@ -115,11 +115,11 @@ export function Header() {
 						</li>
 
 						{/* Time do torcedor */}
-						{/* <li className="flex flex-col items-center relative">
+						<li className="flex flex-col items-center relative">
 							<div className="flex flex-col items-center md:hover:border-b-2 cursor-pointer">
 								<TimeTorcedor />
 							</div>
-						</li> */}
+						</li>
 
 						{/* Campeonatos */}
 						<li className="flex flex-col items-center">
@@ -345,9 +345,9 @@ export function Header() {
 						</li>
 
 						{/* Time do torcedor */}
-						{/* <li>
+						<li>
 							<TimeTorcedor />
-						</li> */}
+						</li>
 
 						{/* Campeonatos */}
 						<li>

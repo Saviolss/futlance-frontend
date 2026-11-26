@@ -1,3 +1,4 @@
+
 "use client"
 
 import { useEffect, useState } from "react"
@@ -65,6 +66,7 @@ export default function ModalEscolherTime({
   if (!aberto || !portalPronto) return null
 
   const timesFiltrados = times.filter((time) => {
+    if (time.disponivelAssinatura !== true) return false
     const nome = String(time.nome || "").toLowerCase()
     return nome.includes(busca.toLowerCase())
   })
@@ -81,7 +83,6 @@ export default function ModalEscolherTime({
               {t("torcedor.escolherTimeDescricao", "Escolha o time que você acompanha.")}
             </p>
           </div>
-
           <button
             type="button"
             onClick={onFechar}
@@ -147,11 +148,8 @@ export default function ModalEscolherTime({
                         ⚽
                       </div>
                     )}
-
                     <span
-                      className={`wrap-break-word max-w-full text-center text-sm font-medium ${selecionado
-                          ? "text-orange-400"
-                          : "text-white"
+                      className={`wrap-break-word max-w-full text-center text-sm font-medium ${selecionado ? "text-orange-400" : "text-white"
                         }`}
                     >
                       {time.nome}
