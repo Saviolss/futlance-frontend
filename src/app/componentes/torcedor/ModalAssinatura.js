@@ -8,7 +8,8 @@ import { EmbeddedCheckout, EmbeddedCheckoutProvider } from "@stripe/react-stripe
 import { api } from "../../servidor/api"
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY)
-
+const precoMes = (process.env.NEXT_PUBLIC_PRECO_MES)
+const precoAno = (process.env.NEXT_PUBLIC_PRECO_ANO)
 export default function ModalAssinatura({ aberto, time, usuario, onFechar, onContinuar }) {
   const router = useRouter()
   const [telefone, setTelefone] = useState("")
