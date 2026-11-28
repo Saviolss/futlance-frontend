@@ -1,5 +1,4 @@
 "use client"
-
 import { useState } from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
@@ -13,7 +12,6 @@ import ModalAssinatura from "../componentes/torcedor/ModalAssinatura.js"
 import { api } from "@/app/servidor/api"
 
 const precoMes = process.env.NEXT_PUBLIC_PRECO_MES
-const precoAno = process.env.NEXT_PUBLIC_PRECO_ANO
 const beneficios = [
   {
     numero: "01",
